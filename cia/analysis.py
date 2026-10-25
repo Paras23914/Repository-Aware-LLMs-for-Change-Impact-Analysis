@@ -223,7 +223,14 @@ def _base_context(predictor_task: PredictorInput) -> tuple[str, tuple[ContextIte
         "You are analyzing likely file impact for a software maintenance request.\n"
         "Return only a JSON object with a 'predictions' array containing up to 10 "
         "objects of the form {\"path\": string, \"rationale\": string}, most likely first.\n"
-        "Use exact file paths from the supplied pre-change repository tree. Do not invent paths.\n\n"
+        "Every predicted path must be unique. Never list the same file twice.\n"
+        "Return fewer than 10 predictions if you cannot identify 10 distinct relevant files.\n"
+        "Use exact file paths from the supplied pre-change repository tree. Do not invent paths.\n"
+        "Copy each predicted path verbatim from one entry in the supplied tree, "
+        "including all intermediate directories and filename capitalization. "
+        "Do not construct paths from class names or infer directory locations.\n"
+        "Prefer files with a direct technical connection to the reported change over "
+        "files that are merely in the same package.\n\n"
         "## Change request\n"
         + predictor_task.issue_text
         + "\n\n## Repository file tree (pre-change)\n"
@@ -243,6 +250,60 @@ def build_c0(predictor_task: PredictorInput) -> ContextDocument:
     """Build C0 from the request and pre-change file tree only."""
     text, items = _base_context(predictor_task)
     return ContextDocument("C0", text, predictor_task.repository.commit_sha, items, predictor_task.repository)
+
+def build_c0_constrained(
+    predictor_task: PredictorInput,
+    candidate_limit: int = 100,
+) -> ContextDocument:
+    """Build a candidate-constrained prompt from the pre-change tree."""
+    if candidate_limit < 1:
+        raise ValueError("candidate_limit must be positive")
+
+    repository = predictor_task.repository
+    paths = repository.list_files()
+
+    ranked = _rank_sources(predictor_task.issue_text, repository)
+    candidates = list(ranked[:candidate_limit])
+
+    # Include non-Java files too, so documentation/configuration files
+    # remain eligible for prediction.
+    remaining = [
+        path for path in paths
+        if path not in set(candidates)
+    ]
+    candidates.extend(remaining[: max(0, candidate_limit - len(candidates))])
+
+    text = (
+        "You are analyzing likely file impact for a software maintenance request.\n"
+        "Return only a JSON object with a 'predictions' array containing up to 10 "
+        "objects of the form {\"path\": string, \"rationale\": string}, most likely first.\n"
+        "Every path must be copied exactly from the candidate path list below.\n"
+        "Do not output any path that is not in that list. Do not repeat paths.\n\n"
+        "## Change request\n"
+        + predictor_task.issue_text
+        + "\n\n## Allowed candidate paths (pre-change repository)\n"
+        + "\n".join(candidates)
+        + "\n"
+    )
+
+    items = (
+        _item(
+            "issue", None, "request supplied for analysis",
+            repository.commit_sha, predictor_task.issue_text,
+        ),
+        *(
+            _item(
+                "candidate_path", path,
+                "candidate selected from the pre-change repository tree",
+                repository.commit_sha,
+            )
+            for path in candidates
+        ),
+    )
+
+    return ContextDocument(
+        "C0_CONSTRAINED", text, repository.commit_sha, items, repository
+    )
 
 def build_contexts(
     predictor_task: PredictorInput, budgets: ContextBudgets | None = None
