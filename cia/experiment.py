@@ -133,7 +133,7 @@ def run_experiment(
     )
     prompt_name = f"{run_id}_{condition}_prompt.txt"
     prompt_path = output_dir / prompt_name
-    prompt_path.write_text(context.text, encoding="utf-8")
+    prompt_path.write_bytes(context.text.encode("utf-8"))
 
     context_manifest = {
         "task_id": task.task_id,
