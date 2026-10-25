@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repository-change-impact"
+version = "0.1.0"
+description = "Reproducible repository-aware change impact analysis prototype"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+cia = "cia.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
