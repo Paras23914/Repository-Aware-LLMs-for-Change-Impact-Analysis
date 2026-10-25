@@ -1,123 +1,67 @@
-# Repository-aware Change Impact Analysis
+# Repository-Aware Change Impact Analysis
 
-A reproducible, inspectable prototype for predicting Java files that may need
-changes for a maintenance request. This is a new implementation; existing
-workspace projects and archives are not used as implementation dependencies.
-
-## Status
-
-The offline pipeline, mock providers, and local Ollama adapter are implemented.
-`data/tasks.jsonl` contains one provenance-checked Ant Ivy task (IVY-1028) for a
-clearly labeled one-task pilot. Pilot artifacts record failed model outputs as
-errors; only predictions that pass path validation receive metrics.
+A small, reproducible pilot that ranks Java files likely to change for a
+maintenance request. The pilot uses one verified Ant Ivy task (IVY-1028).
+It reports changed-path metrics as a one-task observation, not general model
+performance.
 
 ## Requirements
 
-- Python 3.11 or later
-- Git available on `PATH`
-- No network access or model/API credentials are needed for the offline test
+- Python 3.11+
+- Git on PATH
+- A local clone of Apache Ivy containing the fixed target and parent commits
+- Ollama with qwen2.5-coder:7b for the model run
 
-The core package uses only the Python standard library. Optional test tooling is
-version-pinned in `pyproject.toml`; tests can also be run with `unittest`.
+The analysis and tests use the Python standard library; unit tests and the
+offline demonstration need no internet, Ollama, or API key.
 
 ## Setup and commands
 
-The deterministic core and tests use only Python's standard library. From this
-directory in PowerShell:
+Run from this directory in PowerShell:
 
-```powershell
+~~~powershell
 $env:PYTHONPATH = "src"
 python -m unittest discover -s tests -v
-```
-
-The deterministic synthetic-repository demonstration is:
-
-```powershell
-python -m unittest tests.test_offline_demo -v
-```
-
-The synthetic fixture is created in a temporary directory and removed by the
-test runner. It contains no downloaded code or fabricated research task.
-
-Validate a manifest without running a model:
-
-```powershell
 python -m cia validate-manifest data/tasks.jsonl
-```
+python -m unittest discover -s tests -p test_analysis.py -v
+python -m cia run-task --help
+~~~
 
-Build and save all four contexts for a validated manifest task:
+Run the local one-task C0 pilot:
 
-```powershell
-python -m cia build-contexts data/tasks.jsonl TASK_ID PATH_TO_LOCAL_REPOSITORY
-```
+~~~powershell
+python -m cia run-task --task-id ripple-ant-ivy-IVY-1028 --repository "C:\path\to\ant-ivy"
+~~~
 
-## Model providers
+The command validates the issue chronology, fixed commits, first parent, and
+full Git diff path set before building the predictor input. It writes the C0
+prompt, context manifest, baseline predictions, model outcome, and metrics
+(if the model output passes ranked-path validation) under
+runs/real_task_pilot/. Run artifacts are local and ignored by Git; preserve
+them when archiving results.
 
-`OllamaProvider` uses Ollama's native local HTTP API through Python's standard
-library. Its base URL, exact model tag, context limit, seed, sampling settings,
-output limit, and JSON response format are pinned in
-`config/experiment.toml`. It records the digest reported by `/api/tags`, model
-usage counts and durations when Ollama returns them, and wall-clock latency.
+## Workflow
 
-Run a one-request synthetic provider smoke check (not research evidence):
+The manifest in `data/tasks.jsonl` records source URLs, issue text provenance,
+fixed SHAs, cleaning decisions, and patch-path labels. The selected-task audit
+is in `docs/task-audit-ripple-ant-ivy-ivy-1028.md`. The parent-revision reader
+keeps the target patch and labels out of model input.
 
-```powershell
-$env:PYTHONPATH = "src"
-python scripts/ollama_smoke.py
-```
-
-The smoke script uses the existing C0 context builder and runner, writes its
-prompt manifest and run record under `runs/ollama_smoke/`, and reports no
-research metrics. Unit tests use mocked HTTP responses and do not call Ollama.
-
-Run the single real-task C0 pilot against a local Ant Ivy clone containing the
-fixed revisions:
-
-```powershell
-$env:PYTHONPATH = "src"
-python scripts/run_real_task.py --task-id ripple-ant-ivy-IVY-1028 --repository "C:\path\to\ant-ivy"
-```
-
-The pilot writes its C0 prompt, context manifest, baselines, provenance, and
-model outcome under `runs/real_task_pilot/`. The model settings are pinned in
-`config/experiment.toml`. This task is a one-task pilot and does not establish
-general performance.
-
-`OpenAICompatibleProvider` remains available for a separate cloud endpoint.
-Its URL, model ID, and credential are not configured here. Set those through
-the process environment variables in `.env.example`; the program does not
-automatically load `.env` files. Unit tests do not require an API key.
-
-## Data and leakage controls
-
-Each accepted manifest row must identify its source, repository, issue text and
-provenance, target commit, parent commit, changed-path reference labels, and
-task-selection decision. Predictors receive a separate input type containing
-only the issue and parent-revision repository view. The target commit and its
-changed paths are retained for validation and scoring and are not passed to
-predictors. Historical features must be derived only from commits reachable
-from the parent commit.
-
-See `data/task.schema.json` for the manifest contract. Do not add a task until
-its issue text, timestamps, commit relationship, labels, and evaluation scope
-have been checked and documented.
-
-## Planned experiment conditions
-
-- C0: request and parent-revision file tree
-- C1: C0 plus seed and retrieved source
+- C0: issue text and parent-revision file tree
+- C1: C0 plus seed and retrieved Java source
 - C2: C1 plus dependency information
-- C3: C2 plus relevant tests, documentation, and pre-parent co-change history
+- C3: C2 plus relevant tests, documentation, and parent-bounded co-change history
 
-Every saved context manifest will list the source revision and included paths
-and record why each item is allowed in its condition.
+Dependency and historical co-change baselines use a deterministic seed chosen
+from the issue and parent tree. The Ollama provider is local. A separate
+OpenAI-compatible provider remains available but is not configured or called
+by this pilot.
 
 ## Limitations
 
-Changed files are an observed patch label, not a complete oracle for every file
-that could be affected. Results depend on task provenance, issue-text quality,
-repository availability, model/provider behavior, and context budgets. The
-local Qwen2.5-Coder 7B Q4_K_M model is configured through Ollama. A valid ranked
-prediction is not guaranteed: outputs are rejected if they contain malformed
-JSON, duplicate paths, or paths absent from the parent tree.
+The reference labels are files changed by the patch, not a complete oracle of
+all files an issue could affect. Prior Qwen IVY-1028 attempts failed ranked-path
+validation, so they have no model metrics. Existing run evidence is preserved
+outside the Git submission in the sibling research archive and locally under
+runs/real_task_pilot/.
 

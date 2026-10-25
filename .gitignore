@@ -14,6 +14,15 @@ checkpoints/
 data/local/
 data/raw/
 data/cache/
+# Private local-only files; preserved in the sibling research archive.
+docs/local-model-setup-plan.md
+docs/task-audit-ripple-ant-ivy-ivy-1328.md
+docs/private/
+scripts/ollama_smoke.py
+# Generated run artifacts stay local, independent of their success or failure.
+runs/ollama_smoke/
+runs/real_task_pilot/
+runs/context/
 runs/*
 !runs/.gitkeep
 

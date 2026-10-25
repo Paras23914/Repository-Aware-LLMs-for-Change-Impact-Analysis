@@ -45,3 +45,10 @@ The task is suitable for a small pilot: one focused resolver implementation
 file is changed along with the changelog. Its primary limitation is label
 semantics: a patch-path label measures changed paths, not every file that could
 have been affected by the issue.
+
+## Other candidate considered
+
+IVY-1328 was held out. Its inspected Jira timestamp did not include a timezone
+and was on the same date as its target commit, so ordering was not established.
+Its Ripple `impact-set-files` label also differs from the complete Git diff.
+The full rejection audit is preserved in the sibling research archive.

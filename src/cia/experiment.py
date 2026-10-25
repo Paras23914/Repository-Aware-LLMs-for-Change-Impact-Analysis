@@ -1,8 +1,6 @@
-"""Run one provenance-validated C0 pilot with local Ollama and baselines."""
+"""Run the provenance-validated one-task local-model pilot."""
 
 from __future__ import annotations
-
-import argparse
 import hashlib
 import json
 import subprocess
@@ -10,30 +8,17 @@ import tomllib
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
+from cia.analysis import DependencyIndex, _rank_sources, build_c0, historical_cochange_rank
+from cia.data import RepositorySnapshot, load_manifest, predictor_input
+from cia.prediction import evaluate, run_prediction, validate_ranked_paths
+from cia.providers import OllamaConfig, OllamaProvider
 
-from cia.baselines import DependencyIndex, historical_cochange_rank
-from cia.context import _rank_sources, build_c0
-from cia.predictions import evaluate, validate_ranked_paths
-from cia.providers.ollama import OllamaConfig, OllamaProvider
-from cia.repository import RepositorySnapshot
-from cia.runner import run_prediction, save_run_record
-from cia.tasks import load_manifest, predictor_input
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", default="data/tasks.jsonl")
-    parser.add_argument("--task-id", required=True)
-    parser.add_argument("--repository", required=True)
-    parser.add_argument("--config", default="config/experiment.toml")
-    parser.add_argument("--output-dir", default="runs/real_task_pilot")
-    args = parser.parse_args()
-
-    records = [row for row in load_manifest(args.manifest) if row.task_id == args.task_id]
+def run_experiment(task_id: str, repository_path: str | Path, manifest_path: str | Path = Path("data/tasks.jsonl"), config_path: str | Path = Path("config/experiment.toml"), output_dir: str | Path = Path("runs/real_task_pilot")) -> int:
+    records = [row for row in load_manifest(str(manifest_path)) if row.task_id == task_id]
     if len(records) != 1:
-        raise SystemExit(f"expected exactly one manifest task {args.task_id!r}, found {len(records)}")
+        raise SystemExit(f"expected exactly one manifest task {task_id!r}, found {len(records)}")
     task = records[0]
-    repository = RepositorySnapshot.at_commit(args.repository, task.parent_sha)
+    repository = RepositorySnapshot.at_commit(repository_path, task.parent_sha)
     # Validate target metadata before prediction; only the parent snapshot and
     # issue are placed in PredictorInput below.
     repository.validate_task_revision(
@@ -46,7 +31,7 @@ def main() -> int:
     model_input = predictor_input(task, repository)
     context = build_c0(model_input)
 
-    config_path = Path(args.config)
+    config_path = Path(config_path)
     with config_path.open("rb") as stream:
         config = tomllib.load(stream)
     local = config["models"]["local"]
@@ -71,7 +56,7 @@ def main() -> int:
         limit=max_predictions, run_kind="one_task_real_pilot",
     )
 
-    output_dir = Path(args.output_dir)
+    output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
     prompt_name = f"{run_id}_C0_prompt.txt"
@@ -145,7 +130,3 @@ def main() -> int:
     artifact_path.write_text(json.dumps(artifact, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(json.dumps({"status": run.status, "artifact": str(artifact_path), "condition": "C0", "prompt_chars": len(context.text), "seed_path": seed_path, "error": run.error}, indent=2))
     return 0 if run.status == "ok" else 2
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

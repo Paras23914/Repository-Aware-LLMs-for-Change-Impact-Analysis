@@ -1,21 +1,31 @@
-"""Validated task manifest records and predictor-safe task inputs."""
+"""Task manifests, validation errors, and read-only Git snapshots."""
 
 from __future__ import annotations
-
+import json
+import subprocess
 from dataclasses import dataclass
 from datetime import datetime
-from pathlib import PurePosixPath
+from pathlib import PurePosixPath, Path
 from typing import Any, Mapping
 from urllib.parse import urlparse
+from functools import lru_cache
 
-from cia.errors import ManifestError
+class CIAError(Exception):
+    """Base exception for expected analysis and input errors."""
 
+class ManifestError(CIAError):
+    """Raised when a manifest row is malformed or inconsistent."""
+
+class RepositoryError(CIAError):
+    """Raised when a requested Git repository object cannot be read."""
+
+class PredictionError(CIAError):
+    """Raised when ranked predictions are invalid for the repository view."""
 
 def _require_text(value: Any, field: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise ManifestError(f"{field} must be a non-empty string")
     return value.strip()
-
 
 def _require_url(value: Any, field: str) -> str:
     result = _require_text(value, field)
@@ -24,13 +34,11 @@ def _require_url(value: Any, field: str) -> str:
         raise ManifestError(f"{field} must be an absolute HTTP(S) URL")
     return result
 
-
 def _require_sha(value: Any, field: str) -> str:
     result = _require_text(value, field).lower()
     if len(result) != 40 or any(ch not in "0123456789abcdef" for ch in result):
         raise ManifestError(f"{field} must be a full 40-character Git SHA-1")
     return result
-
 
 def validate_repo_path(value: Any, field: str = "path") -> str:
     result = _require_text(value, field)
@@ -40,7 +48,6 @@ def validate_repo_path(value: Any, field: str = "path") -> str:
     if result in {".", ""}:
         raise ManifestError(f"{field} must name a repository file")
     return result
-
 
 @dataclass(frozen=True, slots=True)
 class TaskRecord:
@@ -123,7 +130,6 @@ class TaskRecord:
             suitability_notes=text_array("suitability_notes"),
         )
 
-
 @dataclass(frozen=True, slots=True)
 class PredictorInput:
     """Only request text and the pre-change repository view reach predictors."""
@@ -131,12 +137,8 @@ class PredictorInput:
     issue_text: str
     repository: "RepositorySnapshot"
 
-
 def load_manifest(path: str) -> list[TaskRecord]:
     """Read and validate JSONL task records; blank lines are ignored."""
-    import json
-    from pathlib import Path
-
     manifest_path = Path(path)
     if not manifest_path.is_file():
         raise ManifestError(f"task manifest does not exist: {manifest_path}")
@@ -157,7 +159,6 @@ def load_manifest(path: str) -> list[TaskRecord]:
             records.append(record)
     return records
 
-
 def predictor_input(record: TaskRecord, repository: "RepositorySnapshot") -> PredictorInput:
     """Create a predictor payload without target SHA or reference paths."""
     if record.parent_sha != repository.commit_sha:
@@ -166,9 +167,113 @@ def predictor_input(record: TaskRecord, repository: "RepositorySnapshot") -> Pre
         )
     return PredictorInput(issue_text=record.issue_text, repository=repository)
 
+def _git(root: Path, *args: str) -> bytes:
+    result = subprocess.run(
+        ["git", "-C", str(root), *args],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        check=False,
+    )
+    if result.returncode:
+        details = result.stderr.decode("utf-8", errors="replace").strip()
+        raise RepositoryError(f"git {' '.join(args)} failed: {details}")
+    return result.stdout
 
-from typing import TYPE_CHECKING
+@dataclass(frozen=True, slots=True)
+class RepositorySnapshot:
+    """Immutable view of tracked repository files at one commit."""
 
-if TYPE_CHECKING:
-    from cia.repository import RepositorySnapshot
+    root: Path
+    commit_sha: str
 
+    @classmethod
+    def at_commit(cls, root: str | Path, commit_sha: str) -> "RepositorySnapshot":
+        repo_root = Path(root).resolve()
+        if not repo_root.is_dir():
+            raise RepositoryError(f"repository directory does not exist: {repo_root}")
+        resolved = _git(repo_root, "rev-parse", "--verify", f"{commit_sha}^{{commit}}")
+        actual = resolved.decode("ascii", errors="strict").strip().lower()
+        if actual != commit_sha.lower():
+            raise RepositoryError(f"Git resolved {commit_sha!r} to unexpected commit {actual!r}")
+        return cls(root=repo_root, commit_sha=actual)
+
+    @lru_cache(maxsize=128)
+    def list_files(self) -> tuple[str, ...]:
+        output = _git(self.root, "ls-tree", "-r", "--name-only", "-z", self.commit_sha)
+        paths = [part.decode("utf-8", errors="surrogateescape") for part in output.split(b"\0") if part]
+        return tuple(sorted(paths))
+
+    def read_file(self, path: str) -> str:
+        safe_path = validate_repo_path(path)
+        if safe_path not in set(self.list_files()):
+            raise RepositoryError(f"path is not a tracked file at {self.commit_sha}: {safe_path}")
+        output = _git(self.root, "show", f"{self.commit_sha}:{safe_path}")
+        try:
+            return output.decode("utf-8")
+        except UnicodeDecodeError:
+            # Older Java repositories commonly contain ISO-8859-1 source or
+            # test fixtures. Latin-1 is a deterministic byte-preserving
+            # fallback; ASCII syntax used by the analyzers remains intact.
+            return output.decode("latin-1")
+
+    def first_parent(self, commit_sha: str) -> str:
+        output = _git(self.root, "rev-parse", "--verify", f"{commit_sha}^1")
+        return output.decode("ascii", errors="strict").strip().lower()
+
+    def changed_paths(self, parent_sha: str, target_sha: str) -> tuple[str, ...]:
+        output = _git(self.root, "diff", "--name-only", "-z", parent_sha, target_sha, "--")
+        paths = [part.decode("utf-8", errors="surrogateescape") for part in output.split(b"\0") if part]
+        return tuple(sorted(paths))
+
+    @lru_cache(maxsize=32)
+    def history_changes(self) -> tuple[tuple[str, tuple[str, ...]], ...]:
+        """Read non-merge commit paths reachable from this snapshot in one Git call."""
+        output = _git(
+            self.root, "log", "--no-merges", "--topo-order", "--no-renames",
+            "--format=format:%x1e%H %P%x1f", "--name-only", self.commit_sha,
+        )
+        result: list[tuple[str, tuple[str, ...]]] = []
+        for chunk in output.decode("utf-8", errors="surrogateescape").split("\x1e"):
+            if "\x1f" not in chunk:
+                continue
+            header, paths_text = chunk.split("\x1f", 1)
+            fields = header.strip().split()
+            if not fields or len(fields) == 1:
+                # Ignore the root import: it has no preceding co-change interval.
+                continue
+            paths = tuple(sorted(path for path in paths_text.splitlines() if path))
+            result.append((fields[0].lower(), paths))
+        return tuple(result)
+
+    def validate_task_revision(
+        self,
+        target_sha: str,
+        parent_sha: str,
+        expected_paths: tuple[str, ...],
+        issue_created_at: str,
+    ) -> None:
+        resolved_target = _git(self.root, "rev-parse", "--verify", f"{target_sha}^{{commit}}")
+        resolved_parent = _git(self.root, "rev-parse", "--verify", f"{parent_sha}^{{commit}}")
+        if resolved_target.decode("ascii").strip().lower() != target_sha.lower():
+            raise RepositoryError("target SHA does not resolve to the requested commit")
+        if resolved_parent.decode("ascii").strip().lower() != parent_sha.lower():
+            raise RepositoryError("parent SHA does not resolve to the requested commit")
+        actual_parent = self.first_parent(target_sha)
+        if actual_parent != parent_sha.lower():
+            raise RepositoryError(f"recorded parent is not target's first parent: {actual_parent}")
+        try:
+            issue_time = datetime.fromisoformat(issue_created_at.replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise RepositoryError("issue creation time must be an ISO-8601 timestamp") from exc
+        if issue_time.tzinfo is None:
+            raise RepositoryError("issue creation time must include a timezone offset")
+        target_time_raw = _git(self.root, "show", "-s", "--format=%cI", target_sha)
+        target_time = datetime.fromisoformat(target_time_raw.decode("ascii").strip().replace("Z", "+00:00"))
+        if issue_time >= target_time:
+            raise RepositoryError("issue text was not demonstrably available before the target commit")
+        actual_paths = self.changed_paths(parent_sha, target_sha)
+        if tuple(sorted(expected_paths)) != actual_paths:
+            raise RepositoryError(
+                "manifest changed_paths do not match the Git diff; "
+                f"manifest={sorted(expected_paths)!r}, git={list(actual_paths)!r}"
+            )

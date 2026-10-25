@@ -1,19 +1,138 @@
-"""Deterministic C0-C3 context construction and manifest persistence."""
+"""Java dependency/history analysis and C0-C3 context construction."""
 
 from __future__ import annotations
-
+import re
 import hashlib
 import json
-import re
-from collections import Counter
-from dataclasses import asdict, dataclass
+from collections import Counter, defaultdict, deque
+from dataclasses import dataclass, asdict
 from pathlib import Path
+from cia.data import CIAError, PredictionError, PredictorInput, RepositorySnapshot, validate_repo_path
 
-from cia.baselines import DependencyIndex, historical_cochange_counts
-from cia.errors import CIAError
-from cia.repository import RepositorySnapshot
-from cia.tasks import PredictorInput
+_PACKAGE_RE = re.compile(r"^\s*package\s+([\w.]+)\s*;", re.MULTILINE)
 
+_IMPORT_RE = re.compile(r"^\s*import\s+(?!static\b)([\w.*]+)\s*;", re.MULTILINE)
+
+_TYPE_RE = re.compile(r"\b(?:class|interface|enum|record)\s+([A-Za-z_$][\w$]*)")
+
+_STATIC_IMPORT_RE = re.compile(r"^\s*import\s+static\s+([\w.]+)\s*;", re.MULTILINE)
+
+@dataclass(frozen=True, slots=True)
+class DependencyIndex:
+    """Approximate Java type-reference graph from a fixed repository snapshot."""
+
+    # A -> B means source A refers to a type declared in B.
+    dependents_by_dependency: dict[str, tuple[str, ...]]
+    dependencies_by_source: dict[str, tuple[str, ...]]
+
+    @classmethod
+    def build(cls, repository: RepositorySnapshot) -> "DependencyIndex":
+        java_paths = [p for p in repository.list_files() if p.endswith(".java")]
+        sources = {path: repository.read_file(path) for path in java_paths}
+        package_by_path: dict[str, str] = {}
+        types_by_name: dict[str, list[str]] = defaultdict(list)
+        for path, source in sources.items():
+            package_match = _PACKAGE_RE.search(source)
+            package = package_match.group(1) if package_match else ""
+            package_by_path[path] = package
+            names = set(_TYPE_RE.findall(source))
+            for name in names:
+                types_by_name[name].append(path)
+
+        reverse: dict[str, set[str]] = defaultdict(set)
+        forward: dict[str, set[str]] = defaultdict(set)
+        for source_path, source in sources.items():
+            package = package_by_path[source_path]
+            imported_types: set[str] = set()
+            for match in _IMPORT_RE.finditer(source):
+                qualified = match.group(1)
+                if qualified.endswith(".*"):
+                    continue
+                imported_types.add(qualified.rsplit(".", 1)[-1])
+            for match in _STATIC_IMPORT_RE.finditer(source):
+                imported_types.add(match.group(1).split(".")[-2])
+
+            # Explicit imports are strong evidence. Same-package references are
+            # resolved by Java type name; ambiguous duplicate names are skipped.
+            target_paths: set[str] = set()
+            for type_name in imported_types:
+                matches = types_by_name.get(type_name, [])
+                if len(matches) == 1:
+                    target_paths.add(matches[0])
+            for type_name, matches in types_by_name.items():
+                if len(matches) != 1 or matches[0] == source_path:
+                    continue
+                target_path = matches[0]
+                if package_by_path[target_path] == package and re.search(
+                    rf"\b{re.escape(type_name)}\b", source
+                ):
+                    target_paths.add(target_path)
+            for dependency_path in target_paths:
+                reverse[dependency_path].add(source_path)
+                forward[source_path].add(dependency_path)
+
+        return cls(
+            dependents_by_dependency={key: tuple(sorted(values)) for key, values in sorted(reverse.items())},
+            dependencies_by_source={key: tuple(sorted(values)) for key, values in sorted(forward.items())},
+        )
+
+    def neighbors(self, path: str) -> tuple[str, ...]:
+        """Return direct local Java references and reverse references."""
+        return tuple(sorted(
+            set(self.dependencies_by_source.get(path, ()))
+            | set(self.dependents_by_dependency.get(path, ()))
+        ))
+
+    def rank_from_seed(self, seed_path: str, repository: RepositorySnapshot) -> tuple[str, ...]:
+        seed = validate_repo_path(seed_path, "seed_path")
+        if seed not in set(repository.list_files()):
+            raise PredictionError(f"seed path is not present at parent commit: {seed}")
+        result = [seed]
+        seen = {seed}
+        pending: deque[str] = deque([seed])
+        while pending:
+            dependency = pending.popleft()
+            for dependent in self.dependents_by_dependency.get(dependency, ()):
+                if dependent not in seen:
+                    seen.add(dependent)
+                    result.append(dependent)
+                    pending.append(dependent)
+        return tuple(result)
+
+def historical_cochange_rank(
+    repository: RepositorySnapshot, seed_path: str
+) -> tuple[str, ...]:
+    """Rank current files by prior non-merge commits co-changing with seed.
+
+    Only commits returned by ``repository.history_changes()`` are inspected,
+    which anchors the history to the snapshot's parent SHA. Counts sort first;
+    ties break lexicographically for repeatable output.
+    """
+    seed = validate_repo_path(seed_path, "seed_path")
+    current_files = set(repository.list_files())
+    if seed not in current_files:
+        raise PredictionError(f"seed path is not present at parent commit: {seed}")
+
+    counts = historical_cochange_counts(repository, seed)
+    return (seed, *sorted(counts, key=lambda path: (-counts[path], path)))
+
+def historical_cochange_counts(
+    repository: RepositorySnapshot, seed_path: str
+) -> Counter[str]:
+    """Count prior non-merge co-changes for files present at the snapshot."""
+    seed = validate_repo_path(seed_path, "seed_path")
+    current_files = set(repository.list_files())
+    if seed not in current_files:
+        raise PredictionError(f"seed path is not present at parent commit: {seed}")
+    counts: Counter[str] = Counter()
+    for _commit, paths in repository.history_changes():
+        changed = set(paths)
+        if seed not in changed:
+            continue
+        for path in changed & current_files:
+            if path != seed:
+                counts[path] += 1
+    return counts
 
 @dataclass(frozen=True, slots=True)
 class ContextItem:
@@ -24,7 +143,6 @@ class ContextItem:
     content_sha256: str | None = None
     char_count: int = 0
 
-
 @dataclass(frozen=True, slots=True)
 class ContextDocument:
     condition: str
@@ -32,7 +150,6 @@ class ContextDocument:
     commit_sha: str
     items: tuple[ContextItem, ...]
     repository: RepositorySnapshot
-
 
 @dataclass(frozen=True, slots=True)
 class ContextBudgets:
@@ -47,14 +164,11 @@ class ContextBudgets:
         if self.retrieved_source_limit < 0:
             raise ValueError("retrieved_source_limit must not be negative")
 
-
 _TOKEN_RE = re.compile(r"[A-Za-z_$][\w$]*")
-_TYPE_RE = re.compile(r"\b(?:class|interface|enum|record)\s+([A-Za-z_$][\w$]*)")
-_PACKAGE_RE = re.compile(r"^\s*package\s+([\w.]+)\s*;", re.MULTILINE)
+
 _SIGNATURE_RE = re.compile(
     r"^\s*(?:package\s+|import\s+|(?:public|protected|private|abstract|final|static|default|native|synchronized|strictfp|sealed|non-sealed|class|interface|enum|record)\b).*(?:;|\{|\))?\s*$"
 )
-
 
 def _item(kind: str, path: str | None, reason: str, commit: str, text: str | None = None) -> ContextItem:
     return ContextItem(
@@ -66,11 +180,9 @@ def _item(kind: str, path: str | None, reason: str, commit: str, text: str | Non
         char_count=len(text) if text is not None else 0,
     )
 
-
 def _score_file(query_tokens: Counter[str], path: str, source: str) -> int:
     file_tokens = Counter(_TOKEN_RE.findall(path.lower() + " " + source.lower()))
     return sum(query_tokens[token] * file_tokens[token] for token in query_tokens)
-
 
 def _source_paths(repository: RepositorySnapshot) -> tuple[str, ...]:
     return tuple(
@@ -78,7 +190,6 @@ def _source_paths(repository: RepositorySnapshot) -> tuple[str, ...]:
         if path.endswith(".java") and not path.endswith("package-info.java")
         and "/test/" not in f"/{path.lower()}/" and not path.lower().startswith("test/")
     )
-
 
 def _rank_sources(query: str, repository: RepositorySnapshot) -> tuple[str, ...]:
     query_tokens = Counter(token.lower() for token in _TOKEN_RE.findall(query) if len(token) > 2)
@@ -89,12 +200,10 @@ def _rank_sources(query: str, repository: RepositorySnapshot) -> tuple[str, ...]
     # A zero-overlap tie is stable and explicit; it does not inspect target data.
     return tuple(path for _, path in sorted(scored, key=lambda item: (-item[0], item[1])))
 
-
 def _truncate(text: str, remaining: int) -> str:
     if len(text) <= remaining:
         return text
     return text[:remaining]
-
 
 def _class_names(repository: RepositorySnapshot, paths: tuple[str, ...]) -> set[str]:
     names: set[str] = set()
@@ -102,11 +211,9 @@ def _class_names(repository: RepositorySnapshot, paths: tuple[str, ...]) -> set[
         names.update(_TYPE_RE.findall(repository.read_file(path)))
     return names
 
-
 def _signature(source: str) -> str:
     selected = [line.rstrip() for line in source.splitlines() if _SIGNATURE_RE.match(line)]
     return "\n".join(selected)
-
 
 def _base_context(predictor_task: PredictorInput) -> tuple[str, tuple[ContextItem, ...]]:
     repository = predictor_task.repository
@@ -132,12 +239,10 @@ def _base_context(predictor_task: PredictorInput) -> tuple[str, tuple[ContextIte
     )
     return text, items
 
-
 def build_c0(predictor_task: PredictorInput) -> ContextDocument:
     """Build C0 from the request and pre-change file tree only."""
     text, items = _base_context(predictor_task)
     return ContextDocument("C0", text, predictor_task.repository.commit_sha, items, predictor_task.repository)
-
 
 def build_contexts(
     predictor_task: PredictorInput, budgets: ContextBudgets | None = None
@@ -260,7 +365,6 @@ def build_contexts(
     c3 = ContextDocument("C3", c3_text, repository.commit_sha, tuple(c3_items), repository)
     return (build_c0(predictor_task), c1, c2, c3)
 
-
 def save_contexts(
     output_dir: str | Path,
     task_id: str,
@@ -287,4 +391,3 @@ def save_contexts(
     manifest_path = directory / f"{task_id}_context_manifest.json"
     manifest_path.write_text(json.dumps(manifest_rows, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return manifest_path
-
