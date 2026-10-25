@@ -17,13 +17,12 @@ offline demonstration need no internet, Ollama, or API key.
 
 ## Setup and commands
 
-Run from this directory in PowerShell:
+Run from the repository root in PowerShell:
 
 ~~~powershell
-$env:PYTHONPATH = "src"
+python -m pip install -e .
 python -m unittest discover -s tests -v
 python -m cia validate-manifest data/tasks.jsonl
-python -m unittest discover -s tests -p test_analysis.py -v
 python -m cia run-task --help
 ~~~
 
@@ -33,12 +32,17 @@ Run the local one-task C0 pilot:
 python -m cia run-task --task-id ripple-ant-ivy-IVY-1028 --repository "C:\path\to\ant-ivy"
 ~~~
 
-The command validates the issue chronology, fixed commits, first parent, and
-full Git diff path set before building the predictor input. It writes the C0
-prompt, context manifest, baseline predictions, model outcome, and metrics
-(if the model output passes ranked-path validation) under
-runs/real_task_pilot/. Run artifacts are local and ignored by Git; preserve
-them when archiving results.
+Run the constrained prompt condition with the same validated task:
+
+~~~powershell
+python -m cia run-task --task-id ripple-ant-ivy-IVY-1028 --repository "C:\path\to\ant-ivy" --condition C0_CONSTRAINED
+~~~
+
+The command validates issue chronology, fixed commits, first parent, and the
+full Git diff path set before building predictor input. It writes prompt and
+context artifacts, baseline rankings, the model outcome, and metrics (if the
+model output passes ranked-path validation) under `runs/real_task_pilot/`.
+Run artifacts are local and ignored by Git; preserve them when archiving results.
 
 ## Workflow
 
@@ -48,6 +52,9 @@ is in `docs/task-audit-ripple-ant-ivy-ivy-1028.md`. The parent-revision reader
 keeps the target patch and labels out of model input.
 
 - C0: issue text and parent-revision file tree
+- C0_CONSTRAINED: issue text and a candidate-path list selected from the
+  parent-revision tree. This is a prompt constraint, not a hard decoding
+  constraint; invalid paths are still rejected during validation.
 - C1: C0 plus seed and retrieved Java source
 - C2: C1 plus dependency information
 - C3: C2 plus relevant tests, documentation, and parent-bounded co-change history
@@ -60,8 +67,7 @@ by this pilot.
 ## Limitations
 
 The reference labels are files changed by the patch, not a complete oracle of
-all files an issue could affect. Prior Qwen IVY-1028 attempts failed ranked-path
-validation, so they have no model metrics. Existing run evidence is preserved
-outside the Git submission in the sibling research archive and locally under
-runs/real_task_pilot/.
-
+all files an issue could affect. A single task and model call are pilot evidence,
+not conclusive evidence of general performance. Model results are reported only
+when ranked-path validation succeeds. The experiment's issue cleaning decisions
+are recorded in the task manifest.
