@@ -1,3 +1,4 @@
+# Python environments and caches
 .venv/
 venv/
 __pycache__/
@@ -5,24 +6,32 @@ __pycache__/
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Secrets and local configuration
 .env
 .env.*
 !.env.example
+
+# Logs
 *.log
+
+# Local models and checkpoints
 models/
 checkpoints/
+
+# Local data
 data/local/
 data/raw/
 data/cache/
-# Private local-only files; preserved in the sibling research archive.
+
+# Private local-only research documents
 docs/local-model-setup-plan.md
 docs/task-audit-ripple-ant-ivy-ivy-1328.md
 docs/private/
+
+# Local smoke-test scripts
 scripts/ollama_smoke.py
-# Generated run artifacts stay local, independent of their success or failure.
-runs/ollama_smoke/
-runs/real_task_pilot/
-runs/context/
+
+# Generated experiment artifacts
 runs/*
 !runs/.gitkeep
-
