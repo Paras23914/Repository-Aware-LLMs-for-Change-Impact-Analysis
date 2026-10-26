@@ -1,0 +1,115 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+Snapshot issues when using ibiblio resolver when m2compatible is false
+
+I changed the java.net resolver to use the maven2 of download.java.net and added m2compatible and usepoms=true. Now it does not fail with NPE.
+
+Ivy 2.0.0 is used with snapshot versions. The reporter's resolver configuration includes an ibiblio resolver with m2compatible/usepoms enabled and a java.net resolver using a custom artifact pattern. A snapshot dependency cannot be resolved and Ivy reports an IndexOutOfBoundsException in IBiblioResolver.findSnapshotVersion.
+
+Cleaning: retained the Jira summary and the opening problem statement and technical reproduction from the original Jira description; omitted quoted mailing-list headers, contact addresses, and follow-up discussion. The source description is preserved by ASF Jira; this cleaned request is not represented as a verbatim transcript.
+
+## Allowed candidate paths (pre-change repository)
+src/java/org/apache/ivy/core/resolve/ResolveEngine.java
+src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java
+src/java/org/apache/ivy/core/resolve/IvyNode.java
+src/java/org/apache/ivy/Ivy.java
+src/java/org/apache/ivy/core/settings/IvySettings.java
+src/java/org/apache/ivy/core/resolve/VisitNode.java
+src/java/org/apache/ivy/core/IvyContext.java
+src/java/org/apache/ivy/plugins/resolver/DependencyResolver.java
+src/java/org/apache/ivy/plugins/resolver/BasicResolver.java
+src/java/org/apache/ivy/core/module/id/ModuleRules.java
+src/java/org/apache/ivy/Main.java
+src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java
+src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java
+src/java/org/apache/ivy/core/cache/RepositoryCacheManager.java
+src/java/org/apache/ivy/core/deliver/DeliverOptions.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorBuilder.java
+src/java/org/apache/ivy/core/publish/PublishEngine.java
+src/java/org/apache/ivy/core/search/SearchEngine.java
+src/java/org/apache/ivy/ant/IvyBuildList.java
+src/java/org/apache/ivy/plugins/conflict/LatestCompatibleConflictManager.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultDependencyDescriptor.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java
+src/java/org/apache/ivy/plugins/resolver/AbstractSshBasedResolver.java
+src/java/org/apache/ivy/core/report/ConfigurationResolveReport.java
+src/java/org/apache/ivy/plugins/repository/TransferEvent.java
+src/java/org/apache/ivy/core/settings/XmlSettingsParser.java
+src/java/org/apache/ivy/Ivy14.java
+src/java/org/apache/ivy/core/report/ResolveReport.java
+src/java/org/apache/ivy/util/url/ApacheURLLister.java
+src/java/org/apache/ivy/core/resolve/ResolveData.java
+src/java/org/apache/ivy/util/FileUtil.java
+src/java/org/apache/ivy/plugins/resolver/DualResolver.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultModuleDescriptor.java
+src/java/org/apache/ivy/plugins/repository/ssh/SshRepository.java
+src/java/org/apache/ivy/core/sort/ModuleInSort.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java
+src/java/org/apache/ivy/util/url/URLHandler.java
+src/java/org/apache/ivy/plugins/repository/vsftp/VsftpRepository.java
+src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java
+src/java/org/apache/ivy/plugins/repository/ssh/Scp.java
+src/java/org/apache/ivy/plugins/resolver/ChainResolver.java
+src/java/org/apache/ivy/core/resolve/ResolveOptions.java
+src/java/org/apache/ivy/plugins/repository/Repository.java
+src/java/org/apache/ivy/plugins/resolver/SshResolver.java
+src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java
+src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java
+src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java
+src/java/org/apache/ivy/plugins/repository/ssh/SshCache.java
+src/java/org/apache/ivy/core/module/id/ModuleId.java
+src/java/org/apache/ivy/plugins/repository/ssh/AbstractSshBasedRepository.java
+src/java/org/apache/ivy/core/IvyPatternHelper.java
+src/java/org/apache/ivy/plugins/resolver/IvyRepResolver.java
+src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java
+src/java/org/apache/ivy/core/resolve/IvyNodeEviction.java
+src/java/org/apache/ivy/ant/IvyCacheFileset.java
+src/java/org/apache/ivy/plugins/version/VersionMatcher.java
+src/java/org/apache/ivy/core/module/descriptor/Artifact.java
+src/java/org/apache/ivy/core/resolve/ResolvedModuleRevision.java
+src/java/org/apache/ivy/ant/IvyDeliver.java
+src/java/org/apache/ivy/plugins/repository/Resource.java
+src/java/org/apache/ivy/ant/IvyAntSettings.java
+src/java/org/apache/ivy/plugins/resolver/util/ResolverHelper.java
+src/java/org/apache/ivy/plugins/resolver/FileSystemResolver.java
+src/java/org/apache/ivy/ant/IvyPostResolveTask.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParser.java
+src/java/org/apache/ivy/plugins/resolver/packager/PackagerResolver.java
+src/java/org/apache/ivy/core/deliver/DeliverEngine.java
+src/java/org/apache/ivy/plugins/resolver/AbstractPatternsBasedResolver.java
+src/java/org/apache/ivy/ant/IvyResolve.java
+src/java/org/apache/ivy/plugins/repository/sftp/SFTPRepository.java
+src/java/org/apache/ivy/core/event/IvyEventFilter.java
+src/java/org/apache/ivy/plugins/version/ChainVersionMatcher.java
+src/java/org/apache/ivy/ant/IvyReport.java
+src/java/org/apache/ivy/plugins/lock/LockStrategy.java
+src/java/org/apache/ivy/plugins/repository/vfs/VfsRepository.java
+src/java/org/apache/ivy/ant/IvyTask.java
+src/java/org/apache/ivy/util/extendable/ExtendableItem.java
+src/java/org/apache/ivy/util/MessageLoggerEngine.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorWriter.java
+src/java/org/apache/ivy/core/module/id/ModuleRevisionId.java
+src/java/org/apache/ivy/util/StringUtils.java
+src/java/org/apache/ivy/plugins/parser/m2/PomReader.java
+src/java/org/apache/ivy/core/report/ArtifactDownloadReport.java
+src/java/org/apache/ivy/core/publish/PublishOptions.java
+src/java/org/apache/ivy/core/module/descriptor/Configuration.java
+src/java/org/apache/ivy/ant/IvyBuildNumber.java
+src/java/org/apache/ivy/util/MessageLogger.java
+src/java/org/apache/ivy/core/resolve/IvyNodeUsage.java
+src/java/org/apache/ivy/ant/IvyRepositoryReport.java
+src/java/org/apache/ivy/ant/IvyPublish.java
+src/java/org/apache/ivy/core/cache/ParserSettingsMonitor.java
+src/java/org/apache/ivy/plugins/parser/AbstractModuleDescriptorParser.java
+src/java/org/apache/ivy/plugins/repository/vfs/VfsResource.java
+src/java/org/apache/ivy/core/cache/ArtifactOrigin.java
+src/java/org/apache/ivy/ant/AntMessageLogger.java
+src/java/org/apache/ivy/core/event/resolve/EndResolveDependencyEvent.java
+src/java/org/apache/ivy/core/check/CheckEngine.java
+src/java/org/apache/ivy/util/XMLHelper.java
+src/java/org/apache/ivy/plugins/resolver/packager/PackagerCacheEntry.java
+src/java/org/apache/ivy/core/cache/ModuleDescriptorMemoryCache.java

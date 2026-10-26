@@ -1,0 +1,196 @@
+{
+  "artifact_type": "one_task_real_research_pilot",
+  "is_synthetic": false,
+  "task": {
+    "task_id": "ripple-ant-ivy-IVY-1028",
+    "source_name": "Ripple issue-linked change dataset (record instance-00010; used for candidate discovery and cross-check only)",
+    "source_url": "https://github.com/ASSERT-KTH/ripple",
+    "repository_url": "https://github.com/apache/ant-ivy",
+    "issue_url": "https://issues.apache.org/jira/browse/IVY-1028",
+    "issue_text_source": "ASF Jira REST API v2 issue IVY-1028 fields created,summary,description; timestamp and original request checked 2026-10-25; https://issues.apache.org/jira/rest/api/2/issue/IVY-1028?fields=created,summary,description",
+    "issue_created_at": "2009-02-04T03:55:38.949-05:00",
+    "target_sha": "67647ddcf1c42762dd7bc6df83ba951edad1ce93",
+    "parent_sha": "e556b3cdeb75a6ed2285f581164d76f743ab85ee",
+    "target_first_parent": "e556b3cdeb75a6ed2285f581164d76f743ab85ee",
+    "target_committer_at": "2009-02-10T22:02:15Z",
+    "changed_paths_reference": [
+      "CHANGES.txt",
+      "src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java"
+    ],
+    "selection_decision": "Selected for a one-task pilot after verifying the official Jira creation timestamp precedes the target, the target's first parent equals the recorded parent, and the complete parent-to-target Git diff path set. Evaluation label is every changed path in the target patch, including CHANGES.txt; Ripple impact-set-files is separately recorded metadata and is not used as ground truth.",
+    "cleaning_decisions": [
+      "Use original issue summary plus cleaned opening technical problem statement; omit quoted mail headers, contact addresses, and follow-up discussion.",
+      "Ground truth is exact Git diff path set from parent to target; do not substitute Ripple impact-set-files.",
+      "No target diff/body, commit message, changed paths, or post-target repository content is included in predictor input."
+    ]
+  },
+  "predictor_input_policy": {
+    "condition": "C0",
+    "allowed": [
+      "cleaned issue text",
+      "file tree at parent commit"
+    ],
+    "context_manifest": "20261025T190022.151353Z_C0_context.json",
+    "prompt_file": "20261025T190022.151353Z_C0_prompt.txt",
+    "target_sha_or_patch_content_in_prompt": false,
+    "ground_truth_label_list_in_prompt": false,
+    "changed_paths_appear_only_as_parent_tree_entries": true,
+    "constraint_type": "full parent-revision file tree in prompt"
+  },
+  "baselines": {
+    "seed_path": "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+    "seed_selection": "first deterministic lexical source rank from request text against parent snapshot",
+    "dependency": {
+      "ranked_paths": [
+        "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "src/java/org/apache/ivy/Ivy.java",
+        "src/java/org/apache/ivy/core/check/CheckEngine.java",
+        "src/java/org/apache/ivy/core/install/InstallEngine.java",
+        "src/java/org/apache/ivy/core/report/ConfigurationResolveReport.java",
+        "src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java",
+        "src/java/org/apache/ivy/core/resolve/ResolveData.java",
+        "src/java/org/apache/ivy/core/resolve/ResolveOptions.java",
+        "src/java/org/apache/ivy/core/resolve/VisitNode.java",
+        "src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParser.java"
+      ],
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 2
+      }
+    },
+    "historical_cochange": {
+      "ranked_paths": [
+        "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "CHANGES.txt",
+        "src/java/org/apache/ivy/core/resolve/IvyNode.java",
+        "test/java/org/apache/ivy/core/resolve/ResolveTest.java",
+        "src/java/org/apache/ivy/core/settings/IvySettings.java",
+        "src/java/org/apache/ivy/Ivy.java",
+        "src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java",
+        "src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java",
+        "src/java/org/apache/ivy/plugins/resolver/BasicResolver.java",
+        "src/java/org/apache/ivy/ant/IvyResolve.java"
+      ],
+      "history_anchor_commit": "e556b3cdeb75a6ed2285f581164d76f743ab85ee",
+      "metrics": {
+        "precision": 0.1,
+        "recall": 0.5,
+        "f1": 0.16666666666666669,
+        "recall_at_5": 0.5,
+        "recall_at_10": 0.5,
+        "true_positives": 1,
+        "predicted_count": 10,
+        "reference_count": 2
+      }
+    }
+  },
+  "model_run": {
+    "task_id": "ripple-ant-ivy-IVY-1028",
+    "run_kind": "one_task_real_pilot",
+    "run_started_at": "2026-10-25T18:59:00.817Z",
+    "condition": "C0",
+    "source_commit": "e556b3cdeb75a6ed2285f581164d76f743ab85ee",
+    "provider_name": "ollama",
+    "model_id": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "status": "error",
+    "prompt_sha256": "40d52591254476e98a300f1dd339f1d92e7875b4f5872bbbed3e8bf6e883fb7e",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "latency_ms": 81331.496,
+    "input_tokens": 26220,
+    "output_tokens": 641,
+    "generation_settings": {
+      "temperature": 0.0,
+      "seed": 42,
+      "top_p": 1.0,
+      "top_k": 40,
+      "repeat_penalty": 1.0,
+      "num_ctx": 32768,
+      "num_predict": 2048,
+      "format": "json",
+      "stream": false
+    },
+    "provider_metrics": {
+      "total_duration_ns": 80728102600,
+      "load_duration_ns": 13120597700,
+      "prompt_eval_duration_ns": 16822966000,
+      "eval_duration_ns": 50561906000
+    },
+    "predictions": [],
+    "error": "PredictionError: predicted path is not present at parent commit: src/java/org/apache/ivy/plugins/resolver/AbstractDependencyResolver.java",
+    "raw_response": "{\n  \"predictions\": [\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The IBiblioResolver class is likely to be directly impacted by this change.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/URLResolver.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The URLResolver class is also a resolver and might be indirectly affected.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/ChainResolver.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The ChainResolver class might be used to chain the new resolver with existing ones.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/FileSystemResolver.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The FileSystemResolver class might be used to resolve artifacts from the local file system.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The RepositoryResolver class might be used to resolve artifacts from a repository.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/ResolverSettings.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The ResolverSettings class might be used to configure resolver settings.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/AbstractDependencyResolver.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The AbstractDependencyResolver class is a base class for all resolvers.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/AbstractDependencyResolverTest.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The AbstractDependencyResolverTest class might be used to test the resolver.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/ChainResolverTest.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The ChainResolverTest class might be used to test the chain resolver.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/URLResolverTest.java\",\n      \"rationale\": \"The change involves modifying the java.net resolver to use the maven2 of download.java.net. The URLResolverTest class might be used to test the URL resolver.\"\n    }\n  ]\n}",
+    "path_diagnostics": {
+      "prediction_count": 10,
+      "valid_count": 6,
+      "invalid_count": 4,
+      "all_valid": false,
+      "paths": [
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java",
+          "valid": true,
+          "reason": null
+        },
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/URLResolver.java",
+          "valid": true,
+          "reason": null
+        },
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/ChainResolver.java",
+          "valid": true,
+          "reason": null
+        },
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/FileSystemResolver.java",
+          "valid": true,
+          "reason": null
+        },
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java",
+          "valid": true,
+          "reason": null
+        },
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/ResolverSettings.java",
+          "valid": true,
+          "reason": null
+        },
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/AbstractDependencyResolver.java",
+          "valid": false,
+          "reason": "not present at parent commit"
+        },
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/AbstractDependencyResolverTest.java",
+          "valid": false,
+          "reason": "not present at parent commit"
+        },
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/ChainResolverTest.java",
+          "valid": false,
+          "reason": "not present at parent commit"
+        },
+        {
+          "path": "src/java/org/apache/ivy/plugins/resolver/URLResolverTest.java",
+          "valid": false,
+          "reason": "not present at parent commit"
+        }
+      ]
+    }
+  },
+  "model_metrics": null,
+  "artifact_created_at": "2026-10-25T19:00:22.278Z",
+  "limitations": [
+    "One task and one model call are a pilot only, not conclusive evidence.",
+    "Changed-path labels are not a complete oracle for every file potentially affected.",
+    "Issue cleaning decisions are recorded in the task manifest.",
+    "C0_CONSTRAINED is a candidate-list prompt condition, not a hard decoding constraint; invalid paths are still rejected."
+  ]
+}
