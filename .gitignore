@@ -34,4 +34,4 @@ scripts/ollama_smoke.py
 
 # Generated experiment artifacts
 runs/*
-!runs/.gitkeep
+!runs/.gitkeep*.egg-info/
