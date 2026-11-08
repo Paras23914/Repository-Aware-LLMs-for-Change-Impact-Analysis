@@ -1,0 +1,105 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+ZipArchiveInputStream fails to update count of bytes read
+
+ZipArchiveInputStream fails to call count() in some cases where it reads (or puts back) data from the input stream.
+
+Not quite sure how to handle put-back yet, as a count of -1 is currently ignored, so how does one count a single byte that is put back?
+Easy enough to hack this in - count(1);count(-2); - but that's rather messy.
+
+## Allowed candidate paths (pre-change repository)
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveEntry.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarBuffer.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ExtraFieldUtils.java
+src/main/java/org/apache/commons/compress/archivers/zip/AsiExtraField.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarUtils.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveStreamFactory.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnrecognizedExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/Simple8BitZipEncoding.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipEncodingHelper.java
+src/main/java/org/apache/commons/compress/compressors/CompressorStreamFactory.java
+src/main/java/org/apache/commons/compress/archivers/zip/AbstractUnicodeExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipShort.java
+src/main/java/org/apache/commons/compress/compressors/gzip/GzipUtils.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipLong.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnparseableExtraFieldData.java
+src/main/java/org/apache/commons/compress/compressors/gzip/GzipCompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarConstants.java
+src/main/java/org/apache/commons/compress/compressors/CompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipExtraField.java
+src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveEntry.java
+src/main/java/org/apache/commons/compress/changes/ChangeSetPerformer.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipUtil.java
+src/main/java/org/apache/commons/compress/archivers/zip/JarMarker.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2Utils.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnicodeCommentExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnicodePathExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipEncoding.java
+src/main/java/org/apache/commons/compress/utils/ArchiveUtils.java
+src/main/java/org/apache/commons/compress/utils/IOUtils.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioConstants.java
+src/main/java/org/apache/commons/compress/changes/ChangeSet.java
+src/main/java/org/apache/commons/compress/changes/ChangeSetResults.java
+src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/FallbackZipEncoding.java
+src/main/java/org/apache/commons/compress/changes/Change.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioUtil.java
+src/main/java/org/apache/commons/compress/archivers/zip/NioZipEncoding.java
+src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveException.java
+src/main/java/org/apache/commons/compress/compressors/CompressorException.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/CRC.java
+src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnixStat.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/Rand.java
+src/main/java/org/apache/commons/compress/compressors/gzip/GzipCompressorOutputStream.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2Constants.java
+src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveEntry.java
+src/main/java/org/apache/commons/compress/compressors/CompressorOutputStream.java
+src/test/java/org/apache/commons/compress/changes/ChangeSetTestCase.java
+src/test/java/org/apache/commons/compress/archivers/zip/TestZipEncodings.java
+src/test/java/org/apache/commons/compress/AbstractTestCase.java
+src/test/java/org/apache/commons/compress/archivers/zip/ExtraFieldUtilsTest.java
+src/test/java/org/apache/commons/compress/archivers/zip/AsiExtraFieldTest.java
+src/test/java/org/apache/commons/compress/archivers/zip/Maven221MultiVolumeTest.java
+src/test/java/org/apache/commons/compress/archivers/ZipTestCase.java
+src/test/java/org/apache/commons/compress/archivers/tar/TarUtilsTest.java
+src/test/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntryTest.java
+src/test/java/org/apache/commons/compress/IOMethodsTest.java
+LICENSE.txt
+PROPOSAL.txt
+pom.xml
+NOTICE.txt
+src/site/xdoc/zip.xml
+src/site/xdoc/examples.xml
+src/site/xdoc/index.xml
+src/site/xdoc/download_compress.xml
+src/changes/changes.xml
+src/site/xdoc/conventions.xml
+src/site/xdoc/issue-tracking.xml
+src/main/java/org/apache/commons/compress/archivers/tar/package.html
+src/main/java/org/apache/commons/compress/archivers/jar/package.html
+src/main/java/org/apache/commons/compress/compressors/gzip/package.html
+src/main/java/org/apache/commons/compress/changes/package.html
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.

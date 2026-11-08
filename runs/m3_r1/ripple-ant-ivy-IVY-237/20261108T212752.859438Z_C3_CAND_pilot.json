@@ -1,0 +1,204 @@
+{
+  "artifact_type": "context_ablation_run",
+  "is_synthetic": false,
+  "task": {
+    "task_id": "ripple-ant-ivy-IVY-237",
+    "source_name": "Ripple issue-linked change dataset (record instance-00082; used for candidate discovery and cross-check only)",
+    "source_url": "https://github.com/se-doubleblind/ripple",
+    "repository_url": "https://github.com/apache/ant-ivy",
+    "issue_url": "https://issues.apache.org/jira/browse/IVY-237",
+    "issue_text_source": "ASF Jira REST API v2 issue IVY-237 fields created,summary,description; retrieved 2026-11-06T02:42:14+00:00; https://issues.apache.org/jira/rest/api/2/issue/IVY-237?fields=created,summary,description",
+    "issue_created_at": "2006-04-28T16:24:08.000+00:00",
+    "target_sha": "e602a4253164f8e7520d155ab5fd418a6110515e",
+    "parent_sha": "12db47512ab0e60068fb6f39f71983e29e652158",
+    "target_first_parent": "12db47512ab0e60068fb6f39f71983e29e652158",
+    "target_committer_at": "2006-07-28T07:05:24Z",
+    "changed_paths_reference": [
+      "CHANGES.txt",
+      "src/java/fr/jayasoft/ivy/repository/vfs/VfsResource.java"
+    ],
+    "selection_decision": "From scripts/screen_tasks.py: Jira creation time precedes the target commit, the recorded parent is the target's first parent, and labels are the complete parent-to-target Git diff path set. Confirmed by the reviewers named in cleaning_decisions. Ripple impact-set-files is not used as ground truth.",
+    "cleaning_decisions": [
+      "Ground truth is the exact Git diff path set from parent to target; do not substitute Ripple impact-set-files.",
+      "Issue text is the Jira summary and opening problem statement, manually cleaned: follow-up discussion, contact details and any fix description removed; no patch, commit message or changed-file list is included.",
+      "Reviewed by Atharva + Janvi on 2026-11-08."
+    ]
+  },
+  "predictor_input_policy": {
+    "condition": "C3_CAND",
+    "allowed": [
+      "cleaned issue text",
+      "candidate paths selected from the parent tree (production Java, tests, non-Java text files; label-free rule)",
+      "seed and lexically retrieved source files",
+      "dependency signatures",
+      "related tests and documentation",
+      "pre-parent co-change counts"
+    ],
+    "context_manifest": "20261108T212752.859438Z_C3_CAND_context.json",
+    "prompt_file": "20261108T212752.859438Z_C3_CAND_prompt.txt",
+    "target_sha_or_patch_content_in_prompt": false,
+    "ground_truth_label_list_in_prompt": false,
+    "changed_paths_appear_only_as_parent_tree_entries": true,
+    "constraint_type": "candidate-list prompt constraint; strict validation still enforced after generation"
+  },
+  "run_meta": {
+    "repeat_index": 1,
+    "prompt_chars": 59957,
+    "prompt_truncation_suspected": null,
+    "environment": {
+      "python_version": "3.11.9",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "ollama_version": "0.40.15",
+      "cia_git_commit": "6998094d7fae5e08d28ec7e1d042e7e52b59ffa5"
+    }
+  },
+  "baselines": {
+    "seed_path": "src/java/fr/jayasoft/ivy/Ivy.java",
+    "seed_selection": "first deterministic lexical source rank from request text against parent snapshot",
+    "dependency": {
+      "ranked_paths": [
+        "src/java/fr/jayasoft/ivy/Ivy.java",
+        "src/java/fr/jayasoft/ivy/AbstractArtifact.java",
+        "src/java/fr/jayasoft/ivy/Artifact.java",
+        "src/java/fr/jayasoft/ivy/ArtifactId.java",
+        "src/java/fr/jayasoft/ivy/ArtifactInfo.java",
+        "src/java/fr/jayasoft/ivy/ArtifactOrigin.java",
+        "src/java/fr/jayasoft/ivy/ArtifactRevisionId.java",
+        "src/java/fr/jayasoft/ivy/Configuration.java",
+        "src/java/fr/jayasoft/ivy/ConflictManager.java",
+        "src/java/fr/jayasoft/ivy/DefaultArtifact.java"
+      ],
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 2
+      }
+    },
+    "historical_cochange": {
+      "ranked_paths": [
+        "src/java/fr/jayasoft/ivy/Ivy.java",
+        "CHANGES.txt",
+        "test/java/fr/jayasoft/ivy/ResolveTest.java",
+        "src/java/fr/jayasoft/ivy/IvyNode.java",
+        "src/java/fr/jayasoft/ivy/resolver/BasicResolver.java",
+        "src/java/fr/jayasoft/ivy/xml/XmlIvyConfigurationParser.java",
+        "src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorParser.java",
+        "src/java/fr/jayasoft/ivy/DefaultDependencyDescriptor.java",
+        "src/java/fr/jayasoft/ivy/DefaultModuleDescriptor.java",
+        "src/java/fr/jayasoft/ivy/resolver/AbstractResourceResolver.java"
+      ],
+      "history_anchor_commit": "12db47512ab0e60068fb6f39f71983e29e652158",
+      "metrics": {
+        "precision": 0.1,
+        "recall": 0.5,
+        "f1": 0.16666666666666669,
+        "recall_at_5": 0.5,
+        "recall_at_10": 0.5,
+        "true_positives": 1,
+        "predicted_count": 10,
+        "reference_count": 2
+      }
+    }
+  },
+  "model_run": {
+    "task_id": "ripple-ant-ivy-IVY-237",
+    "run_kind": "context_ablation_run",
+    "run_started_at": "2026-11-08T21:27:33.695Z",
+    "condition": "C3_CAND",
+    "source_commit": "12db47512ab0e60068fb6f39f71983e29e652158",
+    "provider_name": "ollama",
+    "model_id": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "status": "ok",
+    "prompt_sha256": "bbb959ec5f0a3aae711c89e82d95d9fc8b0ec173facb41438577fe41a3c0faff",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "latency_ms": 19162.836,
+    "input_tokens": 13691,
+    "output_tokens": 564,
+    "generation_settings": {
+      "temperature": 0.0,
+      "seed": 42,
+      "top_p": 1.0,
+      "top_k": 40,
+      "repeat_penalty": 1.0,
+      "num_ctx": 32768,
+      "num_predict": 2048,
+      "format": "json",
+      "stream": false
+    },
+    "provider_metrics": {
+      "total_duration_ns": 19122978000,
+      "load_duration_ns": 10475500,
+      "prompt_eval_duration_ns": 1801223000,
+      "eval_duration_ns": 17055273000
+    },
+    "predictions": [
+      {
+        "path": "src/java/fr/jayasoft/ivy/IvyNode.java",
+        "rationale": "The retrieved file IvyNode.java is directly related to the issue as it deals with Ivy nodes, which are central to dependency resolution."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/resolver/BasicResolver.java",
+        "rationale": "BasicResolver.java is involved in the resolution process, and changes to it could affect how dependencies are resolved, which is the root cause of the issue."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/Ivy.java",
+        "rationale": "Ivy.java is the main class of Ivy, and changes to it could have a broad impact on the entire dependency resolution process."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ModuleDescriptor.java",
+        "rationale": "ModuleDescriptor.java is crucial for defining and managing module metadata, which is essential for resolving dependencies."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/Artifact.java",
+        "rationale": "Artifact.java defines the interface for artifacts, which are the actual files that make up a module. Changes to this interface could affect how artifacts are handled during resolution."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ArtifactId.java",
+        "rationale": "ArtifactId.java is used to uniquely identify artifacts. Changes to this class could affect how artifacts are referenced and resolved."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ArtifactRevisionId.java",
+        "rationale": "ArtifactRevisionId.java is used to uniquely identify specific revisions of artifacts. Changes to this class could affect how artifact versions are resolved."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/Configuration.java",
+        "rationale": "Configuration.java defines the configurations of a module, which are used to specify which artifacts should be included in a build. Changes to this class could affect how configurations are handled during resolution."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ConflictManager.java",
+        "rationale": "ConflictManager.java is responsible for resolving conflicts between different versions of the same artifact. Changes to this interface could affect how conflicts are handled during resolution."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/DefaultArtifact.java",
+        "rationale": "DefaultArtifact.java is a concrete implementation of the Artifact interface. Changes to this class could affect how artifacts are created and used during resolution."
+      }
+    ],
+    "error": null,
+    "raw_response": "{\n  \"predictions\": [\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/IvyNode.java\",\n      \"rationale\": \"The retrieved file IvyNode.java is directly related to the issue as it deals with Ivy nodes, which are central to dependency resolution.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/resolver/BasicResolver.java\",\n      \"rationale\": \"BasicResolver.java is involved in the resolution process, and changes to it could affect how dependencies are resolved, which is the root cause of the issue.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/Ivy.java\",\n      \"rationale\": \"Ivy.java is the main class of Ivy, and changes to it could have a broad impact on the entire dependency resolution process.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ModuleDescriptor.java\",\n      \"rationale\": \"ModuleDescriptor.java is crucial for defining and managing module metadata, which is essential for resolving dependencies.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/Artifact.java\",\n      \"rationale\": \"Artifact.java defines the interface for artifacts, which are the actual files that make up a module. Changes to this interface could affect how artifacts are handled during resolution.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ArtifactId.java\",\n      \"rationale\": \"ArtifactId.java is used to uniquely identify artifacts. Changes to this class could affect how artifacts are referenced and resolved.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ArtifactRevisionId.java\",\n      \"rationale\": \"ArtifactRevisionId.java is used to uniquely identify specific revisions of artifacts. Changes to this class could affect how artifact versions are resolved.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/Configuration.java\",\n      \"rationale\": \"Configuration.java defines the configurations of a module, which are used to specify which artifacts should be included in a build. Changes to this class could affect how configurations are handled during resolution.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ConflictManager.java\",\n      \"rationale\": \"ConflictManager.java is responsible for resolving conflicts between different versions of the same artifact. Changes to this interface could affect how conflicts are handled during resolution.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/DefaultArtifact.java\",\n      \"rationale\": \"DefaultArtifact.java is a concrete implementation of the Artifact interface. Changes to this class could affect how artifacts are created and used during resolution.\"\n    }\n  ]\n}",
+    "path_diagnostics": null
+  },
+  "model_metrics": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "recall_at_5": 0.0,
+    "recall_at_10": 0.0,
+    "true_positives": 0,
+    "predicted_count": 10,
+    "reference_count": 2
+  },
+  "artifact_created_at": "2026-11-08T21:27:52.960Z",
+  "limitations": [
+    "A single model call is one sample; repeated calls can differ in lower ranks.",
+    "Changed-path labels are not a complete oracle for every file potentially affected.",
+    "Issue cleaning decisions are recorded in the task manifest.",
+    "C0_CONSTRAINED is a candidate-list prompt condition, not a hard decoding constraint; invalid paths are still rejected."
+  ]
+}

@@ -1,0 +1,135 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+Translation of POM to Ivy XML with * exclusion is removing main artifact
+
+Using the change from issue 1470 (makepom with transitive=false dependency) we get a POM file with * for group and artifact exclusion.  This may also occur naturally in POMs, but the main case for us is a library with transitive=false on a dependency.
+
+Ex:
+    <dependency>
+      <groupId>org.owasp.esapi</groupId>
+      <artifactId>esapi</artifactId>
+      <version>2.1.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+When we are consuming this library as a dependency out of Nexus, Ivy translates the above into:
+
+  <dependency org="org.owasp.esapi" name="esapi" rev="2.1.0" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)">
+    <exclude org="*" module="*" name="*" type="*" ext="*" conf="" matcher="exact"/>
+   </dependency>
+
+This is having the effect of excluding all artifacts, including the master jar.  We are expecting to get the master jar, its sources and javadocs if they exist but no transitive dependencies.
+
+## Allowed candidate paths (pre-change repository)
+src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java
+src/java/org/apache/ivy/core/resolve/ResolveEngine.java
+src/java/org/apache/ivy/core/resolve/IvyNode.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java
+src/java/org/apache/ivy/core/settings/IvySettings.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java
+src/java/org/apache/ivy/Ivy.java
+src/java/org/apache/ivy/plugins/resolver/BasicResolver.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorBuilder.java
+src/java/org/apache/ivy/core/resolve/VisitNode.java
+src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultModuleDescriptor.java
+src/java/org/apache/ivy/core/cache/RepositoryCacheManager.java
+src/java/org/apache/ivy/core/IvyContext.java
+src/java/org/apache/ivy/Main.java
+src/java/org/apache/ivy/util/FileUtil.java
+src/java/org/apache/ivy/core/settings/XmlSettingsParser.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorWriter.java
+src/java/org/apache/ivy/plugins/resolver/DependencyResolver.java
+src/java/org/apache/ivy/core/deliver/DeliverOptions.java
+src/java/org/apache/ivy/core/report/ResolveReport.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorWriter.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultDependencyDescriptor.java
+src/java/org/apache/ivy/Ivy14.java
+src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java
+src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java
+src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java
+src/java/org/apache/ivy/core/module/id/ModuleRules.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParser.java
+src/java/org/apache/ivy/ant/IvyBuildList.java
+src/java/org/apache/ivy/core/IvyPatternHelper.java
+src/java/org/apache/ivy/ant/IvyResolve.java
+src/java/org/apache/ivy/ant/IvyDeliver.java
+src/java/org/apache/ivy/ant/IvyPostResolveTask.java
+src/java/org/apache/ivy/core/report/ConfigurationResolveReport.java
+src/java/org/apache/ivy/core/search/SearchEngine.java
+src/java/org/apache/ivy/core/publish/PublishEngine.java
+src/java/org/apache/ivy/plugins/conflict/LatestCompatibleConflictManager.java
+src/java/org/apache/ivy/core/resolve/ResolveOptions.java
+src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java
+src/java/org/apache/ivy/core/resolve/IvyNodeEviction.java
+src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java
+src/java/org/apache/ivy/osgi/repo/AbstractOSGiResolver.java
+src/java/org/apache/ivy/core/resolve/ResolveData.java
+src/java/org/apache/ivy/plugins/parser/m2/PomReader.java
+src/java/org/apache/ivy/osgi/p2/P2MetadataParser.java
+src/java/org/apache/ivy/util/Configurator.java
+src/java/org/apache/ivy/core/sort/ModuleInSort.java
+src/java/org/apache/ivy/osgi/core/BundleInfoAdapter.java
+src/java/org/apache/ivy/plugins/repository/TransferEvent.java
+src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java
+src/java/org/apache/ivy/ant/IvyAntSettings.java
+src/java/org/apache/ivy/ant/IvyReport.java
+src/java/org/apache/ivy/plugins/repository/vsftp/VsftpRepository.java
+src/java/org/apache/ivy/plugins/resolver/AbstractSshBasedResolver.java
+src/java/org/apache/ivy/plugins/repository/ssh/SshCache.java
+src/java/org/apache/ivy/ant/IvyMakePom.java
+src/java/org/apache/ivy/osgi/util/DelegatingHandler.java
+src/java/org/apache/ivy/ant/IvyTask.java
+src/java/org/apache/ivy/core/resolve/IvyNodeUsage.java
+src/java/org/apache/ivy/core/module/id/ModuleId.java
+src/java/org/apache/ivy/plugins/resolver/DualResolver.java
+src/java/org/apache/ivy/plugins/repository/ssh/Scp.java
+src/java/org/apache/ivy/plugins/repository/ssh/SshRepository.java
+src/java/org/apache/ivy/plugins/lock/FileBasedLockStrategy.java
+src/java/org/apache/ivy/plugins/resolver/AbstractWorkspaceResolver.java
+src/java/org/apache/ivy/ant/IvyPublish.java
+src/java/org/apache/ivy/plugins/version/VersionMatcher.java
+src/java/org/apache/ivy/plugins/parser/AbstractModuleDescriptorParser.java
+src/java/org/apache/ivy/core/module/descriptor/Artifact.java
+src/java/org/apache/ivy/core/module/id/ModuleRevisionId.java
+src/java/org/apache/ivy/util/url/URLHandler.java
+src/java/org/apache/ivy/plugins/resolver/packager/PackagerCacheEntry.java
+src/java/org/apache/ivy/plugins/repository/ssh/AbstractSshBasedRepository.java
+src/java/org/apache/ivy/plugins/resolver/IvyRepResolver.java
+test/java/org/apache/ivy/core/resolve/ResolveTest.java
+test/java/org/apache/ivy/ant/IvyPublishTest.java
+test/java/org/apache/ivy/ant/IvyResolveTest.java
+test/java/org/apache/ivy/plugins/resolver/FileSystemResolverTest.java
+test/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParserTest.java
+test/java/org/apache/ivy/core/publish/PublishEventsTest.java
+test/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParserTest.java
+test/java/org/apache/ivy/ant/IvyDeliverTest.java
+test/java/org/apache/ivy/plugins/resolver/ChainResolverTest.java
+test/java/org/apache/ivy/ant/IvyRetrieveTest.java
+build.xml
+LICENSE
+build-release.xml
+ivy.xml
+README
+build-for-bin-distrib.xml
+ivysettings-release.xml
+version.properties
+build.properties
+NOTICE
+doc/concept.html
+doc/settings/triggers.html
+doc/ivyfile/dependency.html
+doc/tutorial/multiproject.html
+doc/use/resolve.html
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.

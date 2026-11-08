@@ -1,0 +1,53 @@
+task_id,condition,strict_status,lenient_applied,kept,dropped,precision,recall,f1,recall_at_5,recall_at_10,error
+ripple-ant-ivy-IVY-1028,C0_CAND,ok,False,10,0,0.1,0.5,0.16666666666666669,0.5,0.5,
+ripple-ant-ivy-IVY-1028,C1_CAND,ok,False,10,0,0.1,0.5,0.16666666666666669,0.5,0.5,
+ripple-ant-ivy-IVY-1028,C2_CAND,ok,False,10,0,0.1,0.5,0.16666666666666669,0.0,0.5,
+ripple-ant-ivy-IVY-1028,C3_CAND,ok,False,9,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-112,C0_CAND,ok,False,10,0,0.1,0.14285714285714285,0.11764705882352941,0.14285714285714285,0.14285714285714285,
+ripple-ant-ivy-IVY-112,C1_CAND,ok,False,9,0,0.1111111111111111,0.14285714285714285,0.125,0.14285714285714285,0.14285714285714285,
+ripple-ant-ivy-IVY-112,C2_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-112,C3_CAND,error,True,9,1,0.1111111111111111,0.14285714285714285,0.125,0.14285714285714285,0.14285714285714285,PredictionError: predicted path is not present at parent commit: src/java/fr/jayasoft/ivy/ResolveTest.java
+ripple-ant-ivy-IVY-1141,C0_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1141,C1_CAND,ok,False,9,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1141,C2_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1141,C3_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1423,C0_CAND,ok,False,10,0,0.1,0.16666666666666666,0.125,0.16666666666666666,0.16666666666666666,
+ripple-ant-ivy-IVY-1423,C1_CAND,ok,False,10,0,0.1,0.16666666666666666,0.125,0.16666666666666666,0.16666666666666666,
+ripple-ant-ivy-IVY-1423,C2_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1423,C3_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1475,C0_CAND,ok,False,10,0,0.1,0.3333333333333333,0.15384615384615383,0.3333333333333333,0.3333333333333333,
+ripple-ant-ivy-IVY-1475,C1_CAND,error,True,9,1,0.0,0.0,0.0,0.0,0.0,PredictionError: predicted path is not present at parent commit: src/java/org/apache/ivy/plugins/repository/RepositoryCacheManager.java
+ripple-ant-ivy-IVY-1475,C2_CAND,ok,False,9,0,0.1111111111111111,0.3333333333333333,0.16666666666666666,0.0,0.3333333333333333,
+ripple-ant-ivy-IVY-1475,C3_CAND,ok,False,10,0,0.1,0.3333333333333333,0.15384615384615383,0.3333333333333333,0.3333333333333333,
+ripple-ant-ivy-IVY-1522,C0_CAND,error,True,9,1,0.1111111111111111,0.5,0.1818181818181818,0.5,0.5,PredictionError: predicted path is duplicated: src/java/org/apache/ivy/core/resolve/IvyNode.java
+ripple-ant-ivy-IVY-1522,C1_CAND,ok,False,10,0,0.1,0.5,0.16666666666666669,0.0,0.5,
+ripple-ant-ivy-IVY-1522,C2_CAND,ok,False,9,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1522,C3_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1531,C0_CAND,ok,False,10,0,0.1,0.3333333333333333,0.15384615384615383,0.3333333333333333,0.3333333333333333,
+ripple-ant-ivy-IVY-1531,C1_CAND,ok,False,9,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1531,C2_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-1531,C3_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-237,C0_CAND,error,True,8,2,0.125,0.5,0.2,0.5,0.5,PredictionError: predicted path is not present at parent commit: src/java/fr/jayasoft/ivy/resolver/FileSystemResolverTest.java
+ripple-ant-ivy-IVY-237,C1_CAND,ok,False,9,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-237,C2_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-237,C3_CAND,ok,False,10,0,0.0,0.0,0.0,0.0,0.0,
+ripple-ant-ivy-IVY-248,C0_CAND,ok,False,10,0,0.1,0.5,0.16666666666666669,0.5,0.5,
+ripple-ant-ivy-IVY-248,C1_CAND,ok,False,10,0,0.1,0.5,0.16666666666666669,0.5,0.5,
+ripple-ant-ivy-IVY-248,C2_CAND,ok,False,10,0,0.1,0.5,0.16666666666666669,0.5,0.5,
+ripple-ant-ivy-IVY-248,C3_CAND,error,True,9,1,0.0,0.0,0.0,0.0,0.0,PredictionError: predicted path is not present at parent commit: src/java/fr/jayasoft/ivy/Repository.java
+ripple-commons-compress-COMPRESS-119,C0_CAND,error,True,9,1,0.1111111111111111,0.3333333333333333,0.16666666666666666,0.3333333333333333,0.3333333333333333,PredictionError: predicted path is not present at parent commit: src/test/java/org/apache/commons/compress/archivers/tar/TarTestCase.java
+ripple-commons-compress-COMPRESS-119,C1_CAND,ok,False,10,0,0.2,0.6666666666666666,0.30769230769230765,0.6666666666666666,0.6666666666666666,
+ripple-commons-compress-COMPRESS-119,C2_CAND,ok,False,9,0,0.2222222222222222,0.6666666666666666,0.3333333333333333,0.6666666666666666,0.6666666666666666,
+ripple-commons-compress-COMPRESS-119,C3_CAND,ok,False,9,0,0.1111111111111111,0.3333333333333333,0.16666666666666666,0.3333333333333333,0.3333333333333333,
+ripple-commons-compress-COMPRESS-276,C0_CAND,error,True,7,2,0.14285714285714285,0.125,0.13333333333333333,0.125,0.125,PredictionError: predicted path is not present at parent commit: src/test/java/org/apache/commons/compress/archivers/zip/UnparseableExtraFieldData.java
+ripple-commons-compress-COMPRESS-276,C1_CAND,ok,False,10,0,0.1,0.125,0.11111111111111112,0.125,0.125,
+ripple-commons-compress-COMPRESS-276,C2_CAND,ok,False,9,0,0.1111111111111111,0.125,0.11764705882352941,0.125,0.125,
+ripple-commons-compress-COMPRESS-276,C3_CAND,ok,False,9,0,0.1111111111111111,0.125,0.11764705882352941,0.125,0.125,
+ripple-commons-compress-COMPRESS-469,C0_CAND,ok,False,10,0,0.2,0.5,0.28571428571428575,0.5,0.5,
+ripple-commons-compress-COMPRESS-469,C1_CAND,ok,False,10,0,0.1,0.25,0.14285714285714288,0.25,0.25,
+ripple-commons-compress-COMPRESS-469,C2_CAND,error,True,5,4,0.2,0.25,0.22222222222222224,0.25,0.25,PredictionError: predicted path is duplicated: src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java
+ripple-commons-compress-COMPRESS-469,C3_CAND,error,True,5,4,0.2,0.25,0.22222222222222224,0.25,0.25,PredictionError: predicted path is duplicated: src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java
+ripple-commons-compress-COMPRESS-74,C0_CAND,error,True,9,1,0.1111111111111111,0.5,0.1818181818181818,0.5,0.5,PredictionError: predicted path is not present at parent commit: src/test/java/org/apache/commons/compress/archivers/zip/ZipTestCase.java
+ripple-commons-compress-COMPRESS-74,C1_CAND,ok,False,10,0,0.1,0.5,0.16666666666666669,0.5,0.5,
+ripple-commons-compress-COMPRESS-74,C2_CAND,ok,False,9,0,0.1111111111111111,0.5,0.1818181818181818,0.5,0.5,
+ripple-commons-compress-COMPRESS-74,C3_CAND,ok,False,9,0,0.1111111111111111,0.5,0.1818181818181818,0.5,0.5,

@@ -1,0 +1,1499 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+java.io.IOException: Error detected parsing the header on un-archiving. Archive untars fine in BSDTar and JTar
+
+Using TarArchiveInputStream to parse this tar archive results in a
+
+`java.io.IOException: Error detected parsing the header`
+
+`Caused by: java.lang.IllegalArgumentException: Invalid byte 78 at offset 8 in '00000000NaN\{NUL}' len=12`
+
+The `00000000NaN\{NUL}` value is indeed found in the tar archive at the point that TarArchiveInputStream finds it and errors, but both BSDTar from a bash shell and JTar from a Java environment handle the archive fine, including the file with the malformed header.
+
+## Allowed candidate paths (pre-change repository)
+src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/sevenz/SevenZFile.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarUtils.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/dump/DumpArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/zip/X5455_ExtendedTimestamp.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/BlockSort.java
+src/main/java/org/apache/commons/compress/compressors/lz77support/LZ77Compressor.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/compressors/CompressorStreamFactory.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveStreamFactory.java
+src/main/java/org/apache/commons/compress/archivers/sevenz/SevenZOutputFile.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarConstants.java
+src/main/java/org/apache/commons/compress/archivers/zip/X0017_StrongEncryptionHeader.java
+src/main/java/org/apache/commons/compress/utils/ByteUtils.java
+src/main/java/org/apache/commons/compress/compressors/lz77support/AbstractLZ77CompressorInputStream.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/sevenz/SevenZArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/examples/Expander.java
+src/main/java/org/apache/commons/compress/archivers/zip/X000A_NTFS.java
+src/main/java/org/apache/commons/compress/compressors/snappy/SnappyCompressorOutputStream.java
+src/main/java/org/apache/commons/compress/utils/IOUtils.java
+src/main/java/org/apache/commons/compress/compressors/gzip/GzipCompressorInputStream.java
+src/main/java/org/apache/commons/compress/compressors/lz77support/Parameters.java
+src/main/java/org/apache/commons/compress/archivers/zip/X7875_NewUnix.java
+src/main/java/org/apache/commons/compress/archivers/dump/DumpArchiveInputStream.java
+src/main/java/org/apache/commons/compress/compressors/snappy/SnappyCompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ParallelScatterZipCreator.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipUtil.java
+src/main/java/org/apache/commons/compress/compressors/pack200/Pack200CompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/examples/Archiver.java
+src/main/java/org/apache/commons/compress/archivers/zip/PKWareExtraHeader.java
+src/main/java/org/apache/commons/compress/compressors/lz4/BlockLZ4CompressorOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/BinaryTree.java
+src/main/java/org/apache/commons/compress/archivers/zip/StreamCompressor.java
+src/main/java/org/apache/commons/compress/archivers/zip/Zip64ExtendedInformationExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/AsiExtraField.java
+src/main/java/org/apache/commons/compress/compressors/lz4/FramedLZ4CompressorOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/dump/DumpArchiveSummary.java
+src/main/java/org/apache/commons/compress/utils/ArchiveUtils.java
+src/main/java/org/apache/commons/compress/changes/ChangeSetPerformer.java
+src/main/java/org/apache/commons/compress/archivers/zip/GeneralPurposeBit.java
+src/main/java/org/apache/commons/compress/archivers/dump/TapeInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipEightByteInteger.java
+src/main/java/org/apache/commons/compress/utils/Charsets.java
+src/main/java/org/apache/commons/compress/compressors/FileNameUtil.java
+src/main/java/org/apache/commons/compress/compressors/lz4/FramedLZ4CompressorInputStream.java
+src/main/java/org/apache/commons/compress/compressors/snappy/FramedSnappyCompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ExtraFieldUtils.java
+src/main/java/org/apache/commons/compress/compressors/xz/XZCompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipLong.java
+src/main/java/org/apache/commons/compress/compressors/lzw/LZWInputStream.java
+src/main/java/org/apache/commons/compress/archivers/arj/ArjArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipShort.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnrecognizedExtraField.java
+src/main/java/org/apache/commons/compress/compressors/pack200/Pack200Utils.java
+src/main/java/org/apache/commons/compress/utils/BitInputStream.java
+src/main/java/org/apache/commons/compress/compressors/xz/XZUtils.java
+src/main/java/org/apache/commons/compress/compressors/gzip/GzipCompressorOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/arj/ArjArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/zip/AbstractUnicodeExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/ExplodingInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/zip/ScatterZipOutputStream.java
+src/test/java/org/apache/commons/compress/archivers/zip/Zip64SupportIT.java
+src/test/java/org/apache/commons/compress/changes/ChangeSetTestCase.java
+src/test/java/org/apache/commons/compress/AbstractTestCase.java
+src/test/java/org/apache/commons/compress/archivers/ZipTestCase.java
+src/test/java/org/apache/commons/compress/compressors/lz4/BlockLZ4CompressorOutputStreamTest.java
+src/test/java/org/apache/commons/compress/archivers/zip/X5455_ExtendedTimestampTest.java
+src/test/java/org/apache/commons/compress/archivers/zip/ZipFileTest.java
+src/test/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStreamTest.java
+src/test/java/org/apache/commons/compress/compressors/lz4/FramedLZ4CompressorInputStreamTest.java
+src/test/java/org/apache/commons/compress/archivers/tar/TarArchiveInputStreamTest.java
+RELEASE-NOTES.txt
+LICENSE.txt
+CONTRIBUTING.md
+README.md
+BUILDING.md
+pom.xml
+findbugs-exclude-filter.xml
+mvnw
+README.txt
+pmd-ruleset.xml
+.travis.yml
+NOTICE.txt
+src/changes/changes.xml
+src/site/xdoc/examples.xml
+src/site/xdoc/zip.xml
+
+## Seed and retrieved source files
+
+### SEED: src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java
+```java
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.commons.compress.archivers.zip;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.Closeable;
+import java.io.EOFException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.SequenceInputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.zip.Inflater;
+import java.util.zip.ZipException;
+
+import org.apache.commons.compress.archivers.EntryStreamOffsets;
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
+import org.apache.commons.compress.compressors.deflate64.Deflate64CompressorInputStream;
+import org.apache.commons.compress.utils.CountingInputStream;
+import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.compress.utils.InputStreamStatistics;
+
+import static org.apache.commons.compress.archivers.zip.ZipConstants.DWORD;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.SHORT;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.WORD;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.ZIP64_MAGIC;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.ZIP64_MAGIC_SHORT;
+
+/**
+ * Replacement for <code>java.util.ZipFile</code>.
+ *
+ * <p>This class adds support for file name encodings other than UTF-8
+ * (which is required to work on ZIP files created by native zip tools
+ * and is able to skip a preamble like the one found in self
+ * extracting archives.  Furthermore it returns instances of
+ * <code>org.apache.commons.compress.archivers.zip.ZipArchiveEntry</code>
+ * instead of <code>java.util.zip.ZipEntry</code>.</p>
+ *
+ * <p>It doesn't extend <code>java.util.zip.ZipFile</code> as it would
+ * have to reimplement all methods anyway.  Like
+ * <code>java.util.ZipFile</code>, it uses SeekableByteChannel under the
+ * covers and supports compressed and uncompressed entries.  As of
+ * Apache Commons Compress 1.3 it also transparently supports Zip64
+ * extensions and thus individual entries and archives larger than 4
+ * GB or with more than 65536 entries.</p>
+ *
+ * <p>The method signatures mimic the ones of
+ * <code>java.util.zip.ZipFile</code>, with a couple of exceptions:
+ *
+ * <ul>
+ *   <li>There is no getName method.</li>
+ *   <li>entries has been renamed to getEntries.</li>
+ *   <li>getEntries and getEntry return
+ *   <code>org.apache.commons.compress.archivers.zip.ZipArchiveEntry</code>
+ *   instances.</li>
+ *   <li>close is allowed to throw IOException.</li>
+ * </ul>
+ *
+ */
+public class ZipFile implements Closeable {
+    private static final int HASH_SIZE = 509;
+    static final int NIBLET_MASK = 0x0f;
+    static final int BYTE_SHIFT = 8;
+    private static final int POS_0 = 0;
+    private static final int POS_1 = 1;
+    private static final int POS_2 = 2;
+    private static final int POS_3 = 3;
+    private static final byte[] ONE_ZERO_BYTE = new byte[1];
+
+    /**
+     * List of entries in the order they appear inside the central
+     * directory.
+     */
+    private final List<ZipArchiveEntry> entries =
+        new LinkedList<>();
+
+    /**
+     * Maps String to list of ZipArchiveEntrys, name -> actual entries.
+     */
+    private final Map<String, LinkedList<ZipArchiveEntry>> nameMap =
+        new HashMap<>(HASH_SIZE);
+
+    /**
+     * The encoding to use for filenames and the file comment.
+     *
+     * <p>For a list of possible values see <a
+     * href="http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html">http://java.sun.com/j2se/1.5.0/docs/guide/intl/encoding.doc.html</a>.
+     * Defaults to UTF-8.</p>
+     */
+    private final String encoding;
+
+    /**
+     * The zip encoding to use for filenames and the file comment.
+     */
+    private final ZipEncoding zipEncoding;
+
+    /**
+     * File name of actual source.
+     */
+    private final String archiveName;
+
+    /**
+     * The actual data source.
+     */
+    private final SeekableByteChannel archive;
+
+    /**
+     * Whether to look for and use Unicode extra fields.
+     */
+    private final boolean useUnicodeExtraFields;
+
+    /**
+     * Whether the file is closed.
+     */
+    private volatile boolean closed = true;
+
+    // cached buffers - must only be used locally in the class (COMPRESS-172 - reduce garbage collection)
+    private final byte[] dwordBuf = new byte[DWORD];
+    private final byte[] wordBuf = new byte[WORD];
+    private final byte[] cfhBuf = new byte[CFH_LEN];
+    private final byte[] shortBuf = new byte[SHORT];
+    private final ByteBuffer dwordBbuf = ByteBuffer.wrap(dwordBuf);
+    private final ByteBuffer wordBbuf = ByteBuffer.wrap(wordBuf);
+    private final ByteBuffer cfhBbuf = ByteBuffer.wrap(cfhBuf);
+
+    /**
+     * Opens the given file for reading, assuming "UTF8" for file names.
+     *
+     * @param f the archive.
+     *
+     * @throws IOException if an error occurs while reading the file.
+     */
+    public ZipFile(final File f) throws IOException {
+        this(f, ZipEncodingHelper.UTF8);
+    }
+
+    /**
+     * Opens the given file for reading, assuming "UTF8".
+     *
+     * @param name name of the archive.
+     *
+     * @throws IOException if an error occurs while reading the file.
+     */
+    public ZipFile(final String name) throws IOException {
+        this(new File(name), ZipEncodingHelper.UTF8);
+    }
+
+    /**
+     * Opens the given file for reading, assuming the specified
+     * encoding for file names, scanning unicode extra fields.
+     *
+     * @param name name of the archive.
+     * @param encoding the encoding to use for file names, use null
+     * for the platform's default encoding
+     *
+     * @throws IOException if an error occurs while reading the file.
+     */
+    public ZipFile(final String name, final String encoding) throws IOException {
+        this(new File(name), encoding, true);
+    }
+
+    /**
+     * Opens the given file for reading, assuming the specified
+     * encoding for file names and scanning for unicode extra fields.
+     *
+     * @param f the archive.
+     * @param encoding the encoding to use for file names, use null
+     * for the platform's default encoding
+     *
+     * @throws IOException if an error occurs while reading the file.
+     */
+    public ZipFile(final File f, final String encoding) throws IOException {
+        this(f, encoding, true);
+    }
+
+    /**
+     * Opens the given file for reading, assuming the specified
+     * encoding for file names.
+     *
+     * @param f the archive.
+     * @param encoding the encoding to use for file names, use null
+     * for the platform's default encoding
+     * @param useUnicodeExtraFields whether to use InfoZIP Unicode
+     * Extra Fields (if present) to set the file names.
+     *
+     * @throws IOException if an error occurs while reading the file.
+     */
+    public ZipFile(final Fi
+... [truncated]
+```
+
+### RETRIEVED: src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveEntry.java
+```java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.commons.compress.archivers.tar;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipEncoding;
+import org.apache.commons.compress.utils.ArchiveUtils;
+
+/**
+ * This class represents an entry in a Tar archive. It consists
+ * of the entry's header, as well as the entry's File. Entries
+ * can be instantiated in one of three ways, depending on how
+ * they are to be used.
+ * <p>
+ * TarEntries that are created from the header bytes read from
+ * an archive are instantiated with the TarEntry( byte[] )
+ * constructor. These entries will be used when extracting from
+ * or listing the contents of an archive. These entries have their
+ * header filled in using the header bytes. They also set the File
+ * to null, since they reference an archive entry not a file.
+ * <p>
+ * TarEntries that are created from Files that are to be written
+ * into an archive are instantiated with the TarEntry( File )
+ * constructor. These entries have their header filled in using
+ * the File's information. They also keep a reference to the File
+ * for convenience when writing entries.
+ * <p>
+ * Finally, TarEntries can be constructed from nothing but a name.
+ * This allows the programmer to construct the entry by hand, for
+ * instance when only an InputStream is available for writing to
+ * the archive, and the header information is constructed from
+ * other information. In this case the header fields are set to
+ * defaults and the File is set to null.
+ *
+ * <p>
+ * The C structure for a Tar Entry's header is:
+ * <pre>
+ * struct header {
+ * char name[100];     // TarConstants.NAMELEN    - offset   0
+ * char mode[8];       // TarConstants.MODELEN    - offset 100
+ * char uid[8];        // TarConstants.UIDLEN     - offset 108
+ * char gid[8];        // TarConstants.GIDLEN     - offset 116
+ * char size[12];      // TarConstants.SIZELEN    - offset 124
+ * char mtime[12];     // TarConstants.MODTIMELEN - offset 136
+ * char chksum[8];     // TarConstants.CHKSUMLEN  - offset 148
+ * char linkflag[1];   //                         - offset 156
+ * char linkname[100]; // TarConstants.NAMELEN    - offset 157
+ * The following fields are only present in new-style POSIX tar archives:
+ * char magic[6];      // TarConstants.MAGICLEN   - offset 257
+ * char version[2];    // TarConstants.VERSIONLEN - offset 263
+ * char uname[32];     // TarConstants.UNAMELEN   - offset 265
+ * char gname[32];     // TarConstants.GNAMELEN   - offset 297
+ * char devmajor[8];   // TarConstants.DEVLEN     - offset 329
+ * char devminor[8];   // TarConstants.DEVLEN     - offset 337
+ * char prefix[155];   // TarConstants.PREFIXLEN  - offset 345
+ * // Used if "name" field is not long enough to hold the path
+ * char pad[12];       // NULs                    - offset 500
+ * } header;
+ * All unused bytes are set to null.
+ * New-style GNU tar files are slightly different from the above.
+ * For values of size larger than 077777777777L (11 7s)
+ * or uid and gid larger than 07777777L (7 7s)
+ * the sign bit of the first byte is set, and the rest of the
+ * field is the binary representation of the number.
+ * See TarUtils.parseOctalOrBinary.
+ * </pre>
+ *
+ * <p>
+ * The C structure for a old GNU Tar Entry's header is:
+ * <pre>
+ * struct oldgnu_header {
+ * char unused_pad1[345]; // TarConstants.PAD1LEN_GNU       - offset 0
+ * char atime[12];        // TarConstants.ATIMELEN_GNU      - offset 345
+ * char ctime[12];        // TarConstants.CTIMELEN_GNU      - offset 357
+ * char offset[12];       // TarConstants.OFFSETLEN_GNU     - offset 369
+ * char longnames[4];     // TarConstants.LONGNAMESLEN_GNU  - offset 381
+ * char unused_pad2;      // TarConstants.PAD2LEN_GNU       - offset 385
+ * struct sparse sp[4];   // TarConstants.SPARSELEN_GNU     - offset 386
+ * char isextended;       // TarConstants.ISEXTENDEDLEN_GNU - offset 482
+ * char realsize[12];     // TarConstants.REALSIZELEN_GNU   - offset 483
+ * char unused_pad[17];   // TarConstants.PAD3LEN_GNU       - offset 495
+ * };
+ * </pre>
+ * Whereas, "struct sparse" is:
+ * <pre>
+ * struct sparse {
+ * char offset[12];   // offset 0
+ * char numbytes[12]; // offset 12
+ * };
+ * </pre>
+ *
+ * <p>
+ * The C structure for a xstar (Jörg Schilling star) Tar Entry's header is:
+ * <pre>
+ * struct star_header {
+ *  char name[100];		// offset   0
+ *  char mode[8];		// offset 100
+ *  char uid[8];		// offset 108
+ *  char gid[8];		// offset 116
+ *  char size[12];		// offset 124
+ *  char mtime[12];		// offset 136
+ *  char chksum[8];		// offset 148
+ *  char typeflag;		// offset 156
+ *  char linkname[100];		// offset 157
+ *  char magic[6];		// offset 257
+ *  char version[2];		// offset 263
+ *  char uname[32];		// offset 265
+ *  char gname[32];		// offset 297
+ *  char devmajor[8];		// offset 329
+ *  char devminor[8];		// offset 337
+ *  char prefix[131];		// offset 345
+ *  char atime[12];             // offset 476
+ *  char ctime[12];             // offset 488
+ *  char mfill[8];              // offset 500
+ *  char xmagic[4];             // offset 508  "tar"
+ * };
+ * </pre>
+ * <p>which is identical to new-style POSIX up to the first 130 bytes of the prefix.</p>
+ *
+ * @NotThreadSafe
+ */
+
+public class TarArchiveEntry implements ArchiveEntry, TarConstants {
+    private static final TarArchiveEntry[] EMPTY_TAR_ARCHIVE_ENTRIES = new TarArchiveEntry[0];
+
+    /** The entry's name. */
+    private String name = "";
+
+    /** Whether to allow leading slashes or drive names inside the name */
+    private final boolean preserveAbsolutePath;
+
+    /** The entry's permission mode. */
+    private int mode;
+
+    /** The entry's user id. */
+    private long userId = 0;
+
+    /** The entry's group id. */
+    private long groupId = 0;
+
+    /** The entry's size. */
+    private long size = 0;
+
+    /** The entry's modification time. */
+    private long modTime;
+
+    /** If the header checksum is reasonably correct. */
+    private boolean checkSumOK;
+
+    /** The entry's link flag. */
+    private byte linkFlag;
+
+    /** The entry's link name. */
+    private String linkName = "";
+
+    /** The entry's magic tag. */
+    private String magic = MAGIC_POSIX;
+    /** The version of the format */
+    private String version = VERSION_POSIX;
+
+    /** The entry's user name. */
+    private String userName;
+
+    /** The entry's group name. */
+    private String groupName = "";
+
+    /** The entry's major device number. */
+    private int devMajor = 0;
+
+    /** The entry's minor device number. */
+    private int devMinor = 0;
+
+    /** If an extension sparse header follows. */
+    private boolean isExtended;
+
+    /** The entry's real size in case of a sparse file. */
+    private long realSize;
+
+    /** is this entry a GNU sparse entry using one of the PAX formats? */
+    private boolean paxGNUSparse;
+
+    /** is this entry a star sparse entry using the PAX header? */
+    private boolean starSparse;
+
+    /** The entry's file reference */
+    private final File file;
+
+    /** Extra, user supplied pax headers     */
+    private final Ma
+... [truncated]
+```
+
+### RETRIEVED: src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java
+```java
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.commons.compress.archivers.zip;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.util.Calendar;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.zip.Deflater;
+import java.util.zip.ZipException;
+
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveOutputStream;
+import org.apache.commons.compress.utils.IOUtils;
+
+import static org.apache.commons.compress.archivers.zip.ZipConstants.DATA_DESCRIPTOR_MIN_VERSION;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.DEFLATE_MIN_VERSION;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.DWORD;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.INITIAL_VERSION;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.SHORT;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.WORD;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.ZIP64_MAGIC;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.ZIP64_MAGIC_SHORT;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.ZIP64_MIN_VERSION;
+import static org.apache.commons.compress.archivers.zip.ZipLong.putLong;
+import static org.apache.commons.compress.archivers.zip.ZipShort.putShort;
+
+/**
+ * Reimplementation of {@link java.util.zip.ZipOutputStream
+ * java.util.zip.ZipOutputStream} that does handle the extended
+ * functionality of this package, especially internal/external file
+ * attributes and extra fields with different layouts for local file
+ * data and central directory entries.
+ *
+ * <p>This class will try to use {@link
+ * java.nio.channels.SeekableByteChannel} when it knows that the
+ * output is going to go to a file.</p>
+ *
+ * <p>If SeekableByteChannel cannot be used, this implementation will use
+ * a Data Descriptor to store size and CRC information for {@link
+ * #DEFLATED DEFLATED} entries, this means, you don't need to
+ * calculate them yourself.  Unfortunately this is not possible for
+ * the {@link #STORED STORED} method, here setting the CRC and
+ * uncompressed size information is required before {@link
+ * #putArchiveEntry(ArchiveEntry)} can be called.</p>
+ *
+ * <p>As of Apache Commons Compress 1.3 it transparently supports Zip64
+ * extensions and thus individual entries and archives larger than 4
+ * GB or with more than 65536 entries in most cases but explicit
+ * control is provided via {@link #setUseZip64}.  If the stream can not
+ * use SeekableByteChannel and you try to write a ZipArchiveEntry of
+ * unknown size then Zip64 extensions will be disabled by default.</p>
+ *
+ * @NotThreadSafe
+ */
+public class ZipArchiveOutputStream extends ArchiveOutputStream {
+
+    static final int BUFFER_SIZE = 512;
+    private static final int LFH_SIG_OFFSET = 0;
+    private static final int LFH_VERSION_NEEDED_OFFSET = 4;
+    private static final int LFH_GPB_OFFSET = 6;
+    private static final int LFH_METHOD_OFFSET = 8;
+    private static final int LFH_TIME_OFFSET = 10;
+    private static final int LFH_CRC_OFFSET = 14;
+    private static final int LFH_COMPRESSED_SIZE_OFFSET = 18;
+    private static final int LFH_ORIGINAL_SIZE_OFFSET = 22;
+    private static final int LFH_FILENAME_LENGTH_OFFSET = 26;
+    private static final int LFH_EXTRA_LENGTH_OFFSET = 28;
+    private static final int LFH_FILENAME_OFFSET = 30;
+    private static final int CFH_SIG_OFFSET = 0;
+    private static final int CFH_VERSION_MADE_BY_OFFSET = 4;
+    private static final int CFH_VERSION_NEEDED_OFFSET = 6;
+    private static final int CFH_GPB_OFFSET = 8;
+    private static final int CFH_METHOD_OFFSET = 10;
+    private static final int CFH_TIME_OFFSET = 12;
+    private static final int CFH_CRC_OFFSET = 16;
+    private static final int CFH_COMPRESSED_SIZE_OFFSET = 20;
+    private static final int CFH_ORIGINAL_SIZE_OFFSET = 24;
+    private static final int CFH_FILENAME_LENGTH_OFFSET = 28;
+    private static final int CFH_EXTRA_LENGTH_OFFSET = 30;
+    private static final int CFH_COMMENT_LENGTH_OFFSET = 32;
+    private static final int CFH_DISK_NUMBER_OFFSET = 34;
+    private static final int CFH_INTERNAL_ATTRIBUTES_OFFSET = 36;
+    private static final int CFH_EXTERNAL_ATTRIBUTES_OFFSET = 38;
+    private static final int CFH_LFH_OFFSET = 42;
+    private static final int CFH_FILENAME_OFFSET = 46;
+
+    /** indicates if this archive is finished. protected for use in Jar implementation */
+    protected boolean finished = false;
+
+    /**
+     * Compression method for deflated entries.
+     */
+    public static final int DEFLATED = java.util.zip.ZipEntry.DEFLATED;
+
+    /**
+     * Default compression level for deflated entries.
+     */
+    public static final int DEFAULT_COMPRESSION = Deflater.DEFAULT_COMPRESSION;
+
+    /**
+     * Compression method for stored entries.
+     */
+    public static final int STORED = java.util.zip.ZipEntry.STORED;
+
+    /**
+     * default encoding for file names and comment.
+     */
+    static final String DEFAULT_ENCODING = ZipEncodingHelper.UTF8;
+
+    /**
+     * General purpose flag, which indicates that filenames are
+     * written in UTF-8.
+     * @deprecated use {@link GeneralPurposeBit#UFT8_NAMES_FLAG} instead
+     */
+    @Deprecated
+    public static final int EFS_FLAG = GeneralPurposeBit.UFT8_NAMES_FLAG;
+
+    private static final byte[] EMPTY = new byte[0];
+
+    /**
+     * Current entry.
+     */
+    private CurrentEntry entry;
+
+    /**
+     * The file comment.
+     */
+    private String comment = "";
+
+    /**
+     * Compression level for next entry.
+     */
+    private int level = DEFAULT_COMPRESSION;
+
+    /**
+     * Has the compression level changed when compared to the last
+     * entry?
+     */
+    private boolean hasCompressionLevelChanged = false;
+
+    /**
+     * Default compression method for next entry.
+     */
+    private int method = java.util.zip.ZipEntry.DEFLATED;
+
+    /**
+     * List of ZipArchiveEntries written so far.
+     */
+    private final List<ZipArchiveEntry> entries =
+        new LinkedList<>();
+
+    private final StreamCompressor streamCompressor;
+
+    /**
+     * Start of central directory.
+     */
+    private long cdOffset = 0;
+
+    /**
+     * Length of central directory.
+     */
+    private long cdLength = 0;
+
+    /**
+     * Helper, a 0 as ZipShort.
+     */
+    private static final byte[] ZERO = {0, 0};
+
+    /**
+     * Helper, a 0 as ZipLong.
+     */
+    private static final byte[] LZERO = {0, 0, 0, 0};
+
+    private static final byte[] ONE = ZipLong.getBytes(1L);
+
+    /**
+     * Holds some book-keeping data for each entry.
+     */
+    private final Map<ZipArchiveEntry, EntryMetaData> metaData =
+        new HashMap<>();
+
+    /**
+     * The encoding to use for filenames and the file comment.
+     *
+     * <p>For a list of possible values see <a
+     * href="http://java.
+... [truncated]
+```
+
+### RETRIEVED: src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java
+```java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.commons.compress.archivers.zip;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PushbackInputStream;
+import java.math.BigInteger;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.zip.CRC32;
+import java.util.zip.DataFormatException;
+import java.util.zip.Inflater;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
+import org.apache.commons.compress.compressors.deflate64.Deflate64CompressorInputStream;
+import org.apache.commons.compress.utils.ArchiveUtils;
+import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.compress.utils.InputStreamStatistics;
+
+import static org.apache.commons.compress.archivers.zip.ZipConstants.DWORD;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.SHORT;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.WORD;
+import static org.apache.commons.compress.archivers.zip.ZipConstants.ZIP64_MAGIC;
+
+/**
+ * Implements an input stream that can read Zip archives.
+ *
+ * <p>As of Apache Commons Compress it transparently supports Zip64
+ * extensions and thus individual entries and archives larger than 4
+ * GB or with more than 65536 entries.</p>
+ *
+ * <p>The {@link ZipFile} class is preferred when reading from files
+ * as {@link ZipArchiveInputStream} is limited by not being able to
+ * read the central directory header before returning entries.  In
+ * particular {@link ZipArchiveInputStream}</p>
+ *
+ * <ul>
+ *
+ *  <li>may return entries that are not part of the central directory
+ *  at all and shouldn't be considered part of the archive.</li>
+ *
+ *  <li>may return several entries with the same name.</li>
+ *
+ *  <li>will not return internal or external attributes.</li>
+ *
+ *  <li>may return incomplete extra field data.</li>
+ *
+ *  <li>may return unknown sizes and CRC values for entries until the
+ *  next entry has been reached if the archive uses the data
+ *  descriptor feature.</li>
+ *
+ * </ul>
+ *
+ * @see ZipFile
+ * @NotThreadSafe
+ */
+public class ZipArchiveInputStream extends ArchiveInputStream implements InputStreamStatistics {
+
+    /** The zip encoding to use for filenames and the file comment. */
+    private final ZipEncoding zipEncoding;
+
+    // the provided encoding (for unit tests)
+    final String encoding;
+
+    /** Whether to look for and use Unicode extra fields. */
+    private final boolean useUnicodeExtraFields;
+
+    /** Wrapped stream, will always be a PushbackInputStream. */
+    private final InputStream in;
+
+    /** Inflater used for all deflated entries. */
+    private final Inflater inf = new Inflater(true);
+
+    /** Buffer used to read from the wrapped stream. */
+    private final ByteBuffer buf = ByteBuffer.allocate(ZipArchiveOutputStream.BUFFER_SIZE);
+
+    /** The entry that is currently being read. */
+    private CurrentEntry current = null;
+
+    /** Whether the stream has been closed. */
+    private boolean closed = false;
+
+    /** Whether the stream has reached the central directory - and thus found all entries. */
+    private boolean hitCentralDirectory = false;
+
+    /**
+     * When reading a stored entry that uses the data descriptor this
+     * stream has to read the full entry and caches it.  This is the
+     * cache.
+     */
+    private ByteArrayInputStream lastStoredEntry = null;
+
+    /** Whether the stream will try to read STORED entries that use a data descriptor. */
+    private boolean allowStoredEntriesWithDataDescriptor = false;
+
+    /** Count decompressed bytes for current entry */
+    private long uncompressedCount = 0;
+
+    private static final int LFH_LEN = 30;
+    /*
+      local file header signature     WORD
+      version needed to extract       SHORT
+      general purpose bit flag        SHORT
+      compression method              SHORT
+      last mod file time              SHORT
+      last mod file date              SHORT
+      crc-32                          WORD
+      compressed size                 WORD
+      uncompressed size               WORD
+      file name length                SHORT
+      extra field length              SHORT
+    */
+
+    private static final int CFH_LEN = 46;
+    /*
+        central file header signature   WORD
+        version made by                 SHORT
+        version needed to extract       SHORT
+        general purpose bit flag        SHORT
+        compression method              SHORT
+        last mod file time              SHORT
+        last mod file date              SHORT
+        crc-32                          WORD
+        compressed size                 WORD
+        uncompressed size               WORD
+        file name length                SHORT
+        extra field length              SHORT
+        file comment length             SHORT
+        disk number start               SHORT
+        internal file attributes        SHORT
+        external file attributes        WORD
+        relative offset of local header WORD
+    */
+
+    private static final long TWO_EXP_32 = ZIP64_MAGIC + 1;
+
+    // cached buffers - must only be used locally in the class (COMPRESS-172 - reduce garbage collection)
+    private final byte[] lfhBuf = new byte[LFH_LEN];
+    private final byte[] skipBuf = new byte[1024];
+    private final byte[] shortBuf = new byte[SHORT];
+    private final byte[] wordBuf = new byte[WORD];
+    private final byte[] twoDwordBuf = new byte[2 * DWORD];
+
+    private int entriesRead = 0;
+
+    /**
+     * Create an instance using UTF-8 encoding
+     * @param inputStream the stream to wrap
+     */
+    public ZipArchiveInputStream(final InputStream inputStream) {
+        this(inputStream, ZipEncodingHelper.UTF8);
+    }
+
+    /**
+     * Create an instance using the specified encoding
+     * @param inputStream the stream to wrap
+     * @param encoding the encoding to use for file names, use null
+     * for the platform's default encoding
+     * @since 1.5
+     */
+    public ZipArchiveInputStream(final InputStream inputStream, final String encoding) {
+        this(inputStream, encoding, true);
+    }
+
+    /**
+     * Create an instance using the specified encoding
+     * @param inputStream the stream to wrap
+     * @param encoding the encoding to use for file names, use null
+     * for the platform's default encoding
+     * @param useUnicodeExtraFields whether to use InfoZIP Unicode
+     * Extra Fields (if present) to set the file names.
+     */
+    public ZipArchiveInputStream(final InputStream inputStream, final String encoding, final boolean useUnicodeExtraFields) {
+        this(inputStream, encoding, useUnicodeExtraFields, false);
+    }
+
+    /**
+     * Create an instance using the specified encoding
+     * @param inputStream the stream to wrap
+     * @param encoding the encoding to use for file names, use null
+     * for the platform's default encoding
+     * @param useUnicodeExtraFields whether to
+... [truncated]
+```
+
+## Dependency information (parent revision)
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/EntryStreamOffsets.java
+```java
+package org.apache.commons.compress.archivers;
+public interface EntryStreamOffsets {
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/Lister.java
+```java
+package org.apache.commons.compress.archivers;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.util.Enumeration;
+import org.apache.commons.compress.archivers.sevenz.SevenZFile;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+public final class Lister {
+    private static final ArchiveStreamFactory factory = new ArchiveStreamFactory();
+    public static void main(final String[] args) throws Exception {
+        final File f = new File(args[0]);
+    private static void listStream(File f, String[] args) throws ArchiveException, IOException {
+                final ArchiveInputStream ais = createArchiveInputStream(args, fis)) {
+    private static ArchiveInputStream createArchiveInputStream(final String[] args, final InputStream fis)
+    private static String detectFormat(File f) throws ArchiveException, IOException {
+    private static void list7z(File f) throws ArchiveException, IOException {
+    private static void listZipUsingZipFile(File f) throws ArchiveException, IOException {
+    private static void usage() {
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/examples/Expander.java
+```java
+package org.apache.commons.compress.archivers.examples;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.util.Enumeration;
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveException;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
+import org.apache.commons.compress.archivers.ArchiveStreamFactory;
+import org.apache.commons.compress.archivers.sevenz.SevenZFile;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.compress.utils.IOUtils;
+public class Expander {
+    private interface ArchiveEntrySupplier {
+    private interface EntryWriter {
+    public void expand(File archive, File targetDirectory) throws IOException, ArchiveException {
+    public void expand(String format, File archive, File targetDirectory) throws IOException, ArchiveException {
+    public void expand(InputStream archive, File targetDirectory) throws IOException, ArchiveException {
+    public void expand(String format, InputStream archive, File targetDirectory)
+    public void expand(String format, SeekableByteChannel archive, File targetDirectory)
+    public void expand(final ArchiveInputStream archive, File targetDirectory)
+            public ArchiveEntry getNextReadableEntry() throws IOException {
+            public void writeEntryDataTo(ArchiveEntry entry, OutputStream out) throws IOException {
+    public void expand(final ZipFile archive, File targetDirectory)
+        final Enumeration<ZipArchiveEntry> entries = archive.getEntries();
+            public ArchiveEntry getNextReadableEntry() throws IOException {
+            public void writeEntryDataTo(ArchiveEntry entry, OutputStream out) throws IOException {
+    public void expand(final SevenZFile archive, File targetDirectory)
+            public ArchiveEntry getNextReadableEntry() throws IOException {
+            public void writeEntryDataTo(ArchiveEntry entry, OutputStream out) throws IOException {
+                final byte[] buffer = new byte[8024];
+    private boolean prefersSeekableByteChannel(String format) {
+    private void expand(ArchiveEntrySupplier supplier, EntryWr
+... [truncated]
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/zip/CharsetAccessor.java
+```java
+package org.apache.commons.compress.archivers.zip;
+import java.nio.charset.Charset;
+public interface CharsetAccessor {
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/zip/ExplodingInputStream.java
+```java
+package org.apache.commons.compress.archivers.zip;
+import org.apache.commons.compress.utils.CountingInputStream;
+import org.apache.commons.compress.utils.InputStreamStatistics;
+import java.io.IOException;
+import java.io.InputStream;
+class ExplodingInputStream extends InputStream implements InputStreamStatistics {
+    private final InputStream in;
+    private BitStream bits;
+    private final int dictionarySize;
+    private final int numberOfTrees;
+    private final int minimumMatchLength;
+    private BinaryTree literalTree;
+    private BinaryTree lengthTree;
+    private BinaryTree distanceTree;
+    private final CircularBuffer buffer = new CircularBuffer(32 * 1024);
+    private long uncompressedCount = 0;
+    private long treeSizes = 0;
+    public ExplodingInputStream(final int dictionarySize, final int numberOfTrees, final InputStream in) {
+    private void init() throws IOException {
+                    public void close() {
+    public int read() throws IOException {
+        final int ret = buffer.get();
+    public long getCompressedCount() {
+    public long getUncompressedCount() {
+    public void close() throws IOException {
+    private void fillBuffer() throws IOException {
+        final int bit = bits.nextBit();
+            final int distanceLowSize = dictionarySize == 4096 ? 6 : 7;
+            final int distanceLow = (int) bits.nextBits(distanceLowSize);
+            final int distanceHigh = distanceTree.read(bits);
+            final int distance = distanceHigh << distanceLowSize | distanceLow;
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/zip/ExtraFieldUtils.java
+```java
+package org.apache.commons.compress.archivers.zip;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.zip.ZipException;
+public class ExtraFieldUtils {
+    private static final int WORD = 4;
+    private static final Map<ZipShort, Class<?>> implementations;
+    static {
+    public static void register(final Class<?> c) {
+            final ZipExtraField ze = (ZipExtraField) c.newInstance();
+    public static ZipExtraField createExtraField(final ZipShort headerId)
+        final Class<?> c = implementations.get(headerId);
+        final UnrecognizedExtraField u = new UnrecognizedExtraField();
+    public static ZipExtraField[] parse(final byte[] data) throws ZipException {
+    public static ZipExtraField[] parse(final byte[] data, final boolean local)
+    public static ZipExtraField[] parse(final byte[] data, final boolean local,
+                                        final UnparseableExtraField onUnparseableData)
+        final List<ZipExtraField> v = new ArrayList<>();
+            final ZipShort headerId = new ZipShort(data, start);
+            final int length = new ZipShort(data, start + 2).getValue();
+                    final UnparseableExtraFieldData field =
+                default:
+                final ZipExtraField ze = createExtraField(headerId);
+        final ZipExtraField[] result = new ZipExtraField[v.size()];
+    public static byte[] mergeLocalFileDataData(final ZipExtraField[] data) {
+        final boolean lastIsUnparseableHolder = data.length > 0
+        final int regularExtraFieldCount =
+        final byte[] result = new byte[sum];
+            final byte[] local = data[i].getLocalFileDataData();
+            final byte[] local = data[data.length - 1].getLocalFileDataData();
+    public static byte[] mergeCentralDirectoryData(final ZipExtraField[] data) {
+        final boolean lastIsUnparseableHolder = data.length > 0
+        final int regularExtraFieldCount =
+        final byte[] result = new byte[sum];
+            final byte[] local = data[i].getCentralDirectoryData();
+            final byte[] local = data[data.length - 1].getCentralDirectoryData();
+    public static final class UnparseableExtraField {
+        public static final int THROW_KEY = 0;
+        public static final int SKIP_KEY = 1;
+        public static final int READ_KEY = 2;
+        public static final UnparseableExtraField THROW
+        public static final UnparseableExtraField SKIP
+        public
+... [truncated]
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/zip/GeneralPurposeBit.java
+```java
+package org.apache.commons.compress.archivers.zip;
+public final class GeneralPurposeBit implements Cloneable {
+    private static final int ENCRYPTION_FLAG = 1 << 0;
+    private static final int SLIDING_DICTIONARY_SIZE_FLAG = 1 << 1;
+    private static final int NUMBER_OF_SHANNON_FANO_TREES_FLAG = 1 << 2;
+    private static final int DATA_DESCRIPTOR_FLAG = 1 << 3;
+    private static final int STRONG_ENCRYPTION_FLAG = 1 << 6;
+    public static final int UFT8_NAMES_FLAG = 1 << 11;
+    private boolean languageEncodingFlag = false;
+    private boolean dataDescriptorFlag = false;
+    private boolean encryptionFlag = false;
+    private boolean strongEncryptionFlag = false;
+    private int slidingDictionarySize;
+    private int numberOfShannonFanoTrees;
+    public GeneralPurposeBit() {
+    public boolean usesUTF8ForNames() {
+    public void useUTF8ForNames(final boolean b) {
+    public boolean usesDataDescriptor() {
+    public void useDataDescriptor(final boolean b) {
+    public boolean usesEncryption() {
+    public void useEncryption(final boolean b) {
+    public boolean usesStrongEncryption() {
+    public void useStrongEncryption(final boolean b) {
+    public byte[] encode() {
+        final byte[] result = new byte[2];
+    public void encode(final byte[] buf, final int offset) {
+    public static GeneralPurposeBit parse(final byte[] data, final int offset) {
+        final int generalPurposeFlag = ZipShort.getValue(data, offset);
+        final GeneralPurposeBit b = new GeneralPurposeBit();
+    public int hashCode() {
+    public boolean equals(final Object o) {
+        final GeneralPurposeBit g = (GeneralPurposeBit) o;
+    public Object clone() {
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/zip/InflaterInputStreamWithStatistics.java
+```java
+package org.apache.commons.compress.archivers.zip;
+import org.apache.commons.compress.utils.InputStreamStatistics;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.zip.Inflater;
+import java.util.zip.InflaterInputStream;
+    private long compressedCount = 0;
+    private long uncompressedCount = 0;
+    public InflaterInputStreamWithStatistics(I
+... [truncated]
+```
+
+## Tests, documentation, and prior co-change (parent history only)
+
+### Relevant test: src/test/java/org/apache/commons/compress/archivers/tar/TarArchiveEntryTest.java
+```
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
+package org.apache.commons.compress.archivers.tar;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.Locale;
+import org.apache.commons.compress.AbstractTestCase;
+import org.junit.Test;
+
+public class TarArchiveEntryTest implements TarConstants {
+
+    private static final String OS =
+        System.getProperty("os.name").toLowerCase(Locale.ENGLISH);
+    private static final String ROOT =
+        OS.startsWith("windows") || OS.startsWith("netware") ? "C:\\" : "/";
+
+    /**
+     * JIRA issue SANDBOX-284
+     *
+     * @see "https://issues.apache.org/jira/browse/SANDBOX-284"
+     */
+    @Test
+    public void testFileSystemRoot() {
+        final TarArchiveEntry t = new TarArchiveEntry(new File(ROOT));
+        assertEquals("/", t.getName());
+    }
+
+    @Test
+    public void testTarFileWithFSRoot() throws IOException {
+        final File f = File.createTempFile("taetest", ".tar");
+        f.deleteOnExit();
+        TarArchiveOutputStream tout = null;
+        TarArchiveInputStream tin = null;
+        try {
+            tout = new TarArchiveOutputStream(new FileOutputStream(f));
+            TarArchiveEntry t = new TarArchiveEntry(new File(ROOT));
+            tout.putArchiveEntry(t);
+            tout.closeArchiveEntry();
+            t = new TarArchiveEntry(new File(new File(ROOT), "foo.txt"));
+            t.setSize(6);
+            tout.putArchiveEntry(t);
+            tout.write(new byte[] {'h', 'e', 'l', 'l', 'o', ' '});
+            tout.closeArchiveEntry();
+            t = new TarArchiveEntry(new File(new File(ROOT), "bar.txt")
+                                    .getAbsolutePath());
+            t.setSize(5);
+            tout.putArchiveEntry(t);
+            tout.write(new byte[] {'w', 'o', 'r', 'l', 'd'});
+            tout.closeArchiveEntry();
+            t = new TarArchiveEntry("dummy");
+            t.setName(new File(new File(ROOT), "baz.txt").getAbsolutePath());
+            t.setSize(1);
+            tout.putArchiveEntry(t);
+            tout.write(new byte[] {'!'});
+            tout.closeArchiveEntry();
+            tout.close();
+            tout = null;
+
+            tin = new TarArchiveInputStream(new FileInputStream(f));
+            /
+... [truncated]
+```
+
+### Relevant test: src/test/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStreamTest.java
+```
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
+package org.apache.commons.compress.archivers.zip;
+
+import static org.apache.commons.compress.AbstractTestCase.getFile;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.zip.ZipException;
+
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.utils.IOUtils;
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ZipArchiveInputStreamTest {
+
+    /**
+     * @see "https://issues.apache.org/jira/browse/COMPRESS-176"
+     */
+    @Test
+    public void winzipBackSlashWorkaround() throws Exception {
+        ZipArchiveInputStream in = null;
+        try {
+            in = new ZipArchiveInputStream(new FileInputStream(getFile("test-winzip.zip")));
+            ZipArchiveEntry zae = in.getNextZipEntry();
+            zae = in.getNextZipEntry();
+            zae = in.getNextZipEntry();
+            assertEquals("\u00e4/", zae.getName());
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+        }
+    }
+
+    /**
+     * @see "https://issues.apache.org/jira/browse/COMPRESS-189"
+     */
+    @Test
+    public void properUseOfInflater() throws Exception {
+        ZipFile zf = null;
+        ZipArchiveInputStream in = null;
+        try {
+            zf = new ZipFile(getFile("COMPRESS-189.zip"));
+            final ZipArchiveEntry zae = zf.getEntry("USD0558682-20080101.ZIP");
+            in = new ZipArchiveInputStream(new BufferedInputStream(zf.getInputStream(zae)));
+            ZipArchiveEntry innerEntry;
+            while ((innerEntry = in.getNextZipEntry()) != null) {
+                if (innerEntry.getName().endsWith("XML")) {
+                    assertTrue(0 < in.read());
+                }
+            }
+        } finally {
+            if (zf != null) {
+                zf.close();
+            }
+            if (in != null) {
+                in.close();
+            }
+        }
+    }
+
+    @Test
+    public void shouldConsumeArchiveCompletely() throws Exception {
+        final InputStream is = ZipArchiveInputStreamTest.class
+            .getResourceAsStream("/archive_with_trailer.zip");
+        final ZipArchiveInputStream zip = new ZipArchiveInputStream(is);
+        while (zip.getNextZipEntry() != null) {
+            // just consume the archive
+        }
+        
+... [truncated]
+```
+
+### Relevant test: src/test/java/org/apache/commons/compress/archivers/zip/ZipFileTest.java
+```
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
+package org.apache.commons.compress.archivers.zip;
+
+import static org.apache.commons.compress.AbstractTestCase.getFile;
+import static org.junit.Assert.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.zip.CRC32;
+import java.util.zip.ZipEntry;
+
+import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.compress.utils.SeekableInMemoryByteChannel;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Test;
+
+public class ZipFileTest {
+    private ZipFile zf = null;
+
+    @After
+    public void tearDown() {
+        ZipFile.closeQuietly(zf);
+    }
+
+    @Test
+    public void testCDOrder() throws Exception {
+        readOrderTest();
+        final ArrayList<ZipArchiveEntry> l = Collections.list(zf.getEntries());
+        assertEntryName(l, 0, "AbstractUnicodeExtraField");
+        assertEntryName(l, 1, "AsiExtraField");
+        assertEntryName(l, 2, "ExtraFieldUtils");
+        assertEntryName(l, 3, "FallbackZipEncoding");
+        assertEntryName(l, 4, "GeneralPurposeBit");
+        assertEntryName(l, 5, "JarMarker");
+        assertEntryName(l, 6, "NioZipEncoding");
+        assertEntryName(l, 7, "Simple8BitZipEncoding");
+        assertEntryName(l, 8, "UnicodeCommentExtraField");
+        assertEntryName(l, 9, "UnicodePathExtraField");
+        assertEntryName(l, 10, "UnixStat");
+        assertEntryName(l, 11, "UnparseableExtraFieldData");
+        assertEntryName(l, 12, "UnrecognizedExtraField");
+        assertEntryName(l, 13, "ZipArchiveEntry");
+        assertEntryName(l, 14, "ZipArchiveInputStream");
+        assertEntryName(l, 15, "ZipArchiveOutputStream");
+        assertEntryName(l, 16, "ZipEncoding");
+        assertEntryName(l, 17, "ZipEncodingHelper");
+  
+... [truncated]
+```
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.

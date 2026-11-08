@@ -1,0 +1,202 @@
+{
+  "artifact_type": "context_ablation_run",
+  "is_synthetic": false,
+  "task": {
+    "task_id": "ripple-ant-ivy-IVY-112",
+    "source_name": "Ripple issue-linked change dataset (record instance-00036; used for candidate discovery and cross-check only)",
+    "source_url": "https://github.com/se-doubleblind/ripple",
+    "repository_url": "https://github.com/apache/ant-ivy",
+    "issue_url": "https://issues.apache.org/jira/browse/IVY-112",
+    "issue_text_source": "ASF Jira REST API v2 issue IVY-112 fields created,summary,description; retrieved 2026-11-06T02:43:41+00:00; https://issues.apache.org/jira/rest/api/2/issue/IVY-112?fields=created,summary,description",
+    "issue_created_at": "2005-12-07T15:35:06.000+00:00",
+    "target_sha": "866ec93bfd5f6331c95c66e19178c9ffc1441ee2",
+    "parent_sha": "e26114a8fb6e6c7302a072e78dc88ad43979c17e",
+    "target_first_parent": "e26114a8fb6e6c7302a072e78dc88ad43979c17e",
+    "target_committer_at": "2006-01-03T13:51:00Z",
+    "changed_paths_reference": [
+      "CHANGES.txt",
+      "src/java/fr/jayasoft/ivy/IvyNode.java",
+      "src/java/fr/jayasoft/ivy/Main.java",
+      "src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorParser.java",
+      "test/java/fr/jayasoft/ivy/ant/IvyResolveTest.java",
+      "test/java/fr/jayasoft/ivy/ant/ivy-failure2.xml",
+      "test/repositories/1/orgfailure/modfailure/ivys/ivy-1.0.xml"
+    ],
+    "selection_decision": "From scripts/screen_tasks.py: Jira creation time precedes the target commit, the recorded parent is the target's first parent, and labels are the complete parent-to-target Git diff path set. Confirmed by the reviewers named in cleaning_decisions. Ripple impact-set-files is not used as ground truth.",
+    "cleaning_decisions": [
+      "Ground truth is the exact Git diff path set from parent to target; do not substitute Ripple impact-set-files.",
+      "Issue text is the Jira summary and opening problem statement, manually cleaned: follow-up discussion, contact details and any fix description removed; no patch, commit message or changed-file list is included.",
+      "Reviewed by Atharva + Janvi on 2026-11-08."
+    ]
+  },
+  "predictor_input_policy": {
+    "condition": "C1_CAND",
+    "allowed": [
+      "cleaned issue text",
+      "candidate paths selected from the parent tree (production Java, tests, non-Java text files; label-free rule)",
+      "seed and lexically retrieved source files"
+    ],
+    "context_manifest": "20261108T212248.479768Z_C1_CAND_context.json",
+    "prompt_file": "20261108T212248.479768Z_C1_CAND_prompt.txt",
+    "target_sha_or_patch_content_in_prompt": false,
+    "ground_truth_label_list_in_prompt": false,
+    "changed_paths_appear_only_as_parent_tree_entries": true,
+    "constraint_type": "candidate-list prompt constraint; strict validation still enforced after generation"
+  },
+  "run_meta": {
+    "repeat_index": 1,
+    "prompt_chars": 38260,
+    "prompt_truncation_suspected": null,
+    "environment": {
+      "python_version": "3.11.9",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "ollama_version": "0.40.15",
+      "cia_git_commit": "6998094d7fae5e08d28ec7e1d042e7e52b59ffa5"
+    }
+  },
+  "baselines": {
+    "seed_path": "src/java/fr/jayasoft/ivy/Ivy.java",
+    "seed_selection": "first deterministic lexical source rank from request text against parent snapshot",
+    "dependency": {
+      "ranked_paths": [
+        "src/java/fr/jayasoft/ivy/Ivy.java",
+        "src/java/fr/jayasoft/ivy/AbstractArtifact.java",
+        "src/java/fr/jayasoft/ivy/Artifact.java",
+        "src/java/fr/jayasoft/ivy/ArtifactId.java",
+        "src/java/fr/jayasoft/ivy/ArtifactInfo.java",
+        "src/java/fr/jayasoft/ivy/ArtifactRevisionId.java",
+        "src/java/fr/jayasoft/ivy/CircularDependencyException.java",
+        "src/java/fr/jayasoft/ivy/Configuration.java",
+        "src/java/fr/jayasoft/ivy/ConflictManager.java",
+        "src/java/fr/jayasoft/ivy/DefaultArtifact.java"
+      ],
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 7
+      }
+    },
+    "historical_cochange": {
+      "ranked_paths": [
+        "src/java/fr/jayasoft/ivy/Ivy.java",
+        "CHANGES.txt",
+        "test/java/fr/jayasoft/ivy/ResolveTest.java",
+        "src/java/fr/jayasoft/ivy/IvyNode.java",
+        "src/java/fr/jayasoft/ivy/ant/IvyPublish.java",
+        "src/java/fr/jayasoft/ivy/DefaultDependencyDescriptor.java",
+        "src/java/fr/jayasoft/ivy/ant/IvyCachePath.java",
+        "src/java/fr/jayasoft/ivy/ant/IvyResolve.java",
+        "src/java/fr/jayasoft/ivy/report/ConfigurationResolveReport.java",
+        "src/java/fr/jayasoft/ivy/resolver/AbstractResourceResolver.java"
+      ],
+      "history_anchor_commit": "e26114a8fb6e6c7302a072e78dc88ad43979c17e",
+      "metrics": {
+        "precision": 0.2,
+        "recall": 0.2857142857142857,
+        "f1": 0.23529411764705882,
+        "recall_at_5": 0.2857142857142857,
+        "recall_at_10": 0.2857142857142857,
+        "true_positives": 2,
+        "predicted_count": 10,
+        "reference_count": 7
+      }
+    }
+  },
+  "model_run": {
+    "task_id": "ripple-ant-ivy-IVY-112",
+    "run_kind": "context_ablation_run",
+    "run_started_at": "2026-11-08T21:22:26.004Z",
+    "condition": "C1_CAND",
+    "source_commit": "e26114a8fb6e6c7302a072e78dc88ad43979c17e",
+    "provider_name": "ollama",
+    "model_id": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "status": "ok",
+    "prompt_sha256": "556fa4070bae4f4efdc827030c418fea1cb25b50db399529134fbdc9f5d1b554",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "latency_ms": 22474.986,
+    "input_tokens": 8368,
+    "output_tokens": 639,
+    "generation_settings": {
+      "temperature": 0.0,
+      "seed": 42,
+      "top_p": 1.0,
+      "top_k": 40,
+      "repeat_penalty": 1.0,
+      "num_ctx": 32768,
+      "num_predict": 2048,
+      "format": "json",
+      "stream": false
+    },
+    "provider_metrics": {
+      "total_duration_ns": 22415412000,
+      "load_duration_ns": 28310300,
+      "prompt_eval_duration_ns": 3743561000,
+      "eval_duration_ns": 18569046000
+    },
+    "predictions": [
+      {
+        "path": "src/java/fr/jayasoft/ivy/Ivy.java",
+        "rationale": "The change request mentions issues with ivy.xml files and Ivy's behavior. Ivy.java is the main class of Ivy, which is likely to be affected by changes in ivy.xml handling."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/resolver/AbstractURLResolver.java",
+        "rationale": "The change request mentions issues with ivy.xml files and Ivy's behavior. AbstractURLResolver.java is a key component in handling URL-based resolvers, which might be impacted by changes in ivy.xml."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorParser.java",
+        "rationale": "The change request mentions issues with ivy.xml files and Ivy's behavior. XmlModuleDescriptorParser.java is responsible for parsing ivy.xml files, so it is likely to be affected by changes in the file format."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ant/IvyResolve.java",
+        "rationale": "The change request mentions issues with ivy.xml files and Ivy's behavior. IvyResolve.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ant/IvyDeliver.java",
+        "rationale": "The change request mentions issues with ivy.xml files and Ivy's behavior. IvyDeliver.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ant/IvyReport.java",
+        "rationale": "The change request mentions issues with ivy.xml files and Ivy's behavior. IvyReport.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ant/IvyPublish.java",
+        "rationale": "The change request mentions issues with ivy.xml files and Ivy's behavior. IvyPublish.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ant/IvyCacheTask.java",
+        "rationale": "The change request mentions issues with ivy.xml files and Ivy's behavior. IvyCacheTask.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling."
+      },
+      {
+        "path": "src/java/fr/jayasoft/ivy/ant/IvyRetrieve.java",
+        "rationale": "The change request mentions issues with ivy.xml files and Ivy's behavior. IvyRetrieve.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling."
+      }
+    ],
+    "error": null,
+    "raw_response": "{\n  \"predictions\": [\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/Ivy.java\",\n      \"rationale\": \"The change request mentions issues with ivy.xml files and Ivy's behavior. Ivy.java is the main class of Ivy, which is likely to be affected by changes in ivy.xml handling.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/resolver/AbstractURLResolver.java\",\n      \"rationale\": \"The change request mentions issues with ivy.xml files and Ivy's behavior. AbstractURLResolver.java is a key component in handling URL-based resolvers, which might be impacted by changes in ivy.xml.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorParser.java\",\n      \"rationale\": \"The change request mentions issues with ivy.xml files and Ivy's behavior. XmlModuleDescriptorParser.java is responsible for parsing ivy.xml files, so it is likely to be affected by changes in the file format.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ant/IvyResolve.java\",\n      \"rationale\": \"The change request mentions issues with ivy.xml files and Ivy's behavior. IvyResolve.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ant/IvyDeliver.java\",\n      \"rationale\": \"The change request mentions issues with ivy.xml files and Ivy's behavior. IvyDeliver.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ant/IvyReport.java\",\n      \"rationale\": \"The change request mentions issues with ivy.xml files and Ivy's behavior. IvyReport.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ant/IvyPublish.java\",\n      \"rationale\": \"The change request mentions issues with ivy.xml files and Ivy's behavior. IvyPublish.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ant/IvyCacheTask.java\",\n      \"rationale\": \"The change request mentions issues with ivy.xml files and Ivy's behavior. IvyCacheTask.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling.\"\n    },\n    {\n      \"path\": \"src/java/fr/jayasoft/ivy/ant/IvyRetrieve.java\",\n      \"rationale\": \"The change request mentions issues with ivy.xml files and Ivy's behavior. IvyRetrieve.java is an Ant task that uses Ivy, so it might be impacted by changes in ivy.xml handling.\"\n    }\n  ]\n}",
+    "path_diagnostics": null
+  },
+  "model_metrics": {
+    "precision": 0.1111111111111111,
+    "recall": 0.14285714285714285,
+    "f1": 0.125,
+    "recall_at_5": 0.14285714285714285,
+    "recall_at_10": 0.14285714285714285,
+    "true_positives": 1,
+    "predicted_count": 9,
+    "reference_count": 7
+  },
+  "artifact_created_at": "2026-11-08T21:22:48.591Z",
+  "limitations": [
+    "A single model call is one sample; repeated calls can differ in lower ranks.",
+    "Changed-path labels are not a complete oracle for every file potentially affected.",
+    "Issue cleaning decisions are recorded in the task manifest.",
+    "C0_CONSTRAINED is a candidate-list prompt condition, not a hard decoding constraint; invalid paths are still rejected."
+  ]
+}

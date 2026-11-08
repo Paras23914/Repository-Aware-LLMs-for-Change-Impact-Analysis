@@ -1,0 +1,114 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+Namespace revision mapping does not work bidirectionally
+
+Ivy's namespace src and dest operations support rev options. However, leveraging this to remap revisions within a namespace declaration results in errors during validation, and further errors during caching.
+
+## Allowed candidate paths (pre-change repository)
+src/java/org/apache/ivy/core/resolve/ResolveEngine.java
+src/java/org/apache/ivy/core/settings/IvySettings.java
+src/java/org/apache/ivy/Ivy.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java
+src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java
+src/java/org/apache/ivy/plugins/resolver/BasicResolver.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java
+src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java
+src/java/org/apache/ivy/util/FileUtil.java
+src/java/org/apache/ivy/Ivy14.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultModuleDescriptor.java
+src/java/org/apache/ivy/core/resolve/IvyNode.java
+src/java/org/apache/ivy/Main.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultDependencyDescriptor.java
+src/java/org/apache/ivy/ant/IvyResolve.java
+src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java
+src/java/org/apache/ivy/plugins/resolver/DependencyResolver.java
+src/java/org/apache/ivy/core/settings/XmlSettingsParser.java
+src/java/org/apache/ivy/core/publish/PublishEngine.java
+src/java/org/apache/ivy/core/IvyContext.java
+src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java
+src/java/org/apache/ivy/core/module/id/ModuleRevisionId.java
+src/java/org/apache/ivy/ant/IvyBuildNumber.java
+src/java/org/apache/ivy/osgi/p2/P2MetadataParser.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorBuilder.java
+src/java/org/apache/ivy/ant/IvyDeliver.java
+src/java/org/apache/ivy/ant/IvyAntSettings.java
+src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java
+src/java/org/apache/ivy/ant/IvyPublish.java
+src/java/org/apache/ivy/core/deliver/DeliverEngine.java
+src/java/org/apache/ivy/core/resolve/VisitNode.java
+src/java/org/apache/ivy/core/resolve/ResolveOptions.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorWriter.java
+src/java/org/apache/ivy/ant/IvyPostResolveTask.java
+src/java/org/apache/ivy/plugins/parser/xml/UpdateOptions.java
+src/java/org/apache/ivy/ant/IvyTask.java
+src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java
+src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java
+src/java/org/apache/ivy/plugins/resolver/packager/PackagerCacheEntry.java
+src/java/org/apache/ivy/plugins/repository/vsftp/VsftpRepository.java
+src/java/org/apache/ivy/core/retrieve/RetrieveOptions.java
+src/java/org/apache/ivy/ant/IvyReport.java
+src/java/org/apache/ivy/ant/IvyRepositoryReport.java
+src/java/org/apache/ivy/core/deliver/DeliverOptions.java
+src/java/org/apache/ivy/osgi/repo/AbstractOSGiResolver.java
+src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java
+src/java/org/apache/ivy/core/search/SearchEngine.java
+src/java/org/apache/ivy/core/cache/DefaultResolutionCacheManager.java
+src/java/org/apache/ivy/core/event/IvyEventFilter.java
+src/java/org/apache/ivy/plugins/resolver/IvyRepResolver.java
+src/java/org/apache/ivy/ant/IvyBuildList.java
+src/java/org/apache/ivy/plugins/version/VersionRangeMatcher.java
+src/java/org/apache/ivy/ant/IvyMakePom.java
+src/java/org/apache/ivy/core/publish/PublishOptions.java
+src/java/org/apache/ivy/core/cache/CacheMetadataOptions.java
+src/java/org/apache/ivy/plugins/resolver/DualResolver.java
+src/java/org/apache/ivy/util/url/BasicURLHandler.java
+src/java/org/apache/ivy/core/resolve/ResolveData.java
+src/java/org/apache/ivy/ant/IvyInstall.java
+src/java/org/apache/ivy/ant/IvyInfo.java
+src/java/org/apache/ivy/core/cache/RepositoryCacheManager.java
+src/java/org/apache/ivy/core/sort/ModuleInSort.java
+src/java/org/apache/ivy/plugins/resolver/FileSystemResolver.java
+src/java/org/apache/ivy/core/install/InstallEngine.java
+src/java/org/apache/ivy/plugins/namespace/MRIDTransformationRule.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParser.java
+src/java/org/apache/ivy/plugins/version/VersionMatcher.java
+src/java/org/apache/ivy/core/IvyPatternHelper.java
+src/java/org/apache/ivy/osgi/core/BundleInfoAdapter.java
+src/java/org/apache/ivy/plugins/resolver/ChainResolver.java
+src/java/org/apache/ivy/ant/IvyListModules.java
+src/java/org/apache/ivy/plugins/parser/m2/PomReader.java
+src/java/org/apache/ivy/core/module/id/ModuleRules.java
+src/java/org/apache/ivy/plugins/resolver/CacheResolver.java
+src/java/org/apache/ivy/plugins/resolver/packager/PackagerResolver.java
+test/java/org/apache/ivy/core/resolve/ResolveTest.java
+test/java/org/apache/ivy/ant/IvyPublishTest.java
+test/java/org/apache/ivy/plugins/resolver/FileSystemResolverTest.java
+test/java/org/apache/ivy/ant/IvyResolveTest.java
+test/java/org/apache/ivy/ant/IvyDeliverTest.java
+test/java/org/apache/ivy/core/publish/PublishEventsTest.java
+test/java/org/apache/ivy/core/retrieve/RetrieveTest.java
+test/java/org/apache/ivy/ant/IvyRetrieveTest.java
+test/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParserTest.java
+test/java/org/apache/ivy/plugins/parser/xml/XmlModuleUpdaterTest.java
+CHANGES.txt
+RELEASE_NOTES
+build-release.xml
+LICENSE
+build.xml
+ivy.xml
+README
+build-for-bin-distrib.xml
+build.properties
+NOTICE
+version.properties
+ivysettings-release.xml
+doc/concept.html
+doc/ivyfile/dependency.html
+doc/tutorial/defaultconf.html
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.

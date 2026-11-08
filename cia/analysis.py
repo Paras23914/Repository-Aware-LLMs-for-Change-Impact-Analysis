@@ -191,14 +191,18 @@ def _source_paths(repository: RepositorySnapshot) -> tuple[str, ...]:
         and "/test/" not in f"/{path.lower()}/" and not path.lower().startswith("test/")
     )
 
-def _rank_sources(query: str, repository: RepositorySnapshot) -> tuple[str, ...]:
+def _rank_among(query: str, repository: RepositorySnapshot, paths) -> tuple[str, ...]:
+    """Rank the given paths by token overlap with the request (stable, label-free)."""
     query_tokens = Counter(token.lower() for token in _TOKEN_RE.findall(query) if len(token) > 2)
     scored: list[tuple[int, str]] = []
-    for path in _source_paths(repository):
+    for path in paths:
         source = repository.read_file(path)
         scored.append((_score_file(query_tokens, path, source), path))
     # A zero-overlap tie is stable and explicit; it does not inspect target data.
     return tuple(path for _, path in sorted(scored, key=lambda item: (-item[0], item[1])))
+
+def _rank_sources(query: str, repository: RepositorySnapshot) -> tuple[str, ...]:
+    return _rank_among(query, repository, _source_paths(repository))
 
 def _truncate(text: str, remaining: int) -> str:
     if len(text) <= remaining:
@@ -305,37 +309,68 @@ def build_c0_constrained(
         "C0_CONSTRAINED", text, repository.commit_sha, items, repository
     )
 
-def build_contexts(
-    predictor_task: PredictorInput, budgets: ContextBudgets | None = None
-) -> tuple[ContextDocument, ContextDocument, ContextDocument, ContextDocument]:
-    """Build all cumulative contexts from one immutable pre-change snapshot."""
-    budgets = budgets or ContextBudgets()
+@dataclass(frozen=True, slots=True)
+class _SectionLimits:
+    """Character limits for the cumulative C1-C3 sections.
+
+    ``*_per_file`` caps stop one large file from consuming a whole section budget.
+    The default (``None``) reproduces the original unbounded-per-file behaviour.
+    """
+
+    source_chars: int
+    dependency_chars: int
+    supplementary_chars: int
+    retrieved_source_limit: int
+    source_per_file: int | None = None
+    dependency_per_file: int | None = None
+    supplementary_per_file: int | None = None
+    mark_truncation: bool = False
+
+def _clip(text: str, remaining: int, per_file: int | None, mark: bool) -> str:
+    cap = remaining if per_file is None else min(remaining, per_file)
+    if len(text) <= cap:
+        return text
+    clipped = text[:cap]
+    return clipped + "\n... [truncated]" if mark else clipped
+
+def _cumulative_contexts(
+    predictor_task: PredictorInput,
+    base_body: str,
+    base_items: tuple[ContextItem, ...],
+    limits: _SectionLimits,
+    suffix: str,
+    names: tuple[str, str, str],
+) -> tuple[ContextDocument, ContextDocument, ContextDocument]:
+    """Add C1 (source), C2 (dependency) and C3 (extended) sections onto a base body.
+
+    Each condition adds only its own section to the previous one. ``suffix`` is a
+    constant closing instruction appended to every condition's final text.
+    """
     repository = predictor_task.repository
-    base_text, base_items = _base_context(predictor_task)
     source_rank = _rank_sources(predictor_task.issue_text, repository)
     if not source_rank:
         raise CIAError("cannot construct C1: no production Java source files exist at the parent commit")
     seed = source_rank[0]
 
-    c1_text = base_text + "\n## Seed and retrieved source files\n"
+    c1_body = base_body + "\n## Seed and retrieved source files\n"
     c1_items = list(base_items)
     selected_sources: list[str] = []
-    remaining = budgets.source_chars
+    remaining = limits.source_chars
     ordered = (seed, *(path for path in source_rank[1:] if path != seed))
     for index, path in enumerate(ordered):
-        if index > budgets.retrieved_source_limit:
+        if index > limits.retrieved_source_limit:
             break
         if remaining <= 0:
             break
-        source = _truncate(repository.read_file(path), remaining)
+        source = _clip(repository.read_file(path), remaining, limits.source_per_file, limits.mark_truncation)
         selected_sources.append(path)
         kind = "seed_source" if path == seed else "retrieved_source"
         label = "SEED" if path == seed else "RETRIEVED"
-        c1_text += f"\n### {label}: {path}\n```java\n{source}\n```\n"
+        c1_body += f"\n### {label}: {path}\n```java\n{source}\n```\n"
         c1_items.append(_item(kind, path, "lexically ranked from request against parent-revision source", repository.commit_sha, source))
         remaining -= len(source)
     c1_items_tuple = tuple(c1_items)
-    c1 = ContextDocument("C1", c1_text, repository.commit_sha, c1_items_tuple, repository)
+    c1 = ContextDocument(names[0], c1_body + suffix, repository.commit_sha, c1_items_tuple, repository)
 
     dep_index = DependencyIndex.build(repository)
     dep_candidates: list[str] = []
@@ -343,27 +378,27 @@ def build_contexts(
         for neighbor in dep_index.neighbors(path):
             if neighbor not in selected_sources and neighbor not in dep_candidates:
                 dep_candidates.append(neighbor)
-    c2_text = c1_text + "\n## Dependency information (parent revision)\n"
+    c2_body = c1_body + "\n## Dependency information (parent revision)\n"
     c2_items = list(c1_items_tuple)
-    remaining = budgets.dependency_chars
+    remaining = limits.dependency_chars
     for path in dep_candidates:
         if remaining <= 0:
             break
-        signature = _truncate(_signature(repository.read_file(path)), remaining)
+        signature = _clip(_signature(repository.read_file(path)), remaining, limits.dependency_per_file, limits.mark_truncation)
         if not signature:
             continue
-        c2_text += f"\n### Dependency signatures: {path}\n```java\n{signature}\n```\n"
+        c2_body += f"\n### Dependency signatures: {path}\n```java\n{signature}\n```\n"
         c2_items.append(_item(
             "dependency_signature", path,
             "direct import/type reference to or from a C1 source file", repository.commit_sha, signature,
         ))
         remaining -= len(signature)
     c2_items_tuple = tuple(c2_items)
-    c2 = ContextDocument("C2", c2_text, repository.commit_sha, c2_items_tuple, repository)
+    c2 = ContextDocument(names[1], c2_body + suffix, repository.commit_sha, c2_items_tuple, repository)
 
-    c3_text = c2_text + "\n## Tests, documentation, and prior co-change (parent history only)\n"
+    c3_body = c2_body + "\n## Tests, documentation, and prior co-change (parent history only)\n"
     c3_items = list(c2_items_tuple)
-    remaining = budgets.supplementary_chars
+    remaining = limits.supplementary_chars
     type_names = _class_names(repository, tuple(selected_sources))
     java_paths = repository.list_files()
     tests: list[str] = []
@@ -398,12 +433,12 @@ def build_contexts(
     for path in sorted(set(tests)) + sorted(set(docs)):
         if remaining <= 0:
             break
-        content = _truncate(repository.read_file(path), remaining)
+        content = _clip(repository.read_file(path), remaining, limits.supplementary_per_file, limits.mark_truncation)
         if not content:
             continue
         kind = "relevant_test" if path in tests else "relevant_documentation"
         heading = "Relevant test" if kind == "relevant_test" else "Relevant documentation"
-        c3_text += f"\n### {heading}: {path}\n```\n{content}\n```\n"
+        c3_body += f"\n### {heading}: {path}\n```\n{content}\n```\n"
         c3_items.append(_item(kind, path, "associated by declared type or package/issue terms", repository.commit_sha, content))
         remaining -= len(content)
 
@@ -421,10 +456,199 @@ def build_contexts(
         ))
         remaining -= len(fact)
     if history_lines:
-        c3_text += "\n### Prior co-change counts\n" + "\n".join(history_lines) + "\n"
+        c3_body += "\n### Prior co-change counts\n" + "\n".join(history_lines) + "\n"
 
-    c3 = ContextDocument("C3", c3_text, repository.commit_sha, tuple(c3_items), repository)
+    c3 = ContextDocument(names[2], c3_body + suffix, repository.commit_sha, tuple(c3_items), repository)
+    return c1, c2, c3
+
+def build_contexts(
+    predictor_task: PredictorInput, budgets: ContextBudgets | None = None
+) -> tuple[ContextDocument, ContextDocument, ContextDocument, ContextDocument]:
+    """Build all cumulative contexts from one immutable pre-change snapshot."""
+    budgets = budgets or ContextBudgets()
+    base_text, base_items = _base_context(predictor_task)
+    limits = _SectionLimits(
+        source_chars=budgets.source_chars,
+        dependency_chars=budgets.dependency_chars,
+        supplementary_chars=budgets.supplementary_chars,
+        retrieved_source_limit=budgets.retrieved_source_limit,
+    )
+    c1, c2, c3 = _cumulative_contexts(
+        predictor_task, base_text, base_items, limits, "", ("C1", "C2", "C3")
+    )
     return (build_c0(predictor_task), c1, c2, c3)
+
+# ---------------------------------------------------------------------------
+# Candidate-list family: C0_CAND ... C3_CAND
+#
+# The full-file-tree C0 prompt already uses ~26K of the 32K-token window, so the
+# cumulative C1-C3 prompts built on it overflow and are silently clipped by
+# Ollama. The candidate family instead keeps the model, settings and window
+# fixed and builds every condition on the compact candidate list, under a hard
+# per-prompt character budget, so each condition is measurably what it claims.
+# ---------------------------------------------------------------------------
+
+_NON_JAVA_TEXT_EXTENSIONS = (
+    ".txt", ".md", ".rst", ".xml", ".properties", ".gradle", ".yml", ".yaml",
+    ".html", ".xsl", ".cfg", ".json",
+)
+
+_CAND_SUFFIX = (
+    "\n## Task\n"
+    "Using the information above, return the JSON object now: up to 10 predictions, "
+    "most likely first, every path copied exactly from the allowed candidate paths list.\n"
+)
+
+@dataclass(frozen=True, slots=True)
+class CandidateBudgets:
+    """Candidate-list composition and per-condition size limits (all label-free)."""
+
+    candidate_limit: int = 100
+    reserved_tests: int = 10
+    reserved_non_java: int = 15
+    source_chars: int = 32_000
+    source_per_file_chars: int = 8_000
+    dependency_chars: int = 10_000
+    dependency_per_file_chars: int = 2_500
+    supplementary_chars: int = 10_000
+    supplementary_per_file_chars: int = 3_500
+    retrieved_source_limit: int = 5
+    max_prompt_chars: int = 72_000
+
+    def __post_init__(self) -> None:
+        if self.candidate_limit < 1:
+            raise ValueError("candidate_limit must be positive")
+        if self.reserved_tests < 0 or self.reserved_non_java < 0:
+            raise ValueError("reserved slot counts must not be negative")
+        if self.reserved_tests + self.reserved_non_java >= self.candidate_limit:
+            raise ValueError("reserved slots must leave room for production Java files")
+        if min(self.source_chars, self.dependency_chars, self.supplementary_chars) < 1:
+            raise ValueError("section character budgets must be positive")
+        if self.max_prompt_chars < 1:
+            raise ValueError("max_prompt_chars must be positive")
+
+def _is_test_path(path: str) -> bool:
+    return "/test/" in f"/{path.lower()}/"
+
+def _is_test_java(path: str) -> bool:
+    return path.endswith(".java") and not path.endswith("package-info.java") and _is_test_path(path)
+
+def _is_text_candidate(path: str) -> bool:
+    if path.endswith(".java") or _is_test_path(path):
+        return False
+    name = path.rsplit("/", 1)[-1]
+    if path.lower().endswith(_NON_JAVA_TEXT_EXTENSIONS):
+        return True
+    # Root-level files without an extension (README, LICENSE, NOTICE).
+    return "/" not in path and "." not in name
+
+def select_candidates(
+    predictor_task: PredictorInput, budgets: CandidateBudgets | None = None
+) -> tuple[tuple[str, ...], dict[str, int]]:
+    """Choose the allowed candidate paths from the parent tree, without labels.
+
+    Composition: lexically ranked production Java, a reserved block of lexically
+    ranked test files, and a reserved block of non-Java text files (root-level
+    documentation/build files first, then other text files by lexical rank).
+    Order in the prompt: production Java, tests, non-Java.
+    """
+    budgets = budgets or CandidateBudgets()
+    repository = predictor_task.repository
+    query = predictor_task.issue_text
+    paths = repository.list_files()
+
+    production = _rank_sources(query, repository)
+    tests = _rank_among(query, repository, [p for p in paths if _is_test_java(p)])
+    pool = [p for p in paths if _is_text_candidate(p)]
+    root_level = [p for p in pool if "/" not in p]
+    nested = [p for p in pool if "/" in p]
+    non_java = _rank_among(query, repository, root_level) + _rank_among(query, repository, nested)
+
+    n_tests = min(budgets.reserved_tests, len(tests))
+    n_non_java = min(budgets.reserved_non_java, len(non_java))
+    n_production = budgets.candidate_limit - n_tests - n_non_java
+
+    selected = list(production[:n_production]) + list(tests[:n_tests]) + list(non_java[:n_non_java])
+    shortfall = budgets.candidate_limit - len(selected)
+    if shortfall > 0:
+        selected.extend(production[n_production:n_production + shortfall])
+    counts = {
+        "production_java": min(len(production), n_production) + max(0, min(shortfall, len(production) - n_production)),
+        "test_java": n_tests,
+        "non_java": n_non_java,
+    }
+    return tuple(selected), counts
+
+def build_candidate_contexts(
+    predictor_task: PredictorInput, budgets: CandidateBudgets | None = None
+) -> tuple[ContextDocument, ContextDocument, ContextDocument, ContextDocument]:
+    """Build C0_CAND..C3_CAND: the candidate list plus cumulative C1-C3 sections.
+
+    Every prompt is guaranteed to be at most ``budgets.max_prompt_chars``.
+    """
+    budgets = budgets or CandidateBudgets()
+    repository = predictor_task.repository
+    candidates, counts = select_candidates(predictor_task, budgets)
+
+    base_body = (
+        "You are analyzing likely file impact for a software maintenance request.\n"
+        "Return only a JSON object with a 'predictions' array containing up to 10 "
+        "objects of the form {\"path\": string, \"rationale\": string}, most likely first.\n"
+        "Every path must be copied exactly from the candidate path list below.\n"
+        "Do not output any path that is not in that list. Do not repeat paths.\n\n"
+        "## Change request\n"
+        + predictor_task.issue_text
+        + "\n\n## Allowed candidate paths (pre-change repository)\n"
+        + "\n".join(candidates)
+        + "\n"
+    )
+    base_items = (
+        _item("issue", None, "request supplied for analysis", repository.commit_sha, predictor_task.issue_text),
+        *(
+            _item(
+                "candidate_path", path,
+                "candidate selected from the pre-change repository tree "
+                f"(pool sizes: {counts})",
+                repository.commit_sha,
+            )
+            for path in candidates
+        ),
+    )
+
+    # Fit the three section budgets into what is left of the prompt budget,
+    # keeping ~12% back for the headings and truncation markers they add.
+    available = budgets.max_prompt_chars - len(base_body) - len(_CAND_SUFFIX)
+    usable = int(available * 0.88)
+    if usable < 3_000:
+        raise CIAError(
+            "prompt budget is exhausted by the issue text and candidate list; "
+            "reduce candidate_limit or raise max_prompt_chars"
+        )
+    wanted = budgets.source_chars + budgets.dependency_chars + budgets.supplementary_chars
+    scale = min(1.0, usable / wanted)
+    limits = _SectionLimits(
+        source_chars=max(1, int(budgets.source_chars * scale)),
+        dependency_chars=max(1, int(budgets.dependency_chars * scale)),
+        supplementary_chars=max(1, int(budgets.supplementary_chars * scale)),
+        retrieved_source_limit=budgets.retrieved_source_limit,
+        source_per_file=budgets.source_per_file_chars,
+        dependency_per_file=budgets.dependency_per_file_chars,
+        supplementary_per_file=budgets.supplementary_per_file_chars,
+        mark_truncation=True,
+    )
+    c1, c2, c3 = _cumulative_contexts(
+        predictor_task, base_body, base_items, limits, _CAND_SUFFIX,
+        ("C1_CAND", "C2_CAND", "C3_CAND"),
+    )
+    c0 = ContextDocument("C0_CAND", base_body + _CAND_SUFFIX, repository.commit_sha, base_items, repository)
+    contexts = (c0, c1, c2, c3)
+    for context in contexts:
+        if len(context.text) > budgets.max_prompt_chars:
+            raise CIAError(
+                f"{context.condition} prompt is {len(context.text)} characters, over the "
+                f"{budgets.max_prompt_chars}-character budget"
+            )
+    return contexts
 
 def save_contexts(
     output_dir: str | Path,

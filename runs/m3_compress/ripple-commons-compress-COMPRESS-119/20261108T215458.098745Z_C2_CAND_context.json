@@ -1,0 +1,858 @@
+{
+  "task_id": "ripple-commons-compress-COMPRESS-119",
+  "condition": "C2_CAND",
+  "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+  "prompt_file": "20261108T215458.098745Z_C2_CAND_prompt.txt",
+  "prompt_sha256": "29d7d87f5e6fabfe3d8990cd8cecf2d36075f9921d55774402606bd091daedce",
+  "prompt_char_count": 50684,
+  "items": [
+    {
+      "kind": "issue",
+      "path": null,
+      "reason": "request supplied for analysis",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "452c1ffb8f62379e781ef4105a471cd007d1c5585c2700a6e12ac94537e6f412",
+      "char_count": 164
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveStreamFactory.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarBuffer.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/CompressorStreamFactory.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveInputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveOutputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveInputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveInputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/changes/ChangeSetPerformer.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorOutputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveInputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveOutputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/gzip/GzipCompressorInputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveInputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarConstants.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/Lister.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveEntry.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveEntry.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveOutputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/NioZipEncoding.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveEntry.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/FallbackZipEncoding.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/Simple8BitZipEncoding.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/CompressorInputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/changes/ChangeSetResults.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/gzip/GzipCompressorOutputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/utils/IOUtils.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ExtraFieldUtils.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/changes/Change.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/changes/ChangeSet.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveEntry.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioConstants.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/AsiExtraField.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/GeneralPurposeBit.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/JarMarker.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/UnparseableExtraFieldData.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/utils/ArchiveUtils.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveEntry.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/AbstractUnicodeExtraField.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipLong.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveException.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioUtil.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarUtils.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/UnicodeCommentExtraField.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/UnicodePathExtraField.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/UnixStat.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/UnrecognizedExtraField.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/UnsupportedZipFeatureException.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipEncoding.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipEncodingHelper.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipExtraField.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipShort.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/zip/ZipUtil.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/CompressorException.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/CompressorOutputStream.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2Constants.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2Utils.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/bzip2/CRC.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/bzip2/Rand.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/compressors/gzip/GzipUtils.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/AbstractTestCase.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/archivers/ArchiveOutputStreamTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/archivers/ZipTestCase.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/archivers/zip/Maven221MultiVolumeTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/changes/ChangeSetTestCase.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/archivers/TarTestCase.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/IOMethodsTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/archivers/CpioTestCase.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/DetectArchiverTestCase.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/test/java/org/apache/commons/compress/DetectCompressorTestCase.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "pom.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "LICENSE.txt",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "RELEASE-NOTES.txt",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "README.txt",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "PROPOSAL.txt",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "NOTICE.txt",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/site/xdoc/mail-lists.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/site/xdoc/issue-tracking.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/site/xdoc/examples.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/site/xdoc/download_compress.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/site/xdoc/index.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/site/xdoc/zip.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/changes/changes.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ar/package.html",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/package.html",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 66, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "seed_source",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java",
+      "reason": "lexically ranked from request against parent-revision source",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "915a9468b23d00f0bb0f84c8a1d969bb5d5608b8105ab5ce8ceed28d71308d2f",
+      "char_count": 8016
+    },
+    {
+      "kind": "retrieved_source",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveStreamFactory.java",
+      "reason": "lexically ranked from request against parent-revision source",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "30eabe9fb728c59721c5fdbb814ba8443c2ac9d7daad8472fd8bb813de0e09c4",
+      "char_count": 8016
+    },
+    {
+      "kind": "retrieved_source",
+      "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java",
+      "reason": "lexically ranked from request against parent-revision source",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "d6a751574fbed105ad65a305c5e70ceb190d5a8d5862cd3a65f45778bd36efef",
+      "char_count": 8016
+    },
+    {
+      "kind": "retrieved_source",
+      "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarBuffer.java",
+      "reason": "lexically ranked from request against parent-revision source",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "5ea5bd90ee7fc9dbfad8de702f8df0e52e439ccfecbede33793dc27e1e8fe431",
+      "char_count": 7968
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveEntry.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "87282e23f3ca7da2f70009e9e3d746862164927a5a80c7a3e5be2fc58a9cce3b",
+      "char_count": 278
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveOutputStream.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "31dccd9a228694fc830ef7fbaa4fc6ec2121765b92ec50e9012c905bdde3d6ba",
+      "char_count": 868
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveEntry.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "f7bb94bbcc62ae8b2baf6d76171e0b161811ae7699036113c24874a7096993ea",
+      "char_count": 2516
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioConstants.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "17a3a9949e203820b98b0aedafa38af918e0ff37680c15b94bb7a8bef1c72341",
+      "char_count": 1264
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioUtil.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "34a0e26752cd4482496175dd4829e948f3aa7a4a5ed02cb5dc66284b116a993e",
+      "char_count": 262
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/main/java/org/apache/commons/compress/utils/ArchiveUtils.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "024c6a6c69c61d50ad9846af2b7ea365ff803dd4caf3bc90d0addd203ac958ea",
+      "char_count": 1325
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/test/java/org/apache/commons/compress/archivers/CpioTestCase.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "0de87fb6bb78aae29a8f209425c4689d3af3623e817b83bceb3f4b1dfa8279ac",
+      "char_count": 2058
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveException.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "de5adec1ea46f0bf518f0eb66cc0249cd82f80ae66ea83374127585e1e2fb7e3",
+      "char_count": 276
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveInputStream.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "2fd8172881c06d4d2d63813894d88c578b956fb4ab269b212c7007879ede6b2f",
+      "char_count": 641
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/main/java/org/apache/commons/compress/archivers/Lister.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "content_sha256": "625c78594f9bbd7020c0cc513c4ae29d0ec30858ab732b4685d4cbebb004d716",
+      "char_count": 528
+    }
+  ]
+}

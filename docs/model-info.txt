@@ -22,3 +22,4 @@
 NAME                ID              SIZE      MODIFIED       
 qwen2.5-coder:7b    dae161e27b0e    4.7 GB    23 minutes ago    
 ollama version is 0.40.14
+NAME    ID    SIZE    PROCESSOR    CONTEXT    RUNNER    UNTIL 

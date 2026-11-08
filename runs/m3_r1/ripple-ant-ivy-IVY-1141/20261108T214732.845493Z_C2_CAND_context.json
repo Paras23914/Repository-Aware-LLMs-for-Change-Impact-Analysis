@@ -1,0 +1,946 @@
+{
+  "task_id": "ripple-ant-ivy-IVY-1141",
+  "condition": "C2_CAND",
+  "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+  "prompt_file": "20261108T214732.845493Z_C2_CAND_prompt.txt",
+  "prompt_sha256": "fd67a003d7662cd72262c05ac0eff070f66c5ed528976fdb3db277ad6d4523db",
+  "prompt_char_count": 50545,
+  "items": [
+    {
+      "kind": "issue",
+      "path": null,
+      "reason": "request supplied for analysis",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "e53cee3aba7fbc1d726c8b493d149dc0e09b84471e7d7e69985f8bcceb1cc75e",
+      "char_count": 1063
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/Ivy.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/settings/IvySettings.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/resolve/IvyNode.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/resolver/BasicResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/resolve/VisitNode.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/settings/XmlSettingsParser.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/cache/RepositoryCacheManager.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/IvyContext.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/Main.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorBuilder.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/Ivy14.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyResolve.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyDeliver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyPostResolveTask.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/deliver/DeliverOptions.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/resolver/DependencyResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/module/id/ModuleRules.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/util/FileUtil.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyBuildList.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/module/id/ModuleRevisionId.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/conflict/LatestCompatibleConflictManager.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/osgi/p2/P2MetadataParser.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/sort/ModuleInSort.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/report/ResolveReport.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyReport.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParser.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/resolve/ResolveOptions.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorWriter.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/resolve/ResolveData.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/module/descriptor/DefaultModuleDescriptor.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyBuildNumber.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyTask.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/report/ConfigurationResolveReport.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyRepositoryReport.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/module/descriptor/DefaultDependencyDescriptor.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/publish/PublishEngine.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/repository/TransferEvent.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyAntSettings.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyPublish.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/module/id/ModuleId.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/osgi/core/BundleInfoAdapter.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/search/SearchEngine.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/osgi/repo/AbstractOSGiResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/deliver/DeliverEngine.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/version/VersionMatcher.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/resolve/IvyNodeEviction.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorWriter.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/IvyPatternHelper.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/resolver/AbstractWorkspaceResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/resolver/AbstractSshBasedResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/repository/vsftp/VsftpRepository.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyInstall.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/core/module/descriptor/OverrideDependencyDescriptorMediator.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/repository/ssh/SshRepository.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/osgi/util/DelegatingHandler.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/repository/ssh/SshCache.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/repository/Repository.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/ant/IvyInfo.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/util/url/URLHandler.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/resolver/DualResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/util/url/ApacheURLLister.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/repository/ssh/Scp.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/util/extendable/ExtendableItem.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "src/java/org/apache/ivy/plugins/resolver/SshResolver.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/core/resolve/ResolveTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/ant/IvyPublishTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/ant/IvyResolveTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/plugins/resolver/FileSystemResolverTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/ant/IvyDeliverTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/core/publish/PublishEventsTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParserTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/ant/IvyRetrieveTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/ant/IvyPostResolveTaskTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "test/java/org/apache/ivy/plugins/parser/xml/XmlModuleUpdaterTest.java",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "build.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "LICENSE",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "build-release.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "ivy.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "README",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "build-for-bin-distrib.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "version.properties",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "build.properties",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "ivysettings-release.xml",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "NOTICE",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "doc/concept.html",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "doc/settings/triggers.html",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "doc/ivyfile/dependency.html",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "doc/tutorial/multiproject.html",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "candidate_path",
+      "path": "doc/use/resolve.html",
+      "reason": "candidate selected from the pre-change repository tree (pool sizes: {'production_java': 75, 'test_java': 10, 'non_java': 15})",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": null,
+      "char_count": 0
+    },
+    {
+      "kind": "seed_source",
+      "path": "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+      "reason": "lexically ranked from request against parent-revision source",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "f593c0f289f4b47aeba99592b9e26b260a8372a006651536ee1db3454c7cfb51",
+      "char_count": 8016
+    },
+    {
+      "kind": "retrieved_source",
+      "path": "src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java",
+      "reason": "lexically ranked from request against parent-revision source",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "ad03c8ea677310788514c659bcaef48d996af5addd2d43d8a326625836d91957",
+      "char_count": 8016
+    },
+    {
+      "kind": "retrieved_source",
+      "path": "src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java",
+      "reason": "lexically ranked from request against parent-revision source",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "6941981c046544a1fcb024d36fcc77a52b8ea1737447880fbec8851ead883ad4",
+      "char_count": 8016
+    },
+    {
+      "kind": "retrieved_source",
+      "path": "src/java/org/apache/ivy/Ivy.java",
+      "reason": "lexically ranked from request against parent-revision source",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "1c43edc10f7ecabc3a1a0532d5b00845107ee942c1bcd8c1d27707f852c78869",
+      "char_count": 7968
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/IvyContext.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "ec303f8cd35f7db2f455823547bea30102d40967acb859086e89f19fcb2a5992",
+      "char_count": 2396
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/LogOptions.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "0b829bc8defafc36c133e0b284efc705c27bb6dc617bb36af097b3c05559f284",
+      "char_count": 410
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/cache/ArtifactOrigin.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "a47b8ce8f6b34b399bfdb19976ab424b79d4d1d41b7a58d9681d9d765798b494",
+      "char_count": 1099
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/cache/ResolutionCacheManager.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "1a075156ced203210adf355ed05e1866e0d62e24c60b77a46da6b6a577fb70e4",
+      "char_count": 276
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/check/CheckEngine.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "4f1e8ae45c47043675ee90e0dc619a265b308129e625bb5f593c7c0475834929",
+      "char_count": 1028
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/event/EventManager.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "00e4d0bd611c3bcad2b5f96d1ddf8b94dcc142160f9302a9c29cf28d6f14abee",
+      "char_count": 1055
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/event/download/PrepareDownloadEvent.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "f92e7d1d10b4326cff0643b76e159a40e0ab01120bffcd4f6f4542174938e444",
+      "char_count": 381
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/event/resolve/EndResolveEvent.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "a2d6b6ab3db96ee596d8f54c5811986f96d2c3d37bee58be9ec62f831562b3a4",
+      "char_count": 421
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/event/resolve/StartResolveEvent.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "48f92a4a8285bb34d60911db1d824e3a58cd835b2820330e117be4db178ef93c",
+      "char_count": 280
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/install/InstallEngine.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "bee986312f5dd06f875c17906dc6b88bae90ddc481e32f7efb5f800baa8055f6",
+      "char_count": 1730
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/module/descriptor/Artifact.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "4ee9349efb7cd503cd21d554ce4e0fe28064bbe5ce2daa3099c9edef339d7dc9",
+      "char_count": 307
+    },
+    {
+      "kind": "dependency_signature",
+      "path": "src/java/org/apache/ivy/core/module/descriptor/Configuration.java",
+      "reason": "direct import/type reference to or from a C1 source file",
+      "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "content_sha256": "fb93a39f08182ac6d623e319b44ccfa5a591d53b499567068f583f6316c0ed29",
+      "char_count": 633
+    }
+  ]
+}

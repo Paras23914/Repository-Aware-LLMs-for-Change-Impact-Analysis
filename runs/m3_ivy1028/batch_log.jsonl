@@ -1,0 +1,4 @@
+{"logged_at": "2026-11-06T02:18:24+00:00", "task_id": "ripple-ant-ivy-IVY-1028", "condition": "C0_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 87.1}
+{"logged_at": "2026-11-06T02:20:04+00:00", "task_id": "ripple-ant-ivy-IVY-1028", "condition": "C1_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 99.7}
+{"logged_at": "2026-11-06T02:21:50+00:00", "task_id": "ripple-ant-ivy-IVY-1028", "condition": "C2_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 106.3}
+{"logged_at": "2026-11-06T02:23:25+00:00", "task_id": "ripple-ant-ivy-IVY-1028", "condition": "C3_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 95.0}

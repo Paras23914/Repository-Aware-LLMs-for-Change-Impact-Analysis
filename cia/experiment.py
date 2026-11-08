@@ -5,9 +5,11 @@ from __future__ import annotations
 
 import hashlib
 import json
+import platform
 import subprocess
 import tomllib
-from dataclasses import asdict
+import urllib.request
+from dataclasses import asdict, replace
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -16,11 +18,39 @@ from cia.analysis import (
     _rank_sources,
     build_c0,
     build_c0_constrained,
+    build_candidate_contexts,
     historical_cochange_rank,
 )
 from cia.data import RepositorySnapshot, load_manifest, predictor_input
+from cia.guards import detect_truncation, preflight_prompt_check
 from cia.prediction import evaluate, run_prediction, validate_ranked_paths
 from cia.providers import OllamaConfig, OllamaProvider
+
+LEGACY_CONDITIONS = ("C0", "C0_CONSTRAINED")
+CANDIDATE_CONDITIONS = ("C0_CAND", "C1_CAND", "C2_CAND", "C3_CAND")
+ALL_CONDITIONS = LEGACY_CONDITIONS + CANDIDATE_CONDITIONS
+
+
+def _environment(base_url: str) -> dict[str, object]:
+    """Best-effort record of the software environment that produced a run."""
+    info: dict[str, object] = {
+        "python_version": platform.python_version(),
+        "platform": platform.platform(),
+    }
+    try:
+        with urllib.request.urlopen(base_url.rstrip("/") + "/api/version", timeout=5) as response:
+            info["ollama_version"] = json.loads(response.read().decode("utf-8")).get("version")
+    except Exception as exc:  # noqa: BLE001 - metadata only, never fatal
+        info["ollama_version"] = f"unavailable ({type(exc).__name__})"
+    try:
+        project_root = Path(__file__).resolve().parent.parent
+        info["cia_git_commit"] = subprocess.run(
+            ["git", "-C", str(project_root), "rev-parse", "HEAD"],
+            check=True, capture_output=True, text=True,
+        ).stdout.strip()
+    except Exception:  # noqa: BLE001
+        info["cia_git_commit"] = "unavailable"
+    return info
 
 
 def run_experiment(
@@ -30,12 +60,13 @@ def run_experiment(
     config_path: str | Path = Path("config/experiment.toml"),
     output_dir: str | Path = Path("runs/real_task_pilot"),
     condition: str = "C0",
+    repeat_index: int = 1,
 ) -> int:
     """Run one validated task under the selected experimental condition."""
-    if condition not in {"C0", "C0_CONSTRAINED"}:
+    if condition not in ALL_CONDITIONS:
         raise ValueError(
             f"unsupported condition {condition!r}; "
-            "choose 'C0' or 'C0_CONSTRAINED'"
+            f"choose one of {', '.join(ALL_CONDITIONS)}"
         )
 
     records = [
@@ -76,8 +107,10 @@ def run_experiment(
 
     if condition == "C0":
         context = build_c0(model_input)
-    else:
+    elif condition == "C0_CONSTRAINED":
         context = build_c0_constrained(model_input)
+    else:
+        context = build_candidate_contexts(model_input)[CANDIDATE_CONDITIONS.index(condition)]
 
     config_path = Path(config_path)
     with config_path.open("rb") as stream:
@@ -94,6 +127,11 @@ def run_experiment(
         top_k=int(local["top_k"]),
         repeat_penalty=float(local["repeat_penalty"]),
         response_format=local["response_format"],
+    )
+
+    # Refuse to call the model with a prompt Ollama would silently clip.
+    preflight_prompt_check(
+        len(context.text), int(local["num_ctx"]), int(local["num_predict"])
     )
 
     seed_path = _rank_sources(task.issue_text, repository)[0]
@@ -122,8 +160,22 @@ def run_experiment(
         temperature=float(local["temperature"]),
         max_output_tokens=int(local["num_predict"]),
         limit=max_predictions,
-        run_kind="one_task_real_pilot",
+        run_kind=(
+            "one_task_real_pilot" if condition in LEGACY_CONDITIONS
+            else "context_ablation_run"
+        ),
     )
+
+    # A reply to a clipped prompt is not a valid result for this condition.
+    truncation = detect_truncation(
+        len(context.text), run.input_tokens, int(local["num_ctx"])
+    )
+    if truncation is not None and run.status == "ok":
+        run = replace(
+            run,
+            status="error",
+            error=f"PromptTruncationSuspected: {truncation}",
+        )
 
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -177,7 +229,10 @@ def run_experiment(
     }
 
     artifact = {
-        "artifact_type": "one_task_real_research_pilot",
+        "artifact_type": (
+            "one_task_real_research_pilot" if condition in LEGACY_CONDITIONS
+            else "context_ablation_run"
+        ),
         "is_synthetic": False,
         "task": {
             "task_id": task.task_id,
@@ -206,6 +261,26 @@ def run_experiment(
                     "cleaned issue text",
                     "candidate paths selected from the parent tree",
                 ]
+                if condition == "C0_CONSTRAINED"
+                else [
+                    "cleaned issue text",
+                    "candidate paths selected from the parent tree (production Java, "
+                    "tests, non-Java text files; label-free rule)",
+                ]
+                + {
+                    "C0_CAND": [],
+                    "C1_CAND": ["seed and lexically retrieved source files"],
+                    "C2_CAND": [
+                        "seed and lexically retrieved source files",
+                        "dependency signatures",
+                    ],
+                    "C3_CAND": [
+                        "seed and lexically retrieved source files",
+                        "dependency signatures",
+                        "related tests and documentation",
+                        "pre-parent co-change counts",
+                    ],
+                }[condition]
             ),
             "context_manifest": context_path.name,
             "prompt_file": prompt_name,
@@ -218,6 +293,12 @@ def run_experiment(
                 else "candidate-list prompt constraint; strict validation "
                 "still enforced after generation"
             ),
+        },
+        "run_meta": {
+            "repeat_index": repeat_index,
+            "prompt_chars": len(context.text),
+            "prompt_truncation_suspected": truncation,
+            "environment": _environment(local["base_url"]),
         },
         "baselines": baselines,
         "model_run": run.to_dict(),
@@ -232,7 +313,7 @@ def run_experiment(
             .replace("+00:00", "Z")
         ),
         "limitations": [
-            "One task and one model call are a pilot only, not conclusive evidence.",
+            "A single model call is one sample; repeated calls can differ in lower ranks.",
             "Changed-path labels are not a complete oracle for every file potentially affected.",
             "Issue cleaning decisions are recorded in the task manifest.",
             (
@@ -252,6 +333,8 @@ def run_experiment(
         json.dumps(
             {
                 "status": run.status,
+                "task_id": task.task_id,
+                "repeat_index": repeat_index,
                 "artifact": str(artifact_path),
                 "condition": condition,
                 "prompt_chars": len(context.text),

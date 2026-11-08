@@ -1,0 +1,138 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+dependencies failed using branch attribute (and extra attributes)
+
+i tried to use the branch attribute inside my projekt DEV like this:
+
+        <ivy-module version="1.1">
+                <info ... module="DEV" ....
+
+                <dependency org="testng" name="testng" 
+                        branch="mybranch1" rev="latest.integration"  
+                        conf="compile,tests->default"/>
+                .....
+
+If I now try to resolve my dependencies, it failed
+because ivy 2.1.0 try to resolve the latest version (5.6) of testng/testng
+which has NO branch-keyword inside it's ivy.xml. The ivy.xml
+of version testng/testng/4.6 contains the following:
+
+<ivy-module version="1.1">
+    <info
+        organisation="testng" module="testng"
+        branch="mybranch1"  revision="4.6.1.2"
+        status="release"         
+        publication="20060227000000">
+      .....
+
+It looks like the resolver skip this 4.6.1.2 version (which is the only one containing the 
+branch attribute "mybranch1") and try to download the 5.6 (containing NO branch attribute !).
+
+## Allowed candidate paths (pre-change repository)
+src/java/org/apache/ivy/core/resolve/ResolveEngine.java
+src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java
+src/java/org/apache/ivy/Ivy.java
+src/java/org/apache/ivy/core/settings/IvySettings.java
+src/java/org/apache/ivy/core/resolve/IvyNode.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java
+src/java/org/apache/ivy/plugins/resolver/BasicResolver.java
+src/java/org/apache/ivy/core/resolve/VisitNode.java
+src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java
+src/java/org/apache/ivy/core/settings/XmlSettingsParser.java
+src/java/org/apache/ivy/core/cache/RepositoryCacheManager.java
+src/java/org/apache/ivy/core/IvyContext.java
+src/java/org/apache/ivy/Main.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorBuilder.java
+src/java/org/apache/ivy/Ivy14.java
+src/java/org/apache/ivy/ant/IvyResolve.java
+src/java/org/apache/ivy/ant/IvyDeliver.java
+src/java/org/apache/ivy/ant/IvyPostResolveTask.java
+src/java/org/apache/ivy/core/deliver/DeliverOptions.java
+src/java/org/apache/ivy/plugins/resolver/DependencyResolver.java
+src/java/org/apache/ivy/core/module/id/ModuleRules.java
+src/java/org/apache/ivy/util/FileUtil.java
+src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java
+src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java
+src/java/org/apache/ivy/ant/IvyBuildList.java
+src/java/org/apache/ivy/core/module/id/ModuleRevisionId.java
+src/java/org/apache/ivy/plugins/conflict/LatestCompatibleConflictManager.java
+src/java/org/apache/ivy/osgi/p2/P2MetadataParser.java
+src/java/org/apache/ivy/core/sort/ModuleInSort.java
+src/java/org/apache/ivy/core/report/ResolveReport.java
+src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java
+src/java/org/apache/ivy/ant/IvyReport.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParser.java
+src/java/org/apache/ivy/core/resolve/ResolveOptions.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorWriter.java
+src/java/org/apache/ivy/core/resolve/ResolveData.java
+src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultModuleDescriptor.java
+src/java/org/apache/ivy/ant/IvyBuildNumber.java
+src/java/org/apache/ivy/ant/IvyTask.java
+src/java/org/apache/ivy/core/report/ConfigurationResolveReport.java
+src/java/org/apache/ivy/ant/IvyRepositoryReport.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultDependencyDescriptor.java
+src/java/org/apache/ivy/core/publish/PublishEngine.java
+src/java/org/apache/ivy/plugins/repository/TransferEvent.java
+src/java/org/apache/ivy/ant/IvyAntSettings.java
+src/java/org/apache/ivy/ant/IvyPublish.java
+src/java/org/apache/ivy/core/module/id/ModuleId.java
+src/java/org/apache/ivy/osgi/core/BundleInfoAdapter.java
+src/java/org/apache/ivy/core/search/SearchEngine.java
+src/java/org/apache/ivy/osgi/repo/AbstractOSGiResolver.java
+src/java/org/apache/ivy/core/deliver/DeliverEngine.java
+src/java/org/apache/ivy/plugins/version/VersionMatcher.java
+src/java/org/apache/ivy/core/resolve/IvyNodeEviction.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorWriter.java
+src/java/org/apache/ivy/core/IvyPatternHelper.java
+src/java/org/apache/ivy/plugins/resolver/AbstractWorkspaceResolver.java
+src/java/org/apache/ivy/plugins/resolver/AbstractSshBasedResolver.java
+src/java/org/apache/ivy/plugins/repository/vsftp/VsftpRepository.java
+src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java
+src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java
+src/java/org/apache/ivy/ant/IvyInstall.java
+src/java/org/apache/ivy/core/module/descriptor/OverrideDependencyDescriptorMediator.java
+src/java/org/apache/ivy/plugins/repository/ssh/SshRepository.java
+src/java/org/apache/ivy/osgi/util/DelegatingHandler.java
+src/java/org/apache/ivy/plugins/repository/ssh/SshCache.java
+src/java/org/apache/ivy/plugins/repository/Repository.java
+src/java/org/apache/ivy/ant/IvyInfo.java
+src/java/org/apache/ivy/util/url/URLHandler.java
+src/java/org/apache/ivy/plugins/resolver/DualResolver.java
+src/java/org/apache/ivy/util/url/ApacheURLLister.java
+src/java/org/apache/ivy/plugins/repository/ssh/Scp.java
+src/java/org/apache/ivy/util/extendable/ExtendableItem.java
+src/java/org/apache/ivy/plugins/resolver/SshResolver.java
+test/java/org/apache/ivy/core/resolve/ResolveTest.java
+test/java/org/apache/ivy/ant/IvyPublishTest.java
+test/java/org/apache/ivy/ant/IvyResolveTest.java
+test/java/org/apache/ivy/plugins/resolver/FileSystemResolverTest.java
+test/java/org/apache/ivy/ant/IvyDeliverTest.java
+test/java/org/apache/ivy/core/publish/PublishEventsTest.java
+test/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParserTest.java
+test/java/org/apache/ivy/ant/IvyRetrieveTest.java
+test/java/org/apache/ivy/ant/IvyPostResolveTaskTest.java
+test/java/org/apache/ivy/plugins/parser/xml/XmlModuleUpdaterTest.java
+build.xml
+LICENSE
+build-release.xml
+ivy.xml
+README
+build-for-bin-distrib.xml
+version.properties
+build.properties
+ivysettings-release.xml
+NOTICE
+doc/concept.html
+doc/settings/triggers.html
+doc/ivyfile/dependency.html
+doc/tutorial/multiproject.html
+doc/use/resolve.html
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.

@@ -1,0 +1,1319 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+bad ivy.xml files do not cause build failures
+
+Attached is a poorly formed ivy.xml (artifact element is entered as a child to conf rather than to dependency) and a debug output from ant. Ivy does recognize a problem as indicated by the output on lines 791 and 792 (Invalid content ...)
+
+Despite the fact that the resolve was called with the validation attribute set to true, Ivy does not through a build failure, but continues.
+
+## Allowed candidate paths (pre-change repository)
+src/java/fr/jayasoft/ivy/Ivy.java
+src/java/fr/jayasoft/ivy/IvyNode.java
+src/java/fr/jayasoft/ivy/Main.java
+src/java/fr/jayasoft/ivy/resolver/AbstractURLResolver.java
+src/java/fr/jayasoft/ivy/resolver/BasicResolver.java
+src/java/fr/jayasoft/ivy/resolver/IvyRepResolver.java
+src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorParser.java
+src/java/fr/jayasoft/ivy/ant/IvyDeliver.java
+src/java/fr/jayasoft/ivy/ant/IvyReport.java
+src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorUpdater.java
+src/java/fr/jayasoft/ivy/resolver/DualResolver.java
+src/java/fr/jayasoft/ivy/ant/IvyPublish.java
+src/java/fr/jayasoft/ivy/ant/IvyResolve.java
+src/java/fr/jayasoft/ivy/url/ApacheURLLister.java
+src/java/fr/jayasoft/ivy/ant/IvyTask.java
+src/java/fr/jayasoft/ivy/ant/IvyBuildList.java
+src/java/fr/jayasoft/ivy/resolver/IBiblioResolver.java
+src/java/fr/jayasoft/ivy/resolver/AbstractResourceResolver.java
+src/java/fr/jayasoft/ivy/ant/IvyCacheTask.java
+src/java/fr/jayasoft/ivy/resolver/CacheResolver.java
+src/java/fr/jayasoft/ivy/ant/IvyArtifactProperty.java
+src/java/fr/jayasoft/ivy/repository/TransferEvent.java
+src/java/fr/jayasoft/ivy/util/Configurator.java
+src/java/fr/jayasoft/ivy/resolver/RepositoryResolver.java
+src/java/fr/jayasoft/ivy/ant/IvyRetrieve.java
+src/java/fr/jayasoft/ivy/ModuleDescriptor.java
+src/java/fr/jayasoft/ivy/resolver/AbstractResolver.java
+src/java/fr/jayasoft/ivy/resolver/ChainResolver.java
+src/java/fr/jayasoft/ivy/report/ConfigurationResolveReport.java
+src/java/fr/jayasoft/ivy/resolver/ResolverHelper.java
+src/java/fr/jayasoft/ivy/ant/IvyConfigure.java
+src/java/fr/jayasoft/ivy/DependencyResolver.java
+src/java/fr/jayasoft/ivy/xml/XmlIvyConfigurationParser.java
+src/java/fr/jayasoft/ivy/xml/XmlReportParser.java
+src/java/fr/jayasoft/ivy/DependencyArtifactDescriptor.java
+src/java/fr/jayasoft/ivy/DefaultModuleDescriptor.java
+src/java/fr/jayasoft/ivy/report/XmlReportOutputter.java
+src/java/fr/jayasoft/ivy/util/IvyPatternHelper.java
+src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorWriter.java
+src/java/fr/jayasoft/ivy/ModuleRevisionId.java
+src/java/fr/jayasoft/ivy/ModuleDescriptorSorter.java
+src/java/fr/jayasoft/ivy/DefaultDependencyDescriptor.java
+src/java/fr/jayasoft/ivy/url/URLHandler.java
+src/java/fr/jayasoft/ivy/util/XMLHelper.java
+src/java/fr/jayasoft/ivy/ant/IvyCheck.java
+src/java/fr/jayasoft/ivy/util/Message.java
+src/java/fr/jayasoft/ivy/repository/url/URLRepository.java
+src/java/fr/jayasoft/ivy/ConflictManager.java
+src/java/fr/jayasoft/ivy/LatestStrategy.java
+src/java/fr/jayasoft/ivy/ResolveData.java
+src/java/fr/jayasoft/ivy/conflict/AbstractConflictManager.java
+src/java/fr/jayasoft/ivy/latest/AbstractLatestStrategy.java
+src/java/fr/jayasoft/ivy/DependencyDescriptor.java
+src/java/fr/jayasoft/ivy/ant/IvyExtractFromSources.java
+src/example/dependence/standalone/src/standalone/Main.java
+src/java/fr/jayasoft/ivy/ant/IvyVar.java
+src/java/fr/jayasoft/ivy/PublishingDependencyRevisionResolver.java
+src/java/fr/jayasoft/ivy/url/HttpClientHandler.java
+src/java/fr/jayasoft/ivy/Artifact.java
+src/java/fr/jayasoft/ivy/repository/file/FileRepository.java
+src/java/fr/jayasoft/ivy/url/BasicURLHandler.java
+src/java/fr/jayasoft/ivy/DefaultDependencyArtifactDescriptor.java
+src/java/fr/jayasoft/ivy/repository/Repository.java
+src/java/fr/jayasoft/ivy/Configuration.java
+src/java/fr/jayasoft/ivy/conflict/LatestConflictManager.java
+src/java/fr/jayasoft/ivy/util/FileUtil.java
+src/java/fr/jayasoft/ivy/ArtifactId.java
+src/java/fr/jayasoft/ivy/DefaultArtifact.java
+src/java/fr/jayasoft/ivy/report/ResolveReport.java
+src/java/fr/jayasoft/ivy/report/LogReportOutputter.java
+src/java/fr/jayasoft/ivy/ant/IvyCacheFileset.java
+src/java/fr/jayasoft/ivy/ant/IvyCachePath.java
+src/java/fr/jayasoft/ivy/resolver/URLResolver.java
+src/java/fr/jayasoft/ivy/conflict/StrictConflictManager.java
+src/java/fr/jayasoft/ivy/latest/LatestLexicographicStrategy.java
+test/java/fr/jayasoft/ivy/ResolveTest.java
+test/java/fr/jayasoft/ivy/resolver/FileSystemResolverTest.java
+test/java/fr/jayasoft/ivy/xml/XmlIvyConfigurationParserTest.java
+test/java/fr/jayasoft/ivy/ant/IvyPublishTest.java
+test/java/fr/jayasoft/ivy/resolver/IBiblioResolverTest.java
+test/java/fr/jayasoft/ivy/ant/IvyConfigureTest.java
+test/java/fr/jayasoft/ivy/resolver/IvyRepResolverTest.java
+test/java/fr/jayasoft/ivy/ant/IvyResolveTest.java
+test/java/fr/jayasoft/ivy/ant/IvyDeliverTest.java
+test/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorParserTest.java
+CHANGES.txt
+build.xml
+LICENSE.txt
+build.properties
+ivy.xml
+src/java/fr/jayasoft/ivy/report/ivy-report.xsl
+doc/announce/announce-1.0.txt
+doc/conflict-solving-algo.html
+src/java/fr/jayasoft/ivy/ant/ivy.properties
+src/example/dependence/standalone/build.xml
+src/example/dual/project/build.xml
+src/example/multi-project/common/common.xml
+src/example/chained-resolvers/chainedresolvers-project/build.xml
+src/example/dependence/depending/build.xml
+src/example/hello-ivy/build.xml
+
+## Seed and retrieved source files
+
+### SEED: src/java/fr/jayasoft/ivy/Ivy.java
+```java
+/*
+ * This file is subject to the license found in LICENCE.TXT in the root directory of the project.
+ * 
+ * #SNAPSHOT#
+ */
+package fr.jayasoft.ivy;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Pattern;
+
+import javax.swing.event.EventListenerList;
+
+import org.xml.sax.SAXException;
+
+import fr.jayasoft.ivy.conflict.LatestConflictManager;
+import fr.jayasoft.ivy.conflict.NoConflictManager;
+import fr.jayasoft.ivy.conflict.StrictConflictManager;
+import fr.jayasoft.ivy.filter.Filter;
+import fr.jayasoft.ivy.filter.FilterHelper;
+import fr.jayasoft.ivy.latest.LatestLexicographicStrategy;
+import fr.jayasoft.ivy.latest.LatestRevisionStrategy;
+import fr.jayasoft.ivy.latest.LatestTimeStrategy;
+import fr.jayasoft.ivy.report.ArtifactDownloadReport;
+import fr.jayasoft.ivy.report.ConfigurationResolveReport;
+import fr.jayasoft.ivy.report.DownloadReport;
+import fr.jayasoft.ivy.report.DownloadStatus;
+import fr.jayasoft.ivy.report.LogReportOutputter;
+import fr.jayasoft.ivy.report.ReportOutputter;
+import fr.jayasoft.ivy.report.ResolveReport;
+import fr.jayasoft.ivy.report.XmlReportOutputter;
+import fr.jayasoft.ivy.repository.TransferEvent;
+import fr.jayasoft.ivy.repository.TransferListener;
+import fr.jayasoft.ivy.resolver.CacheResolver;
+import fr.jayasoft.ivy.resolver.ChainResolver;
+import fr.jayasoft.ivy.resolver.DualResolver;
+import fr.jayasoft.ivy.resolver.ModuleEntry;
+import fr.jayasoft.ivy.resolver.OrganisationEntry;
+import fr.jayasoft.ivy.resolver.RevisionEntry;
+import fr.jayasoft.ivy.url.URLHandlerRegistry;
+import fr.jayasoft.ivy.util.FileUtil;
+import fr.jayasoft.ivy.util.IvyPatternHelper;
+import fr.jayasoft.ivy.util.Message;
+import fr.jayasoft.ivy.xml.XmlIvyConfigurationParser;
+import fr.jayasoft.ivy.xml.XmlModuleDescriptorParser;
+import fr.jayasoft.ivy.xml.XmlModuleDescriptorUpdater;
+import fr.jayasoft.ivy.xml.XmlReportParser;
+
+/**
+ * Ivy is a free java based dependency manager.
+ * 
+ * This class is the main class of Ivy, which offers mainly dependency resolution.
+ * 
+ * Here is one typical usage:
+ * Ivy ivy = new Ivy();
+ * ivy.configure(new URL("ivyconf.xml"));
+ * ivy.resolve(new URL("ivy.xml"), null, new String[] {"*"}, null, null, true);
+ *  
+ * @author x.hanin
+ *
+ */
+public class Ivy implements TransferListener {
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+
+    private static final String DEFAULT_CACHE_ARTIFACT_PATTERN = "[organisation]/[module]/[type]s/[artifact]-[revision].[ext]";
+    private static final String DEFAULT_CACHE_IVY_PATTERN = "[organisation]/[module]/ivy-[revision].xml";
+    private static final String DEFAULT_CACHE_RESOLVED_IVY_PATTERN = "resolved-[organisation]-[module]-[revision].xml";
+    private static final String DEFAULT_CACHE_RESOLVED_IVY_PROPERTIES_PATTERN = "resolved-[organisation]-[module]-[revision].properties";
+    
+    private Map _typeDefs = new HashMap();
+    private Map _resolversMap = new HashMap();
+    private DependencyResolver _defaultResolver;
+    private DependencyResolver _dictatorResolver = null;
+    
+    private String _defaultResolverName;
+    private File _defaultCache;
+    private boolean _checkUpToDate = true;
+    private Map _moduleConfigurations = new LinkedHashMap(); // Map (ModuleId -> String resolverName)
+    
+    private Map _conflictsManager = new HashMap(); // Map (String conflictManagerName -> ConflictManager)
+    private Map _latestStrategies = new HashMap(); // Map (String latestStrategyName -> LatestStrategy)
+    
+    private Map _variables = new HashMap();
+
+    private ReportOutputter[] _reportOutputters = new ReportOutputter[] {new LogReportOutputter(), new XmlReportOutputter()};
+    
+    private String _cacheIvyPattern = DEFAULT_CACHE_IVY_PATTERN;
+    private String _cacheResolvedIvyPattern = DEFAULT_CACHE_RESOLVED_IVY_PATTERN;
+    private String _cacheResolvedIvyPropertiesPattern = DEFAULT_CACHE_RESOLVED_IVY_PROPERTIES_PATTERN;
+    private String _cacheArtifactPattern = DEFAULT_CACHE_ARTIFACT_PATTERN;
+
+    private boolean _validate = true;
+
+    private LatestStrategy _defaultLatestStrategy = null;
+    private ConflictManager _defaultConflictManager = null;
+    
+    private List _listingIgnore = new ArrayList();
+
+    private boolean _repositoriesConfigured;
+
+    private boolean _useRemoteConfig = false;
+    
+    public Ivy() {
+        String ivyTypeDefs = System.getProperty("ivy.typedef.files");
+        if (ivyTypeDefs != null) {
+            String[] files = ivyTypeDefs.split("\\,");
+            for (int i = 0; i < files.length; i++) {
+                try {
+                    typeDefs(new FileInputStream(new File(files[i].trim())));
+                } catch (FileNotFoundException e) {
+                    Message.warn("typedefs file not found: "+files[i].trim());
+                } catch (IOException e) {
+                    Message.warn("problem with typedef file: "+files[i].trim()+": "+e.getMessage());
+                }
+            }
+        } else {
+            try {
+                typeDefs(Ivy.class.getResourceAsStream("typedef.properties"));
+            } catch (IOException e) {
+                Message.warn("impossible to load default type defs");
+            }
+        }
+        LatestLexicographicStrategy latestLexicographicStrategy = new LatestLexicographicStrategy();
+        LatestRevisionStrategy latestRevisionStrategy = new LatestRevisionStrategy();
+        LatestTimeStrategy latestTimeStrategy = new LatestTimeStrategy();
+
+        addLatestStrategy("latest-revision", latestRevisionStrategy);
+        addLatestStrategy("latest-lexico", latestLexicographicStrategy);
+        addLatestStrategy("latest-time", latestTimeStrategy);
+
+        addConflictManager("latest-revision", new LatestConflictManager("latest-revision", latestRevisionStrategy));
+        addConflictManager("latest-time", new LatestConflictManager("latest-time", latestTimeStrategy));
+        addConflictManager("all", new NoConflictManager());    
+        addConflictManager("strict", new StrictConflictManager());
+        
+        _listingIgnore.add(".cvsignore");
+        _listingIgnore.add("CVS");
+        _listingIgnore.add(".svn");
+        
+        addTransferListener(new TransferListener() {
+            public void transferProgress(TransferEvent evt) {
+                switch (evt.getEventType()) {
+                case TransferEvent.TRANSFER_PROGRESS:
+                    Message.progress();
+                    break;
+                case TransferEvent.TRANSFER_COMPLETED:
+                    Message.endProgress(" ("+(evt.getTotalLength() / 1024)+"kB)");
+                    break;
+                default:
+                    break;
+                }
+            }
+        });
+    }
+    
+    /**
+     * Call this method to ask ivy to configure some variables using either a remote or a local properties file
+     */
+    public void configureRepositories(boolean remote) {
+        if (!_repositoriesConfigured) {
+            Properties props = new Properties();
+            boolean configured = false;
+            if (_useRemoteConfig && remote) {
+                try {
+... [truncated]
+```
+
+### RETRIEVED: src/java/fr/jayasoft/ivy/IvyNode.java
+```java
+/*
+ * This file is subject to the license found in LICENCE.TXT in the root directory of the project.
+ * 
+ * #SNAPSHOT#
+ */
+package fr.jayasoft.ivy;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Pattern;
+
+import fr.jayasoft.ivy.filter.Filter;
+import fr.jayasoft.ivy.filter.FilterHelper;
+import fr.jayasoft.ivy.util.Message;
+
+public class IvyNode {
+    public static class EvictionData {
+        private IvyNode _node; // can be null in case of transitive eviction
+        private ConflictManager _conflictManager; // can be null in case of transitive eviction
+        private Collection _selected; // can be null in case of transitive eviction
+        private String _rootModuleConf;
+
+        public EvictionData(String rootModuleConf, IvyNode node, ConflictManager conflictManager, Collection selected) {
+            _rootModuleConf = rootModuleConf;
+            _node = node;
+            _conflictManager = conflictManager;
+            _selected = selected;
+        }
+        
+        public String toString() {
+            if (_selected != null) {
+                return _selected + " in "+ _node+" ("+_conflictManager+") ["+_rootModuleConf+"]";
+            } else {
+                return "transitively ["+_rootModuleConf+"]";
+            }
+        }
+
+        public ConflictManager getConflictManager() {
+            return _conflictManager;
+        }
+        
+
+        public IvyNode getNode() {
+            return _node;
+        }
+
+        public Collection getSelected() {
+            return _selected;
+        }
+        
+
+        public String getRootModuleConf() {
+            return _rootModuleConf;
+        }
+        
+        
+    }
+
+    public static class Caller {
+        private ModuleDescriptor _md;
+        private ModuleRevisionId _mrid;
+        private Map _confs = new HashMap(); // Map (String callerConf -> String[] dependencyConfs)
+        private ModuleRevisionId _askedDependencyId;
+        
+        public Caller(ModuleDescriptor md, ModuleRevisionId mrid, ModuleRevisionId askedDependencyId) {
+            _md = md;
+            _mrid = mrid;
+            _askedDependencyId = askedDependencyId;
+        }
+        public void addConfiguration(String callerConf, String[] dependencyConfs) {
+            String[] prevDepConfs = (String[])_confs.get(callerConf);
+            if (prevDepConfs != null) {
+                Set newDepConfs = new HashSet(Arrays.asList(prevDepConfs));
+                newDepConfs.addAll(Arrays.asList(dependencyConfs));
+                _confs.put(callerConf, (String[])newDepConfs.toArray(new String[newDepConfs.size()]));
+            } else {
+                _confs.put(callerConf, dependencyConfs);
+            }
+        }
+        public String[] getCallerConfigurations() {
+            return (String[])_confs.keySet().toArray(new String[_confs.keySet().size()]);
+        }
+        public ModuleRevisionId getModuleRevisionId() {
+            return _mrid;
+        }
+        public boolean equals(Object obj) {
+            if (! (obj instanceof Caller)) {
+                return false;
+            }
+            Caller other = (Caller)obj;
+            return other._confs.equals(_confs) 
+                && _mrid.equals(other._mrid);
+        }
+        public int hashCode() {
+            int hash = 31;
+            hash = hash * 13 + _confs.hashCode();
+            hash = hash * 13 + _mrid.hashCode();
+            return hash;
+        }
+        public String toString() {
+            return _mrid.toString();
+        }
+        public ModuleRevisionId getAskedDependencyId() {
+            return _askedDependencyId;
+        }
+        public ModuleDescriptor getModuleDescriptor() {
+            return _md;
+        }
+    }
+    private static final class NodeConf {
+        private IvyNode _node;
+        private String _conf;
+
+        public NodeConf(IvyNode node, String conf) {
+            _node = node;
+            _conf = conf;
+        }
+
+        public final String getConf() {
+            return _conf;
+        }
+        
+        public final IvyNode getNode() {
+            return _node;
+        }
+        public boolean equals(Object obj) {
+            if (!(obj instanceof NodeConf)) {
+                return false;
+            }
+            return getNode().equals(((NodeConf)obj).getNode()) 
+                && getConf().equals(((NodeConf)obj).getConf());
+        }
+        public int hashCode() {
+            int hash = 33;
+            hash += getNode().hashCode() * 17;
+            hash += getConf().hashCode() * 17;
+            return hash;
+        }
+    }
+
+    private static final class ModuleIdConf {
+        private ModuleId _moduleId;
+        private String _conf;
+
+        public ModuleIdConf(ModuleId mid, String conf) {
+            _moduleId = mid;
+            _conf = conf;
+        }
+
+        public final String getConf() {
+            return _conf;
+        }
+        
+        public final ModuleId getModuleId() {
+            return _moduleId;
+        }
+        public boolean equals(Object obj) {
+            if (!(obj instanceof ModuleIdConf)) {
+                return false;
+            }
+            return getModuleId().equals(((ModuleIdConf)obj).getModuleId()) 
+                && getConf().equals(((ModuleIdConf)obj).getConf());
+        }
+        public int hashCode() {
+            int hash = 33;
+            hash += getModuleId().hashCode() * 17;
+            hash += getConf().hashCode() * 17;
+            return hash;
+        }
+    }
+
+    private ModuleRevisionId _id; // id as requested, i.e. may be with latest rev
+    
+    /** 
+     * Represents the current parent of the node during ivy visit
+     * of dependency graph.
+     * Use callers on Dependency to know all the callers
+     * of a dependency
+     */
+    private IvyNode _parent = null;
+    private String _parentConf = null;
+    private String _rootModuleConf;
+
+    private Map _selected = new HashMap(); // Map (ModuleIdConf -> Set(Node))
+    private Map _evicted = new HashMap(); // Map (root module conf -> EvictionData)
+
+    // Map (String rootModuleConf -> Map (ModuleRevisionId -> Caller)): key in second map is used to easily get a caller by its mrid
+    private Map _callersByRootConf = new HashMap(); 
+    
+    // Map (String rootConfName -> Set(String confName))
+    // used to know which configurations of the dependency are required by root
+    // module configuration
+    private Map _rootModuleConfs = new HashMap(); 
+        
+    // Map (String rootModuleConf -> Set(DependencyArtifactDescriptor))
+    private Map _dependencyArtifactsIncludes = new HashMap();
+
+
+    // shared data
+    private ResolveData _data;
+
+    private Collection _confsToFetch = new HashSet();
+    private Collection _fetchedConfigurations = new HashSet();
+
+    // set only when node has been built from DependencyDescriptor
+    private DependencyDescriptor _dd;
+
+    // Set when data has been loaded only
+    private ModuleDescriptor _md;
+
+    private ResolvedModuleRevision _module;
+
+    private Exception _problem = null;
+    
+    private boolean _downloaded = false;
+    private boolean _searched = false;
+
+
+    private Map _requiredConfs = new HashMap(); // Map (NodeConf in -> Set(String conf))
+
+    private boolean _isRoot = false;
+
+    private Collection _allCallers = new HashSet();
+
+    private boolean _isCircular = false;
+
+    
+    public IvyNode(ResolveData data, DependencyDescriptor dd) {
+        _id = dd.getDependencyRevisionId();
+        _dd = dd;
+
+        init(data, true);
+    }
+
+    public IvyNode(ResolveData data, ModuleD
+... [truncated]
+```
+
+### RETRIEVED: src/java/fr/jayasoft/ivy/Main.java
+```java
+/*
+ * This file is subject to the license found in LICENCE.TXT in the root directory of the project.
+ * 
+ * #SNAPSHOT#
+ */
+package fr.jayasoft.ivy;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.types.Path;
+
+import fr.jayasoft.ivy.url.URLHandlerDispatcher;
+import fr.jayasoft.ivy.url.URLHandlerRegistry;
+import fr.jayasoft.ivy.util.DefaultMessageImpl;
+import fr.jayasoft.ivy.util.Message;
+import fr.jayasoft.ivy.xml.XmlModuleDescriptorWriter;
+import fr.jayasoft.ivy.xml.XmlReportParser;
+
+/**
+ * class used to launch ivy as a standalone tool
+ * arguments are :
+ * -conf <conffile> : indicates the path to the ivy configuration file
+ *                  ivyconf.xml is assumed if not given
+ * -cache <cachedir> : indicates the path to the cache directory
+ *                   cache is assumed if not given
+ * -ivy <ivyfile> : indicates the path to the ivy file to use
+ *                  ivy.xml is assumed if not given
+ * -retrieve <retrievepattern> : when used, retrieve is also done using the given retrievepattern
+ * -revision <revision> : the revision with which the module should be published, required to publish
+ * -status <status> :   the status with which the module should be published, 
+ *                      release is assumed if not given
+ * -publish <publishpattern> :  the pattern used to publish the resolved ivy file, 
+ *                              ivy-[revision].xml is assumed if not given
+ */
+public class Main {
+    private static Options getOptions() {
+        Option conf = OptionBuilder.withArgName( "conffile" )
+            .hasArg()
+            .withDescription(  "use given file for configuration" )
+            .create( "conf" );
+        Option cache = OptionBuilder.withArgName( "cachedir" )
+            .hasArg()
+            .withDescription(  "use given directory for cache" )
+            .create( "cache" );
+        Option ivyfile = OptionBuilder.withArgName( "ivyfile" )
+            .hasArg()
+            .withDescription(  "use given file as ivy file" )
+            .create( "ivy" );
+        Option dependency = OptionBuilder.withArgName( "organisation module revision" )
+            .hasArgs()
+            .withDescription(  "use this instead of ivy file to do the rest of the work with this as a dependency." )
+            .create( "dependency" );
+        Option confs = OptionBuilder.withArgName( "configurations" )
+            .hasArgs()
+            .withDescription(  "resolve given configurations" )
+            .create( "confs" );
+        Option retrieve = OptionBuilder.withArgName( "retrievepattern" )
+            .hasArg()
+            .withDescription(  "use given pattern as retrieve pattern" )
+            .create( "retrieve" );
+        Option cachepath = OptionBuilder.withArgName( "cachepathfile" )
+            .hasArg()
+            .withDescription(  "outputs a classpath consisting of all dependencies in cache (including transitive ones) of the given ivy file to the given cachepathfile" )
+            .create( "cachepath" );
+        Option revision = OptionBuilder.withArgName( "revision" )
+            .hasArg()
+            .withDescription(  "use given revision to publish the module" )
+            .create( "revision" );
+        Option status = OptionBuilder.withArgName( "status" )
+            .hasArg()
+            .withDescription(  "use given status to publish the module" )
+            .create( "status" );
+        Option deliver = OptionBuilder.withArgName( "ivypattern" )
+            .hasArg()
+            .withDescription(  "use given pattern as resolved ivy file pattern" )
+            .create( "deliverto" );
+        Option publishResolver = OptionBuilder.withArgName( "resolvername" )
+            .hasArg()
+            .withDescription(  "use given resolver to publish to" )
+            .create( "publish" );
+        Option publishPattern = OptionBuilder.withArgName( "artpattern" )
+            .hasArg()
+            .withDescription(  "use given pattern to find artifacts to publish" )
+            .create( "publishpattern" );
+        Option realm = OptionBuilder.withArgName( "realm" )
+            .hasArg()
+            .withDescription(  "use given realm for HTTP AUTH" )
+            .create( "realm" );
+        Option host = OptionBuilder.withArgName( "host" )
+            .hasArg()
+            .withDescription(  "use given host for HTTP AUTH" )
+            .create( "host" );
+        Option username = OptionBuilder.withArgName( "username" )
+            .hasArg()
+            .withDescription(  "use given username for HTTP AUTH" )
+            .create( "username" );
+        Option passwd = OptionBuilder.withArgName( "passwd" )
+            .hasArg()
+            .withDescription(  "use given password for HTTP AUTH" )
+            .create( "passwd" );
+        
+        Options options = new Options();
+
+        options.addOption("debug", false, "set message level to debug");
+        options.addOption("verbose", false, "set message level to verbose");
+        options.addOption("warn", false, "set message level to warn");
+        options.addOption("error", false, "set message level to error");
+        options.addOption("novalidate", false, "do not validate ivy files against xsd");
+        options.addOption("?", false, "display this help");
+        options.addOption(conf);
+        options.addOption(confs);
+        options.addOption(cache);
+        options.addOption(ivyfile);
+        options.addOption(dependency);
+        options.addOption(retrieve);
+        options.addOption(cachepath);
+        options.addOption(revision);
+        options.addOption(status);
+        options.addOption(deliver);
+        options.addOption(publishResolver);
+        options.addOption(publishPattern);
+        options.addOption(realm);
+        options.addOption(host);
+        options.addOption(username);
+        options.addOption(passwd);
+        
+        return options;
+    }
+    public static void main(String[] args) throws Exception {
+        Options options = getOptions();
+        
+        CommandLineParser parser = new GnuParser();
+        try {
+            // parse the command line arguments
+            CommandLine line = parser.parse( options, args );
+            
+            if (line.hasOption("?")) {
+                usage(options);
+                return;
+            }
+            
+            if (line.hasOption("debug")) {
+                Message.init(new DefaultMessageImpl(Message.MSG_DEBUG));
+            } else if (line.hasOption("verbose")) {
+                Message.init(new DefaultMessageImpl(Message.MSG_VERBOSE));
+            } else if (line.hasOption("warn")) {
+                Message.init(new DefaultMessageImpl(Message.MSG_WARN));
+            } else if (line.hasOption("error")) {
+                Message.init(new DefaultMessageImpl(Message.MSG_ERR));
+            } else {
+                Message.init(new DefaultMessageImpl(Message.MSG_INFO));
+            }
+            
+            boolean validate = line.hasOption("novalidate")?false:true;
+            
+            Ivy ivy = new Ivy();
+            ivy.addAllVariables(System.getProperties());
+
+            configureURLHandler(
+                    line.getOptionValue("realm", null), 
+                    line.getOptionValue("host", null), 
+                    line.getOptionValue
+... [truncated]
+```
+
+### RETRIEVED: src/java/fr/jayasoft/ivy/resolver/AbstractURLResolver.java
+```java
+/*
+ * This file is subject to the license found in LICENCE.TXT in the root directory of the project.
+ * 
+ * #SNAPSHOT#
+ */
+package fr.jayasoft.ivy.resolver;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+
+import fr.jayasoft.ivy.Artifact;
+import fr.jayasoft.ivy.DefaultArtifact;
+import fr.jayasoft.ivy.DefaultModuleDescriptor;
+import fr.jayasoft.ivy.DefaultModuleRevision;
+import fr.jayasoft.ivy.DependencyDescriptor;
+import fr.jayasoft.ivy.Ivy;
+import fr.jayasoft.ivy.IvyNode;
+import fr.jayasoft.ivy.LatestStrategy;
+import fr.jayasoft.ivy.ModuleDescriptor;
+import fr.jayasoft.ivy.ModuleRevisionId;
+import fr.jayasoft.ivy.ResolveData;
+import fr.jayasoft.ivy.ResolvedModuleRevision;
+import fr.jayasoft.ivy.ResolvedURL;
+import fr.jayasoft.ivy.Status;
+import fr.jayasoft.ivy.report.ArtifactDownloadReport;
+import fr.jayasoft.ivy.report.DownloadReport;
+import fr.jayasoft.ivy.report.DownloadStatus;
+import fr.jayasoft.ivy.repository.url.URLResource;
+import fr.jayasoft.ivy.util.CopyProgressEvent;
+import fr.jayasoft.ivy.util.CopyProgressListener;
+import fr.jayasoft.ivy.util.FileUtil;
+import fr.jayasoft.ivy.util.IvyPattern;
+import fr.jayasoft.ivy.util.IvyPatternHelper;
+import fr.jayasoft.ivy.util.Message;
+import fr.jayasoft.ivy.xml.XmlModuleDescriptorParser;
+import fr.jayasoft.ivy.xml.XmlModuleDescriptorUpdater;
+import fr.jayasoft.ivy.xml.XmlModuleDescriptorWriter;
+
+/**
+ * @deprecated use RepositoryResolver instead
+ * @author Xavier Hanin
+ *
+ */
+public abstract class AbstractURLResolver extends AbstractResolver {
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMddHHmmss");
+
+    protected String _workspaceName;
+    /**
+     * True if the files resolved are dependent of the environment from which they have been resolved, false otherwise. In general, relative paths are dependent of the environment, and absolute paths including machine reference are not. 
+     */
+    private boolean _envDependent = true;
+
+    /**
+     * The latest strategy to use to find latest among several artifacts
+     */
+    private LatestStrategy _latestStrategy;
+
+    private String _latestStrategyName;
+
+    private List _ivyattempts = new ArrayList();
+    
+    
+    public AbstractURLResolver() {
+        _workspaceName = Ivy.getLocalHostName();
+    }
+
+    public String getWorkspaceName() {
+        return _workspaceName;
+    }
+
+    public void setWorkspaceName(String workspaceName) {
+        _workspaceName = workspaceName;
+    }
+
+    public boolean isEnvDependent() {
+        return _envDependent;
+    }
+
+    public void setEnvDependent(boolean envDependent) {
+        _envDependent = envDependent;
+    }
+
+    public LatestStrategy getLatestStrategy() {        
+        if (_latestStrategy == null) {
+            if (_latestStrategyName != null) {
+                _latestStrategy = getIvy().getLatestStrategy(_latestStrategyName);
+                if (_latestStrategy == null) {
+                    Message.error("unknown latest strategy: "+_latestStrategyName);
+                    _latestStrategy = getIvy().getDefaultLatestStrategy();
+                }
+            } else {
+                _latestStrategy = getIvy().getDefaultLatestStrategy();
+                Message.debug(getName()+": no latest strategy defined: using default");
+            }
+        }
+        return _latestStrategy;
+    }
+    
+
+    public void setLatestStrategy(LatestStrategy latestStrategy) {
+        _latestStrategy = latestStrategy;
+    }    
+
+    public void setLatest(String strategyName) {
+        _latestStrategyName = strategyName;
+    }    
+
+    public ResolvedModuleRevision getDependency(DependencyDescriptor dd, ResolveData data) throws ParseException {
+        _ivyattempts.clear();
+        boolean downloaded = false;
+        ModuleRevisionId mrid = dd.getDependencyRevisionId();
+    	// check revision
+		int index = mrid.getRevision().indexOf("@");
+		if (index != -1 && !mrid.getRevision().substring(index+1).equals(_workspaceName)) {
+            Message.verbose("\t"+getName()+": unhandled revision => "+mrid.getRevision());
+            return null;
+		}
+        
+        if (!mrid.isExactRevision() && !acceptLatest()) {
+            Message.error("latest revisions not handled by "+getClass().getName()+". impossible to resolve "+mrid);
+            return null;
+        }
+    	
+        // look for ivy file
+    	ResolvedURL ivyURL = getIvyURL(mrid, data.getDate());
+    	URL cachedIvyURL = null;
+        // get module descriptor
+        ModuleDescriptor md;
+        if (ivyURL == null) {
+            md = DefaultModuleDescriptor.newDefaultInstance(mrid, dd.getAllDependencyArtifactsIncludes());
+            ResolvedURL artifactURL = findFirstArtifact(md, mrid, data.getDate());
+            if (artifactURL == null) {
+                Message.verbose("\t"+getName()+": no ivy file nor artifact found for "+mrid);
+                logIvyNotFound(mrid);
+                return null;
+            } else {
+                Message.verbose("\t"+getName()+": no ivy file found for "+mrid+": using default data");            
+                logIvyNotFound(mrid);
+    	        if (!mrid.isExactRevision()) {
+    	            md.setResolvedModuleRevisionId(new ModuleRevisionId(mrid.getModuleId(), artifactURL.getRevision()));
+    	        }
+            }
+        } else {
+            Message.verbose("\t"+getName()+": found ivy file for "+mrid);
+            Message.verbose("\t\t=> "+ivyURL);
+            // first check if this dependency has not yet been resolved
+            if (!mrid.isExactRevision()) {
+                ModuleRevisionId resolvedMrid = new ModuleRevisionId(mrid.getModuleId(), ivyURL.getRevision());
+                IvyNode node = data.getNode(resolvedMrid);
+                if (node != null) {
+                    // this revision has already be resolved : return it
+                    Message.verbose("\t"+getName()+": revision already resolved: "+resolvedMrid);
+                    return node.getModuleRevision();
+                }
+                
+                // now let's see if we can find it in cache
+                ResolvedModuleRevision rmr = data.getIvy().findModuleInCache(resolvedMrid, data.getCache(), doValidate(data));
+                if (rmr != null) {
+                    Message.verbose("\t"+getName()+": revision in cache: "+resolvedMrid);
+                    return rmr;
+                }
+
+            }
+            
+            
+            // now download ivy file and parse it  
+            cachedIvyURL = ivyURL.getURL(); // default value: the source itself
+            try {
+                // temp file is used to prevent downloading twice
+                File ivyTempFile = File.createTempFile("ivy", "xml"); 
+                ivyTempFile.deleteOnExit();
+                Message.debug("\t"+getName()+": downloading "+ivyURL.getURL());
+                FileUtil.copy(ivyURL.getURL(), ivyTempFile, null);
+                downloaded = true;
+                try {
+                    cachedIvyURL = ivyTempFile.toURL();
+                } catch (MalformedURLException ex) {
+                    // ignored, will not used temp file
+                    Message.warn("malformed url exception for temp file: "+ivyTempFile+": "+ex.getMessage());
+                }
+            } catch (IOException ex) {
+                // ignored, will not used temp file
+                Message.warn("prob
+... [truncated]
+```
+
+## Dependency information (parent revision)
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/AbstractArtifact.java
+```java
+package fr.jayasoft.ivy;
+public abstract class AbstractArtifact implements Artifact {
+    public boolean equals(Object obj) {
+    public int hashCode() {
+    public String toString() {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/Artifact.java
+```java
+package fr.jayasoft.ivy;
+import java.util.Date;
+public interface Artifact {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/ArtifactId.java
+```java
+package fr.jayasoft.ivy;
+public class ArtifactId {
+    private ModuleId _mid;
+    private String _name;
+    private String _type;
+    private String _ext;
+    public ArtifactId(ModuleId mid, String name, String type, String ext) {
+    public boolean equals(Object obj) {
+    public int hashCode() {
+    public String toString() {
+    public ModuleId getModuleId() {
+    public String getName() {
+    public String getType() {
+    public String getExt() {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/ArtifactInfo.java
+```java
+package fr.jayasoft.ivy;
+public interface ArtifactInfo {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/ArtifactRevisionId.java
+```java
+package fr.jayasoft.ivy;
+public class ArtifactRevisionId {
+    public static ArtifactRevisionId newInstance(ModuleRevisionId mrid, String name, String type, String ext) {
+    private ArtifactId _artifactId;
+    private ModuleRevisionId _mrid;
+    public ArtifactRevisionId(ArtifactId artifactId, ModuleRevisionId mrid) {
+    public boolean equals(Object obj) {
+    public int hashCode() {
+    public String toString() {
+    public ArtifactId getArtifactId() {
+    public ModuleRevisionId getModuleRevisionId() {
+    public String getName() {
+    public String getType() {
+    public String getExt() {
+    public String getRevision() {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/CircularDependencyException.java
+```java
+package fr.jayasoft.ivy;
+public class CircularDependencyException extends RuntimeException {
+    public CircularDependencyException(final ModuleDescriptor[] descriptors) {
+    private static String formatMessage(final ModuleDescriptor[] descriptors) {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/Configuration.java
+```java
+package fr.jayasoft.ivy;
+public class Configuration {
+    public static class Visibility {
+        public static Visibility PUBLIC = new Visibility("public");
+        public static Visibility PRIVATE = new Visibility("private");
+        public static Visibility getVisibility(String name) {
+        private String _name;
+        private Visibility(String name) {
+    private String _name;
+    private String _description;
+    private String[] _extends;
+    private Visibility _visibility;
+    public Configuration(String name, Visibility visibility,
+    public Configuration(String name) {
+    public String getDescription() {
+    public String[] getExtends() {
+    public String getName() {
+    public Visibility getVisibility() {
+    public String toString() {
+    public boolean equals(Object obj) {
+    public int hashCode() {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/ConflictManager.java
+```java
+package fr.jayasoft.ivy;
+import java.util.Collection;
+public interface ConflictManager {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/DefaultArtifact.java
+```java
+package fr.jayasoft.ivy;
+import java.util.Date;
+public class DefaultArtifact extends AbstractArtifact {
+    public static Artifact cloneWithAnotherType(Artifact artifact, String newType) {
+    public DefaultArtifact(ModuleRevisionId mrid, Date publicationDate, String name, String type, String ext) {
+    public ModuleRevisionId getModuleRevisionId() {
+    public String getName() {
+    public Date getPublicationDate() {
+    public String getType() {
+    public String getExt() {
+    public ArtifactRevisionId getId() {
+    public String[] getConfigurations() {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/DefaultDependencyArtifactDescriptor.java
+```java
+package fr.jayasoft.ivy;
+import java.util.ArrayList;
+import java.util.Collection;
+public class DefaultDependencyArtifactDescriptor implements DependencyArtifactDescriptor {
+    private DefaultDependencyDescriptor _dd;
+    private ArtifactId _id;
+    private Collection _confs = new ArrayList();
+    private boolean _includes;
+    public DefaultDependencyArtifactDescriptor(DefaultDependencyDescriptor dd,
+    public DefaultDependencyArtifactDescriptor(DefaultDependencyDescriptor dd, ArtifactId aid, boolean includes) {
+    public boolean equals(Object obj) {
+    public int hashCode() {
+    public void addConfiguration(String conf) {
+    public DependencyDescriptor getDependency() {
+    public ArtifactId getId() {
+    public String getName() {
+    public String getType() {
+    public String getExt() {
+    public String[] getConfigurations() {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/DefaultDependencyDescriptor.java
+```java
+package fr.jayasoft.ivy;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+public class DefaultDependencyDescriptor implements DependencyDescriptor {
+	private ModuleRevisionId _revId;
+    private Map _confs = new HashMap();
+    private Map _artifactsIncludes = new HashMap(); // Map (String masterConf -> Collection(DependencyArtifactDescriptor))
+    private Map _artifactsExcludes = new HashMap(); // Map (String masterConf -> Collection(DependencyArtifactDescriptor))
+    private Set _extends = new HashSet();
+    private boolean _force;
+    private boolean _changing;
+    private ModuleRevisionId _parentId;
+    private boolean _transitive = true;
+    public DefaultDependencyDescriptor(DependencyDescriptor dd, String revision) {
+    public DefaultDependencyDescriptor(ModuleDescriptor md, ModuleRevisionId mrid, boolean force, boolean changing, boolean transitive) {
+    public DefaultDependencyDescriptor(ModuleRevisionId mrid, boolean force) {
+    public DefaultDependencyDescriptor(ModuleRevisionId mrid, boolean force, boolean changing) {
+	public ModuleId getDependencyId() {
+	public ModuleRevisionId getDependencyRevisionId() {
+	public String[] getModuleConfigurations() {
+	public String[] getDependencyConfigurations(String moduleConfiguration) {
+	public String[] getDependencyConfigurations(String[] moduleConfigurations) {
+    public DependencyArtifactDescriptor[] getDependencyArtifactsIncludes(String moduleConfiguration) {
+    public DependencyArtifactDescriptor[] getDependencyArtifactsExcludes(String moduleConfiguration) {
+    private DependencyArtifactDescriptor[] getDependencyArtifacts(String moduleConfiguration, Map artifactsMap) {
+    public DependencyArtifactDescriptor[] getDependencyArtifactsIncludes(String[] moduleConfigurations) {
+    public DependencyArtifactDescriptor[] getDependencyArtifactsExcludes(String[] moduleConfigurations) {
+    public DependencyArtifactDescriptor[] getAllDependencyArtifactsIncludes() {
+    public DependencyArtifactDescriptor[] getAllDependencyArtifactsExcludes() {
+    private DependencyArtifactDescriptor[] getAllDependencyArtifacts(Map artifactsMap) {
+    public void addDependencyConfiguration(String masterConf, String depConf) {
+    public void addDependencyArtifactIncludes(String masterConf, DependencyArtifactDescriptor dad) {
+    public void addDepen
+... [truncated]
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/DefaultModuleDescriptor.java
+```java
+package fr.jayasoft.ivy;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+public class DefaultModuleDescriptor implements ModuleDescriptor {
+    public static DefaultModuleDescriptor newDefaultInstance(ModuleRevisionId mrid) {
+    public static DefaultModuleDescriptor newDefaultInstance(ModuleRevisionId mrid, DependencyArtifactDescriptor[] artifacts) {
+	private ModuleRevisionId _revId;
+	private ModuleRevisionId _resolvedRevId;
+	private String _status = Status.DEFAULT_STATUS;
+	private Date _publicationDate;
+	private Date _resolvedPublicationDate;
+	private List _dependencies = new ArrayList();
+	private Map _configurations = new HashMap(); // Map(String conf -> Configuration)
+    private Map _artifacts = new HashMap(); // Map (String conf -> Collection(Artifact))
+    private String _resolverName;
+    private boolean _isDefault = false;
+    private Map _conflictManagers = new LinkedHashMap(); // Map (ModuleId -> )
+    private List _licenses = new ArrayList(); // List(License)
+    private String _homePage;
+    private long _lastModified = 0;
+    public DefaultModuleDescriptor(ModuleRevisionId id, String status, Date pubDate) {
+    public DefaultModuleDescriptor(ModuleRevisionId id, String status, Date pubDate, boolean isDefault) {
+	public DefaultModuleDescriptor() {
+    public boolean isDefault() {
+    public void setPublicationDate(Date publicationDate) {
+	public Date getPublicationDate() {
+    public void setResolvedPublicationDate(Date publicationDate) {
+    public Date getResolvedPublicationDate() {
+    public void setModuleRevisionId(ModuleRevisionId revId) {
+    public void setResolvedModuleRevisionId(ModuleRevisionId revId) {
+    public void setStatus(String status) {
+    public void addDependency(DependencyDescriptor dependency) {
+    public void addConfiguration(Configuration conf) {
+    public void addArtifact(String conf, Artifact artifact) {
+	public ModuleRevisionId getModuleRevisionId() {
+	public ModuleRevisionId getResolvedModuleRevisionId() {
+	public String getStatus() {
+    public Configuration[] getConfigurations() {
+    public String[] getConfigurationsNames() {
+    public String[] getPublicConfigurationsNames() {
+    public Configuration getConfiguration(String confName) {
+    public Artifact[] getArtifacts(String conf) {
+    public Artifact[] getAllArt
+... [truncated]
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/DefaultModuleRevision.java
+```java
+package fr.jayasoft.ivy;
+import java.util.Date;
+public class DefaultModuleRevision implements ResolvedModuleRevision {
+    private DependencyResolver _resolver;
+    private ModuleDescriptor _descriptor;
+    private boolean _isDownloaded;
+    private boolean _isSearched;
+    public DefaultModuleRevision(DependencyResolver resolver, ModuleDescriptor descriptor, boolean searched, boolean downloaded) {
+    public DependencyResolver getResolver() {
+    public ModuleDescriptor getDescriptor() {
+    public ModuleRevisionId getId() {
+    public Date getPublicationDate() {
+    public boolean equals(Object obj) {
+    public int hashCode() {
+    public String toString() {
+    public boolean isDownloaded() {
+    public boolean isSearched() {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/DefaultPublishingDRResolver.java
+```java
+package fr.jayasoft.ivy;
+public class DefaultPublishingDRResolver implements PublishingDependencyRevisionResolver {
+    public String resolve(ModuleDescriptor published, String publishedStatus, ModuleRevisionId depMrid, String status) {
+```
+
+### Dependency signatures: src/java/fr/jayasoft/ivy/DependencyArtifactDescriptor.java
+```java
+package fr.
+... [truncated]
+```
+
+## Tests, documentation, and prior co-change (parent history only)
+
+### Prior co-change counts
+CHANGES.txt: co-changed with seed in 15 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/ResolveTest.java: co-changed with seed in 8 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/IvyNode.java: co-changed with seed in 5 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ant/IvyPublish.java: co-changed with seed in 3 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/DefaultDependencyDescriptor.java: co-changed with seed in 2 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ant/IvyCachePath.java: co-changed with seed in 2 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ant/IvyResolve.java: co-changed with seed in 2 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/report/ConfigurationResolveReport.java: co-changed with seed in 2 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/resolver/AbstractResourceResolver.java: co-changed with seed in 2 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/resolver/BasicResolver.java: co-changed with seed in 2 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/resolver/CacheResolver.java: co-changed with seed in 2 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/xml/XmlReportParser.java: co-changed with seed in 2 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/ant/IvyResolveTest.java: co-changed with seed in 2 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/a/ivy-1.0.1.xml: co-changed with seed in 2 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/a/ivy-1.0.2.xml: co-changed with seed in 2 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/b/ivy-1.0.1.xml: co-changed with seed in 2 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/b/ivy-1.0.2.xml: co-changed with seed in 2 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/c/ivy-1.0.1.xml: co-changed with seed in 2 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/c/ivy-1.0.2.xml: co-changed with seed in 2 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/DefaultArtifact.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/DefaultModuleDescriptor.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/DefaultPublishingDRResolver.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/DependencyDescriptor.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/DependencyResolver.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ModuleDescriptor.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ModuleId.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ModuleRevisionId.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/PublishingDependencyRevisionResolver.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ant/IvyCacheFileset.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ant/IvyDeliver.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ant/antlib.xml: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/ant/ivy.properties: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/conflict/StrictConflictException.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/conflict/StrictConflictManager.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/filter/ArtifactTypeFilter.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/filter/Filter.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/filter/FilterHelper.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/filter/NoFilter.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/report/LogReportOutputter.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/report/ResolveReport.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/report/XmlReportOutputter.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/repository/Repository.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/repository/file/FileRepository.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/repository/url/URLRepository.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/resolver/ChainResolver.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/resolver/DualResolver.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/resolver/IBiblioResolver.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/resolver/IvyRepResolver.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/resolver/RepositoryResolver.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/util/FileUtil.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/xml/XmlIvyConfigurationParser.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorParser.java: co-changed with seed in 1 prior non-merge commit(s)
+src/java/fr/jayasoft/ivy/xml/ivy.xsd: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/SortTest.java: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/TestPerformance.java: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/ant/IvyDeliverTest.java: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/ant/IvyPublishTest.java: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/conflict/StrictConflictManagerTest.java: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/conflict/ivy-conflict.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/conflict/ivy-noconflict.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/conflict/ivyconf-strict-test.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/ivy-mod1.2.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/resolver/FileSystemResolverTest.java: co-changed with seed in 1 prior non-merge commit(s)
+test/java/fr/jayasoft/ivy/resolver/MockResolver.java: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/1/org2/mod2.4/ivys/ivy-0.3.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/1/org2/mod2.4/jars/art24A-0.3.jar: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/1/org2/mod2.4/jars/art24B-0.3.jar: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/2/mod10.1/ivy-1.0.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/2/mod8.1/a-1.0.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/2/mod8.1/a-private-1.0.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/2/mod8.1/ivy-1.0.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/2/mod8.2/ivy-1.0.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/2/mod8.3/ivy-1.0.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/2/mod8.4/ivy-1.0.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/ivyconf.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/a/1.0.1/a-1.0.1.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/a/1.0.1/a-bt-1.0.1.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/a/1.0.2/a-1.0.2.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/a/1.0.2/a-bt-1.0.2.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/b/1.0.1/b-1.0.1.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/b/1.0.1/b-bt-1.0.1.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/b/1.0.2/b-1.0.2.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/b/1.0.2/b-bt-1.0.2.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/c/1.0.1/c-1.0.1.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/c/1.0.1/c-bt-1.0.1.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/c/1.0.2/c-1.0.2.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/repo/test/c/1.0.2/c-bt-1.0.2.txt: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/tests/1/ivy.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/tests/2/ivy.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/tests/3/ivy.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/tests/4/ivy.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/tests/5/ivy.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/tests/6/ivy.xml: co-changed with seed in 1 prior non-merge commit(s)
+test/repositories/IVY-84/tests/7/ivy.xml: co-changed with seed in 1 prior non-merge commit(s)
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.

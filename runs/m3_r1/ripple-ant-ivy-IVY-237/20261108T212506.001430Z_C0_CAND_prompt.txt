@@ -1,0 +1,118 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+VFS Resolve fails when trying to resolve a + version
+
+Resolution of a + dependency using a vfs resolver (with ftp) fails with a "Could no read from ... because it is not a file" error. This problem does not occur if the revision is specified explicitly (e,g, 1.3.1). It looks like there is a problem either with the file specifier ivy is passing to the vfs resolver or the vfs resolver is having problems handling the passed file specifier.
+
+Here's the basic error message:
+:: problems summary ::
+        WARN:  problem while downloading ivy file: ftp://<edited out for security purposes>/var/www/html/ivy/Milestones/Platform/LoggerService/ivy-020700+.xml: Could not read from "ftp://<edited out for security purposes>/var/www/html/ivy/Milestones/Platform/LoggerService/ivy-020700+.xml" because it is a not a file.
+
+## Allowed candidate paths (pre-change repository)
+src/java/fr/jayasoft/ivy/Ivy.java
+src/java/fr/jayasoft/ivy/IvyNode.java
+src/java/fr/jayasoft/ivy/resolver/BasicResolver.java
+src/java/fr/jayasoft/ivy/Main.java
+src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorUpdater.java
+src/java/fr/jayasoft/ivy/ant/IvyReport.java
+src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorParser.java
+src/java/fr/jayasoft/ivy/resolver/IvyRepResolver.java
+src/java/fr/jayasoft/ivy/ant/IvyDeliver.java
+src/java/fr/jayasoft/ivy/ant/IvyArtifactReport.java
+src/java/fr/jayasoft/ivy/repository/vfs/VfsRepository.java
+src/java/fr/jayasoft/ivy/ant/IvyResolve.java
+src/java/fr/jayasoft/ivy/ant/IvyBuildList.java
+src/java/fr/jayasoft/ivy/ant/IvyCacheTask.java
+src/java/fr/jayasoft/ivy/ant/IvyPublish.java
+src/java/fr/jayasoft/ivy/external/m2/PomModuleDescriptorParser.java
+src/java/fr/jayasoft/ivy/resolver/DualResolver.java
+src/java/fr/jayasoft/ivy/repository/Repository.java
+src/java/fr/jayasoft/ivy/report/XmlReportOutputter.java
+src/java/fr/jayasoft/ivy/resolver/ChainResolver.java
+src/java/fr/jayasoft/ivy/resolver/RepositoryResolver.java
+src/java/fr/jayasoft/ivy/xml/XmlIvyConfigurationParser.java
+src/java/fr/jayasoft/ivy/resolver/IBiblioResolver.java
+src/java/fr/jayasoft/ivy/url/ApacheURLLister.java
+src/java/fr/jayasoft/ivy/ant/IvyRetrieve.java
+src/java/fr/jayasoft/ivy/resolver/CacheResolver.java
+src/java/fr/jayasoft/ivy/resolver/AbstractResolver.java
+src/java/fr/jayasoft/ivy/ant/IvyTask.java
+src/java/fr/jayasoft/ivy/repository/Resource.java
+src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorWriter.java
+src/java/fr/jayasoft/ivy/ant/IvyArtifactProperty.java
+src/java/fr/jayasoft/ivy/util/IvyPatternHelper.java
+src/java/fr/jayasoft/ivy/xml/XmlReportParser.java
+src/java/fr/jayasoft/ivy/repository/TransferEvent.java
+src/java/fr/jayasoft/ivy/ant/IvyConfigure.java
+src/java/fr/jayasoft/ivy/parser/AbstractModuleDescriptorParser.java
+src/java/fr/jayasoft/ivy/DefaultModuleDescriptor.java
+src/java/fr/jayasoft/ivy/DefaultDependencyDescriptor.java
+src/java/fr/jayasoft/ivy/version/VersionMatcher.java
+src/java/fr/jayasoft/ivy/ModuleDescriptor.java
+src/java/fr/jayasoft/ivy/repository/vfs/VfsResource.java
+src/java/fr/jayasoft/ivy/IvyContext.java
+src/java/fr/jayasoft/ivy/ant/IvyInfo.java
+src/java/fr/jayasoft/ivy/resolver/ResolverHelper.java
+src/java/fr/jayasoft/ivy/url/URLHandler.java
+src/java/fr/jayasoft/ivy/report/ConfigurationResolveReport.java
+src/java/fr/jayasoft/ivy/resolver/AbstractResourceResolver.java
+src/java/fr/jayasoft/ivy/ant/IvyInstall.java
+src/java/fr/jayasoft/ivy/extendable/ExtendableItem.java
+src/java/fr/jayasoft/ivy/DependencyResolver.java
+src/java/fr/jayasoft/ivy/repository/vfs/IvyWebdavConnectionManager.java
+src/java/fr/jayasoft/ivy/ant/IvyConvertPom.java
+src/java/fr/jayasoft/ivy/DependencyArtifactDescriptor.java
+src/java/fr/jayasoft/ivy/parser/ModuleDescriptorParserRegistry.java
+src/java/fr/jayasoft/ivy/url/HttpClientHandler.java
+src/java/fr/jayasoft/ivy/ant/IvyCheck.java
+src/java/fr/jayasoft/ivy/conflict/RegexpConflictManager.java
+src/java/fr/jayasoft/ivy/version/VersionRangeMatcher.java
+src/java/fr/jayasoft/ivy/ModuleDescriptorSorter.java
+src/java/fr/jayasoft/ivy/repository/url/URLRepository.java
+src/java/fr/jayasoft/ivy/ant/IvyCachePath.java
+src/java/fr/jayasoft/ivy/repository/file/FileRepository.java
+src/java/fr/jayasoft/ivy/util/FileUtil.java
+src/java/fr/jayasoft/ivy/ant/IvyVar.java
+src/java/fr/jayasoft/ivy/LatestStrategy.java
+src/java/fr/jayasoft/ivy/url/BasicURLHandler.java
+src/java/fr/jayasoft/ivy/ResolveData.java
+src/java/fr/jayasoft/ivy/util/Message.java
+src/example/dependence/standalone/src/standalone/Main.java
+src/java/fr/jayasoft/ivy/ant/IvyExtractFromSources.java
+src/java/fr/jayasoft/ivy/report/LogReportOutputter.java
+src/java/fr/jayasoft/ivy/resolver/FileURLLister.java
+src/java/fr/jayasoft/ivy/util/Configurator.java
+src/java/fr/jayasoft/ivy/namespace/NameSpaceHelper.java
+src/java/fr/jayasoft/ivy/util/XMLHelper.java
+test/java/fr/jayasoft/ivy/ResolveTest.java
+test/java/fr/jayasoft/ivy/resolver/FileSystemResolverTest.java
+test/java/fr/jayasoft/ivy/xml/XmlIvyConfigurationParserTest.java
+test/java/fr/jayasoft/ivy/ant/IvyPublishTest.java
+test/java/fr/jayasoft/ivy/ant/IvyDeliverTest.java
+test/java/fr/jayasoft/ivy/ant/IvyRetrieveTest.java
+test/java/fr/jayasoft/ivy/repository/vfs/VfsRepositoryTest.java
+test/java/fr/jayasoft/ivy/InstallTest.java
+test/java/fr/jayasoft/ivy/resolver/ChainResolverTest.java
+test/java/fr/jayasoft/ivy/resolver/IBiblioResolverTest.java
+CHANGES.txt
+build.xml
+LICENSE.txt
+ivy.xml
+build.properties
+src/example/multi-project/common/common.xml
+doc/ideas.txt
+src/java/fr/jayasoft/ivy/report/ivy-report.xsl
+src/example/build-a-ivy-repository/build.xml
+doc/announce/announce-1.3-RC1.txt
+doc/announce/announce-1.3.txt
+doc/announce/announce-1.3-RC2.txt
+doc/conflict-solving-algo.html
+doc/announce/announce-1.0.txt
+doc/announce/announce-1.3-RC3.txt
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.

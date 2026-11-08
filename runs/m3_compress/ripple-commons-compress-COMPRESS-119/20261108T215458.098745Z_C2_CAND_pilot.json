@@ -1,0 +1,199 @@
+{
+  "artifact_type": "context_ablation_run",
+  "is_synthetic": false,
+  "task": {
+    "task_id": "ripple-commons-compress-COMPRESS-119",
+    "source_name": "Ripple issue-linked change dataset (record instance-00408; used for candidate discovery and cross-check only)",
+    "source_url": "https://github.com/se-doubleblind/ripple",
+    "repository_url": "https://github.com/apache/commons-compress",
+    "issue_url": "https://issues.apache.org/jira/browse/COMPRESS-119",
+    "issue_text_source": "ASF Jira REST API v2 issue COMPRESS-119 fields created,summary,description; retrieved 2026-11-08T21:13:22+00:00; https://issues.apache.org/jira/rest/api/2/issue/COMPRESS-119?fields=created,summary,description",
+    "issue_created_at": "2010-10-04T12:28:53.211+00:00",
+    "target_sha": "1eb9dbb7fd336b1e8a160977722b570354040798",
+    "parent_sha": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+    "target_first_parent": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+    "target_committer_at": "2010-10-26T09:44:59Z",
+    "changed_paths_reference": [
+      "src/changes/changes.xml",
+      "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java",
+      "src/main/java/org/apache/commons/compress/archivers/tar/TarBuffer.java"
+    ],
+    "selection_decision": "From scripts/screen_tasks.py: Jira creation time precedes the target commit, the recorded parent is the target's first parent, and labels are the complete parent-to-target Git diff path set. Confirmed by the reviewers named in cleaning_decisions. Ripple impact-set-files is not used as ground truth.",
+    "cleaning_decisions": [
+      "Ground truth is the exact Git diff path set from parent to target; do not substitute Ripple impact-set-files.",
+      "Issue text is the Jira summary and opening problem statement, manually cleaned: follow-up discussion, contact details and any fix description removed; no patch, commit message or changed-file list is included.",
+      "Reviewed by Atharva + Janvi on 2026-11-08."
+    ]
+  },
+  "predictor_input_policy": {
+    "condition": "C2_CAND",
+    "allowed": [
+      "cleaned issue text",
+      "candidate paths selected from the parent tree (production Java, tests, non-Java text files; label-free rule)",
+      "seed and lexically retrieved source files",
+      "dependency signatures"
+    ],
+    "context_manifest": "20261108T215458.098745Z_C2_CAND_context.json",
+    "prompt_file": "20261108T215458.098745Z_C2_CAND_prompt.txt",
+    "target_sha_or_patch_content_in_prompt": false,
+    "ground_truth_label_list_in_prompt": false,
+    "changed_paths_appear_only_as_parent_tree_entries": true,
+    "constraint_type": "candidate-list prompt constraint; strict validation still enforced after generation"
+  },
+  "run_meta": {
+    "repeat_index": 1,
+    "prompt_chars": 50684,
+    "prompt_truncation_suspected": null,
+    "environment": {
+      "python_version": "3.11.9",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "ollama_version": "0.40.15",
+      "cia_git_commit": "6998094d7fae5e08d28ec7e1d042e7e52b59ffa5"
+    }
+  },
+  "baselines": {
+    "seed_path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java",
+    "seed_selection": "first deterministic lexical source rank from request text against parent snapshot",
+    "dependency": {
+      "ranked_paths": [
+        "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java",
+        "src/main/java/org/apache/commons/compress/archivers/ArchiveStreamFactory.java",
+        "src/test/java/org/apache/commons/compress/archivers/CpioTestCase.java",
+        "src/main/java/org/apache/commons/compress/archivers/ArchiveInputStream.java",
+        "src/main/java/org/apache/commons/compress/archivers/Lister.java",
+        "src/test/java/org/apache/commons/compress/AbstractTestCase.java",
+        "src/test/java/org/apache/commons/compress/archivers/ArTestCase.java",
+        "src/test/java/org/apache/commons/compress/archivers/ExceptionMessageTest.java",
+        "src/test/java/org/apache/commons/compress/archivers/JarTestCase.java",
+        "src/test/java/org/apache/commons/compress/archivers/LongPathTest.java"
+      ],
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 3
+      }
+    },
+    "historical_cochange": {
+      "ranked_paths": [
+        "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java",
+        "src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java",
+        "src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveOutputStream.java",
+        "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java",
+        "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveInputStream.java",
+        "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveEntry.java",
+        "src/main/java/org/apache/commons/compress/archivers/ArchiveOutputStream.java",
+        "src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveInputStream.java",
+        "src/main/java/org/apache/commons/compress/archivers/cpio/CpioConstants.java",
+        "src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorOutputStream.java"
+      ],
+      "history_anchor_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+      "metrics": {
+        "precision": 0.1,
+        "recall": 0.3333333333333333,
+        "f1": 0.15384615384615383,
+        "recall_at_5": 0.3333333333333333,
+        "recall_at_10": 0.3333333333333333,
+        "true_positives": 1,
+        "predicted_count": 10,
+        "reference_count": 3
+      }
+    }
+  },
+  "model_run": {
+    "task_id": "ripple-commons-compress-COMPRESS-119",
+    "run_kind": "context_ablation_run",
+    "run_started_at": "2026-11-08T21:54:39.076Z",
+    "condition": "C2_CAND",
+    "source_commit": "80c0d2c08c851350d46c21ebafbbf9d9f5ad67b8",
+    "provider_name": "ollama",
+    "model_id": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "status": "ok",
+    "prompt_sha256": "29d7d87f5e6fabfe3d8990cd8cecf2d36075f9921d55774402606bd091daedce",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "latency_ms": 19021.394,
+    "input_tokens": 11254,
+    "output_tokens": 585,
+    "generation_settings": {
+      "temperature": 0.0,
+      "seed": 42,
+      "top_p": 1.0,
+      "top_k": 40,
+      "repeat_penalty": 1.0,
+      "num_ctx": 32768,
+      "num_predict": 2048,
+      "format": "json",
+      "stream": false
+    },
+    "provider_metrics": {
+      "total_duration_ns": 18981574100,
+      "load_duration_ns": 22268000,
+      "prompt_eval_duration_ns": 1619743000,
+      "eval_duration_ns": 17248607000
+    },
+    "predictions": [
+      {
+        "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java",
+        "rationale": "The change request is about TarArchiveOutputStream#finish not flushing content to the underlying stream. The retrieved source file is TarArchiveOutputStream.java, which is the most relevant file for this change request."
+      },
+      {
+        "path": "src/main/java/org/apache/commons/compress/archivers/tar/TarBuffer.java",
+        "rationale": "TarArchiveOutputStream.java depends on TarBuffer.java for reading and writing records. Modifying TarArchiveOutputStream.java might require changes in TarBuffer.java to ensure proper handling of records."
+      },
+      {
+        "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveOutputStream.java",
+        "rationale": "TarArchiveOutputStream.java extends ArchiveOutputStream.java. Changes in TarArchiveOutputStream.java might affect the behavior of ArchiveOutputStream.java."
+      },
+      {
+        "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveEntry.java",
+        "rationale": "TarArchiveOutputStream.java uses ArchiveEntry.java to represent archive entries. Changes in TarArchiveOutputStream.java might require changes in ArchiveEntry.java to ensure compatibility."
+      },
+      {
+        "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveException.java",
+        "rationale": "TarArchiveOutputStream.java might throw ArchiveException.java in case of errors. Changes in TarArchiveOutputStream.java might require changes in ArchiveException.java to handle new error conditions."
+      },
+      {
+        "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveInputStream.java",
+        "rationale": "TarArchiveOutputStream.java might interact with ArchiveInputStream.java for reading archive data. Changes in TarArchiveOutputStream.java might require changes in ArchiveInputStream.java to ensure proper interaction."
+      },
+      {
+        "path": "src/main/java/org/apache/commons/compress/archivers/ArchiveStreamFactory.java",
+        "rationale": "TarArchiveOutputStream.java might be created using ArchiveStreamFactory.java. Changes in TarArchiveOutputStream.java might require changes in ArchiveStreamFactory.java to ensure proper creation."
+      },
+      {
+        "path": "src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java",
+        "rationale": "TarArchiveOutputStream.java might be used in conjunction with CpioArchiveOutputStream.java for handling different archive formats. Changes in TarArchiveOutputStream.java might require changes in CpioArchiveOutputStream.java to ensure compatibility."
+      },
+      {
+        "path": "src/main/java/org/apache/commons/compress/utils/ArchiveUtils.java",
+        "rationale": "TarArchiveOutputStream.java might use ArchiveUtils.java for utility functions. Changes in TarArchiveOutputStream.java might require changes in ArchiveUtils.java to ensure proper functionality."
+      }
+    ],
+    "error": null,
+    "raw_response": "{\n  \"predictions\": [\n    {\n      \"path\": \"src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java\",\n      \"rationale\": \"The change request is about TarArchiveOutputStream#finish not flushing content to the underlying stream. The retrieved source file is TarArchiveOutputStream.java, which is the most relevant file for this change request.\"\n    },\n    {\n      \"path\": \"src/main/java/org/apache/commons/compress/archivers/tar/TarBuffer.java\",\n      \"rationale\": \"TarArchiveOutputStream.java depends on TarBuffer.java for reading and writing records. Modifying TarArchiveOutputStream.java might require changes in TarBuffer.java to ensure proper handling of records.\"\n    },\n    {\n      \"path\": \"src/main/java/org/apache/commons/compress/archivers/ArchiveOutputStream.java\",\n      \"rationale\": \"TarArchiveOutputStream.java extends ArchiveOutputStream.java. Changes in TarArchiveOutputStream.java might affect the behavior of ArchiveOutputStream.java.\"\n    },\n    {\n      \"path\": \"src/main/java/org/apache/commons/compress/archivers/ArchiveEntry.java\",\n      \"rationale\": \"TarArchiveOutputStream.java uses ArchiveEntry.java to represent archive entries. Changes in TarArchiveOutputStream.java might require changes in ArchiveEntry.java to ensure compatibility.\"\n    },\n    {\n      \"path\": \"src/main/java/org/apache/commons/compress/archivers/ArchiveException.java\",\n      \"rationale\": \"TarArchiveOutputStream.java might throw ArchiveException.java in case of errors. Changes in TarArchiveOutputStream.java might require changes in ArchiveException.java to handle new error conditions.\"\n    },\n    {\n      \"path\": \"src/main/java/org/apache/commons/compress/archivers/ArchiveInputStream.java\",\n      \"rationale\": \"TarArchiveOutputStream.java might interact with ArchiveInputStream.java for reading archive data. Changes in TarArchiveOutputStream.java might require changes in ArchiveInputStream.java to ensure proper interaction.\"\n    },\n    {\n      \"path\": \"src/main/java/org/apache/commons/compress/archivers/ArchiveStreamFactory.java\",\n      \"rationale\": \"TarArchiveOutputStream.java might be created using ArchiveStreamFactory.java. Changes in TarArchiveOutputStream.java might require changes in ArchiveStreamFactory.java to ensure proper creation.\"\n    },\n    {\n      \"path\": \"src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java\",\n      \"rationale\": \"TarArchiveOutputStream.java might be used in conjunction with CpioArchiveOutputStream.java for handling different archive formats. Changes in TarArchiveOutputStream.java might require changes in CpioArchiveOutputStream.java to ensure compatibility.\"\n    },\n    {\n      \"path\": \"src/main/java/org/apache/commons/compress/utils/ArchiveUtils.java\",\n      \"rationale\": \"TarArchiveOutputStream.java might use ArchiveUtils.java for utility functions. Changes in TarArchiveOutputStream.java might require changes in ArchiveUtils.java to ensure proper functionality.\"\n    }\n  ]\n}",
+    "path_diagnostics": null
+  },
+  "model_metrics": {
+    "precision": 0.2222222222222222,
+    "recall": 0.6666666666666666,
+    "f1": 0.3333333333333333,
+    "recall_at_5": 0.6666666666666666,
+    "recall_at_10": 0.6666666666666666,
+    "true_positives": 2,
+    "predicted_count": 9,
+    "reference_count": 3
+  },
+  "artifact_created_at": "2026-11-08T21:54:58.165Z",
+  "limitations": [
+    "A single model call is one sample; repeated calls can differ in lower ranks.",
+    "Changed-path labels are not a complete oracle for every file potentially affected.",
+    "Issue cleaning decisions are recorded in the task manifest.",
+    "C0_CONSTRAINED is a candidate-list prompt condition, not a hard decoding constraint; invalid paths are still rejected."
+  ]
+}

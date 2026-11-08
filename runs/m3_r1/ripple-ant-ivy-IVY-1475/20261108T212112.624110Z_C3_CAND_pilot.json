@@ -1,0 +1,205 @@
+{
+  "artifact_type": "context_ablation_run",
+  "is_synthetic": false,
+  "task": {
+    "task_id": "ripple-ant-ivy-IVY-1475",
+    "source_name": "Ripple issue-linked change dataset (record instance-00111; used for candidate discovery and cross-check only)",
+    "source_url": "https://github.com/se-doubleblind/ripple",
+    "repository_url": "https://github.com/apache/ant-ivy",
+    "issue_url": "https://issues.apache.org/jira/browse/IVY-1475",
+    "issue_text_source": "ASF Jira REST API v2 issue IVY-1475 fields created,summary,description; retrieved 2026-11-06T02:42:54+00:00; https://issues.apache.org/jira/rest/api/2/issue/IVY-1475?fields=created,summary,description",
+    "issue_created_at": "2014-06-03T00:51:02.084+00:00",
+    "target_sha": "7f293a06a0b7ec9b554d51f150991efa9b7dd54e",
+    "parent_sha": "c07d659cf8f7b16452472da6052a1de326bcb6a4",
+    "target_first_parent": "c07d659cf8f7b16452472da6052a1de326bcb6a4",
+    "target_committer_at": "2017-06-13T15:17:51+05:30",
+    "changed_paths_reference": [
+      "doc/use/cachefileset.html",
+      "src/java/org/apache/ivy/ant/IvyCacheFileset.java",
+      "test/java/org/apache/ivy/ant/IvyCacheFilesetTest.java"
+    ],
+    "selection_decision": "From scripts/screen_tasks.py: Jira creation time precedes the target commit, the recorded parent is the target's first parent, and labels are the complete parent-to-target Git diff path set. Confirmed by the reviewers named in cleaning_decisions. Ripple impact-set-files is not used as ground truth.",
+    "cleaning_decisions": [
+      "Ground truth is the exact Git diff path set from parent to target; do not substitute Ripple impact-set-files.",
+      "Issue text is the Jira summary and opening problem statement, manually cleaned: follow-up discussion, contact details and any fix description removed; no patch, commit message or changed-file list is included.",
+      "Reviewed by Atharva + Janvi on 2026-11-08."
+    ]
+  },
+  "predictor_input_policy": {
+    "condition": "C3_CAND",
+    "allowed": [
+      "cleaned issue text",
+      "candidate paths selected from the parent tree (production Java, tests, non-Java text files; label-free rule)",
+      "seed and lexically retrieved source files",
+      "dependency signatures",
+      "related tests and documentation",
+      "pre-parent co-change counts"
+    ],
+    "context_manifest": "20261108T212112.624110Z_C3_CAND_context.json",
+    "prompt_file": "20261108T212112.624110Z_C3_CAND_prompt.txt",
+    "target_sha_or_patch_content_in_prompt": false,
+    "ground_truth_label_list_in_prompt": false,
+    "changed_paths_appear_only_as_parent_tree_entries": true,
+    "constraint_type": "candidate-list prompt constraint; strict validation still enforced after generation"
+  },
+  "run_meta": {
+    "repeat_index": 1,
+    "prompt_chars": 60387,
+    "prompt_truncation_suspected": null,
+    "environment": {
+      "python_version": "3.11.9",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "ollama_version": "0.40.15",
+      "cia_git_commit": "6998094d7fae5e08d28ec7e1d042e7e52b59ffa5"
+    }
+  },
+  "baselines": {
+    "seed_path": "src/java/org/apache/ivy/core/settings/IvySettings.java",
+    "seed_selection": "first deterministic lexical source rank from request text against parent snapshot",
+    "dependency": {
+      "ranked_paths": [
+        "src/java/org/apache/ivy/core/settings/IvySettings.java",
+        "src/java/org/apache/ivy/Ivy.java",
+        "src/java/org/apache/ivy/Main.java",
+        "src/java/org/apache/ivy/ant/BuildOBRTask.java",
+        "src/java/org/apache/ivy/ant/IvyAntSettings.java",
+        "src/java/org/apache/ivy/ant/IvyBuildList.java",
+        "src/java/org/apache/ivy/ant/IvyBuildNumber.java",
+        "src/java/org/apache/ivy/ant/IvyCleanCache.java",
+        "src/java/org/apache/ivy/ant/IvyConflict.java",
+        "src/java/org/apache/ivy/ant/IvyDeliver.java"
+      ],
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 3
+      }
+    },
+    "historical_cochange": {
+      "ranked_paths": [
+        "src/java/org/apache/ivy/core/settings/IvySettings.java",
+        "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "test/java/org/apache/ivy/core/resolve/ResolveTest.java",
+        "src/java/org/apache/ivy/core/settings/XmlSettingsParser.java",
+        "src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java",
+        "src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java",
+        "test/java/org/apache/ivy/core/settings/XmlSettingsParserTest.java",
+        "src/java/org/apache/ivy/core/resolve/IvyNode.java",
+        "src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java",
+        "src/java/org/apache/ivy/Ivy.java"
+      ],
+      "history_anchor_commit": "c07d659cf8f7b16452472da6052a1de326bcb6a4",
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 3
+      }
+    }
+  },
+  "model_run": {
+    "task_id": "ripple-ant-ivy-IVY-1475",
+    "run_kind": "context_ablation_run",
+    "run_started_at": "2026-11-08T21:20:51.852Z",
+    "condition": "C3_CAND",
+    "source_commit": "c07d659cf8f7b16452472da6052a1de326bcb6a4",
+    "provider_name": "ollama",
+    "model_id": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "status": "ok",
+    "prompt_sha256": "51577850ccc042d357930f36578475144a4a4f9209828d14b7b07b6aa89ac09e",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "latency_ms": 20771.329,
+    "input_tokens": 12665,
+    "output_tokens": 604,
+    "generation_settings": {
+      "temperature": 0.0,
+      "seed": 42,
+      "top_p": 1.0,
+      "top_k": 40,
+      "repeat_penalty": 1.0,
+      "num_ctx": 32768,
+      "num_predict": 2048,
+      "format": "json",
+      "stream": false
+    },
+    "provider_metrics": {
+      "total_duration_ns": 20727481200,
+      "load_duration_ns": 20540000,
+      "prompt_eval_duration_ns": 1827589000,
+      "eval_duration_ns": 18786204000
+    },
+    "predictions": [
+      {
+        "path": "src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java",
+        "rationale": "The error occurs when trying to find a common base directory for artifacts in separate directories on different drives. This class is responsible for managing the cache of resolved artifacts, and it might be involved in determining the base directory for these artifacts."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "rationale": "The ResolveEngine is responsible for resolving dependencies. It might be involved in determining the base directory for artifacts, especially when dealing with multiple drives."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/resolve/IvyNode.java",
+        "rationale": "IvyNode represents a node in the dependency graph. It might be involved in determining the base directory for artifacts, especially when dealing with multiple drives."
+      },
+      {
+        "path": "src/java/org/apache/ivy/ant/IvyCacheFileset.java",
+        "rationale": "This class is responsible for handling the cache fileset, which might be involved in determining the base directory for artifacts, especially when dealing with multiple drives."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/settings/IvySettings.java",
+        "rationale": "IvySettings manages the settings for Ivy, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java",
+        "rationale": "ModuleDescriptor represents a module descriptor, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/module/descriptor/Artifact.java",
+        "rationale": "Artifact represents an artifact, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java",
+        "rationale": "DependencyDescriptor represents a dependency descriptor, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/module/id/ModuleRevisionId.java",
+        "rationale": "ModuleRevisionId represents a module revision ID, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/report/ResolveReport.java",
+        "rationale": "ResolveReport represents a resolve report, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives."
+      }
+    ],
+    "error": null,
+    "raw_response": "{\n  \"predictions\": [\n    {\n      \"path\": \"src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java\",\n      \"rationale\": \"The error occurs when trying to find a common base directory for artifacts in separate directories on different drives. This class is responsible for managing the cache of resolved artifacts, and it might be involved in determining the base directory for these artifacts.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/resolve/ResolveEngine.java\",\n      \"rationale\": \"The ResolveEngine is responsible for resolving dependencies. It might be involved in determining the base directory for artifacts, especially when dealing with multiple drives.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/resolve/IvyNode.java\",\n      \"rationale\": \"IvyNode represents a node in the dependency graph. It might be involved in determining the base directory for artifacts, especially when dealing with multiple drives.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/ant/IvyCacheFileset.java\",\n      \"rationale\": \"This class is responsible for handling the cache fileset, which might be involved in determining the base directory for artifacts, especially when dealing with multiple drives.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/settings/IvySettings.java\",\n      \"rationale\": \"IvySettings manages the settings for Ivy, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java\",\n      \"rationale\": \"ModuleDescriptor represents a module descriptor, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/module/descriptor/Artifact.java\",\n      \"rationale\": \"Artifact represents an artifact, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java\",\n      \"rationale\": \"DependencyDescriptor represents a dependency descriptor, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/module/id/ModuleRevisionId.java\",\n      \"rationale\": \"ModuleRevisionId represents a module revision ID, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/report/ResolveReport.java\",\n      \"rationale\": \"ResolveReport represents a resolve report, and it might be involved in determining the base directory for artifacts, especially when dealing with multiple drives.\"\n    }\n  ]\n}",
+    "path_diagnostics": null
+  },
+  "model_metrics": {
+    "precision": 0.1,
+    "recall": 0.3333333333333333,
+    "f1": 0.15384615384615383,
+    "recall_at_5": 0.3333333333333333,
+    "recall_at_10": 0.3333333333333333,
+    "true_positives": 1,
+    "predicted_count": 10,
+    "reference_count": 3
+  },
+  "artifact_created_at": "2026-11-08T21:21:12.669Z",
+  "limitations": [
+    "A single model call is one sample; repeated calls can differ in lower ranks.",
+    "Changed-path labels are not a complete oracle for every file potentially affected.",
+    "Issue cleaning decisions are recorded in the task manifest.",
+    "C0_CONSTRAINED is a candidate-list prompt condition, not a hard decoding constraint; invalid paths are still rejected."
+  ]
+}

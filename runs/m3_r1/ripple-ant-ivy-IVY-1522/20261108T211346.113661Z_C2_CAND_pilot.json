@@ -1,0 +1,198 @@
+{
+  "artifact_type": "context_ablation_run",
+  "is_synthetic": false,
+  "task": {
+    "task_id": "ripple-ant-ivy-IVY-1522",
+    "source_name": "Ripple issue-linked change dataset (record instance-00165; used for candidate discovery and cross-check only)",
+    "source_url": "https://github.com/se-doubleblind/ripple",
+    "repository_url": "https://github.com/apache/ant-ivy",
+    "issue_url": "https://issues.apache.org/jira/browse/IVY-1522",
+    "issue_text_source": "ASF Jira REST API v2 issue IVY-1522 fields created,summary,description; retrieved 2026-11-06T02:42:31+00:00; https://issues.apache.org/jira/rest/api/2/issue/IVY-1522?fields=created,summary,description",
+    "issue_created_at": "2015-05-19T18:03:16.547+00:00",
+    "target_sha": "9ea5c69bda2ed1ec0c69c081e91b72dcf6a6e81c",
+    "parent_sha": "36e99429c22af17bcc3ecf6031ed531055aaada2",
+    "target_first_parent": "36e99429c22af17bcc3ecf6031ed531055aaada2",
+    "target_committer_at": "2017-05-26T13:25:01+05:30",
+    "changed_paths_reference": [
+      "src/java/org/apache/ivy/util/FileUtil.java",
+      "test/java/org/apache/ivy/ant/FileUtilTest.java"
+    ],
+    "selection_decision": "From scripts/screen_tasks.py: Jira creation time precedes the target commit, the recorded parent is the target's first parent, and labels are the complete parent-to-target Git diff path set. Confirmed by the reviewers named in cleaning_decisions. Ripple impact-set-files is not used as ground truth.",
+    "cleaning_decisions": [
+      "Ground truth is the exact Git diff path set from parent to target; do not substitute Ripple impact-set-files.",
+      "Issue text is the Jira summary and opening problem statement, manually cleaned: follow-up discussion, contact details and any fix description removed; no patch, commit message or changed-file list is included.",
+      "Reviewed by Atharva + Janvi on 2026-11-08."
+    ]
+  },
+  "predictor_input_policy": {
+    "condition": "C2_CAND",
+    "allowed": [
+      "cleaned issue text",
+      "candidate paths selected from the parent tree (production Java, tests, non-Java text files; label-free rule)",
+      "seed and lexically retrieved source files",
+      "dependency signatures"
+    ],
+    "context_manifest": "20261108T211346.113661Z_C2_CAND_context.json",
+    "prompt_file": "20261108T211346.113661Z_C2_CAND_prompt.txt",
+    "target_sha_or_patch_content_in_prompt": false,
+    "ground_truth_label_list_in_prompt": false,
+    "changed_paths_appear_only_as_parent_tree_entries": true,
+    "constraint_type": "candidate-list prompt constraint; strict validation still enforced after generation"
+  },
+  "run_meta": {
+    "repeat_index": 1,
+    "prompt_chars": 50391,
+    "prompt_truncation_suspected": null,
+    "environment": {
+      "python_version": "3.11.9",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "ollama_version": "0.40.15",
+      "cia_git_commit": "6998094d7fae5e08d28ec7e1d042e7e52b59ffa5"
+    }
+  },
+  "baselines": {
+    "seed_path": "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+    "seed_selection": "first deterministic lexical source rank from request text against parent snapshot",
+    "dependency": {
+      "ranked_paths": [
+        "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "src/java/org/apache/ivy/Ivy.java",
+        "src/java/org/apache/ivy/core/check/CheckEngine.java",
+        "src/java/org/apache/ivy/core/install/InstallEngine.java",
+        "src/java/org/apache/ivy/core/report/ConfigurationResolveReport.java",
+        "src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java",
+        "src/java/org/apache/ivy/core/resolve/ResolveData.java",
+        "src/java/org/apache/ivy/core/resolve/ResolveOptions.java",
+        "src/java/org/apache/ivy/core/resolve/VisitNode.java",
+        "src/java/org/apache/ivy/osgi/repo/ResolverManifestIterable.java"
+      ],
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 2
+      }
+    },
+    "historical_cochange": {
+      "ranked_paths": [
+        "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "test/java/org/apache/ivy/core/resolve/ResolveTest.java",
+        "src/java/org/apache/ivy/core/resolve/IvyNode.java",
+        "src/java/org/apache/ivy/core/settings/IvySettings.java",
+        "src/java/org/apache/ivy/Ivy.java",
+        "src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java",
+        "src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java",
+        "src/java/org/apache/ivy/plugins/resolver/BasicResolver.java",
+        "src/java/org/apache/ivy/ant/IvyResolve.java",
+        "src/java/org/apache/ivy/core/resolve/DownloadOptions.java"
+      ],
+      "history_anchor_commit": "36e99429c22af17bcc3ecf6031ed531055aaada2",
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 2
+      }
+    }
+  },
+  "model_run": {
+    "task_id": "ripple-ant-ivy-IVY-1522",
+    "run_kind": "context_ablation_run",
+    "run_started_at": "2026-11-08T21:13:26.133Z",
+    "condition": "C2_CAND",
+    "source_commit": "36e99429c22af17bcc3ecf6031ed531055aaada2",
+    "provider_name": "ollama",
+    "model_id": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "status": "ok",
+    "prompt_sha256": "2e47ec72863b32932d9d5d28a547984c01ad31da083af5365c73921986a175d9",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "latency_ms": 19979.738,
+    "input_tokens": 10644,
+    "output_tokens": 638,
+    "generation_settings": {
+      "temperature": 0.0,
+      "seed": 42,
+      "top_p": 1.0,
+      "top_k": 40,
+      "repeat_penalty": 1.0,
+      "num_ctx": 32768,
+      "num_predict": 2048,
+      "format": "json",
+      "stream": false
+    },
+    "provider_metrics": {
+      "total_duration_ns": 19954027400,
+      "load_duration_ns": 23644300,
+      "prompt_eval_duration_ns": 1502361000,
+      "eval_duration_ns": 18334448000
+    },
+    "predictions": [
+      {
+        "path": "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "rationale": "The change request mentions issues with Ivy 2.4.0 handling modules with colons in version numbers. The ResolveEngine class is a central component in Ivy's dependency resolution process, so it is likely to be affected by such issues."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java",
+        "rationale": "The change request involves handling module versions with colons, which might affect how artifacts are cached. The DefaultRepositoryCacheManager is responsible for managing the cache of resolved artifacts, so it could be impacted."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/resolve/IvyNode.java",
+        "rationale": "The change request mentions issues with the IvyNode class, which is used to represent a module in the dependency graph. If there are issues with module versions containing colons, it's likely that the IvyNode class would need to be updated."
+      },
+      {
+        "path": "src/java/org/apache/ivy/Ivy.java",
+        "rationale": "The Ivy class is the main entry point for using Ivy. If there are issues with handling module versions containing colons, it's possible that the Ivy class would need to be updated to address these issues."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/cache/ArtifactOrigin.java",
+        "rationale": "The change request involves handling module versions with colons, which might affect how artifacts are resolved and cached. The ArtifactOrigin class is responsible for representing the origin of an artifact, so it could be impacted."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/check/CheckEngine.java",
+        "rationale": "The change request involves handling module versions with colons, which might affect how dependencies are checked. The CheckEngine class is responsible for checking dependencies, so it could be impacted."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/event/EventManager.java",
+        "rationale": "The change request involves handling module versions with colons, which might affect how events are managed during the resolution process. The EventManager class is responsible for managing events, so it could be impacted."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/event/download/PrepareDownloadEvent.java",
+        "rationale": "The change request involves handling module versions with colons, which might affect how artifacts are prepared for download. The PrepareDownloadEvent class is responsible for preparing download events, so it could be impacted."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/event/resolve/EndResolveEvent.java",
+        "rationale": "The change request involves handling module versions with colons, which might affect how resolution events are managed. The EndResolveEvent class is responsible for managing end-of-resolution events, so it could be impacted."
+      }
+    ],
+    "error": null,
+    "raw_response": "{\n  \"predictions\": [\n    {\n      \"path\": \"src/java/org/apache/ivy/core/resolve/ResolveEngine.java\",\n      \"rationale\": \"The change request mentions issues with Ivy 2.4.0 handling modules with colons in version numbers. The ResolveEngine class is a central component in Ivy's dependency resolution process, so it is likely to be affected by such issues.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java\",\n      \"rationale\": \"The change request involves handling module versions with colons, which might affect how artifacts are cached. The DefaultRepositoryCacheManager is responsible for managing the cache of resolved artifacts, so it could be impacted.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/resolve/IvyNode.java\",\n      \"rationale\": \"The change request mentions issues with the IvyNode class, which is used to represent a module in the dependency graph. If there are issues with module versions containing colons, it's likely that the IvyNode class would need to be updated.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/Ivy.java\",\n      \"rationale\": \"The Ivy class is the main entry point for using Ivy. If there are issues with handling module versions containing colons, it's possible that the Ivy class would need to be updated to address these issues.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/cache/ArtifactOrigin.java\",\n      \"rationale\": \"The change request involves handling module versions with colons, which might affect how artifacts are resolved and cached. The ArtifactOrigin class is responsible for representing the origin of an artifact, so it could be impacted.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/check/CheckEngine.java\",\n      \"rationale\": \"The change request involves handling module versions with colons, which might affect how dependencies are checked. The CheckEngine class is responsible for checking dependencies, so it could be impacted.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/event/EventManager.java\",\n      \"rationale\": \"The change request involves handling module versions with colons, which might affect how events are managed during the resolution process. The EventManager class is responsible for managing events, so it could be impacted.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/event/download/PrepareDownloadEvent.java\",\n      \"rationale\": \"The change request involves handling module versions with colons, which might affect how artifacts are prepared for download. The PrepareDownloadEvent class is responsible for preparing download events, so it could be impacted.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/event/resolve/EndResolveEvent.java\",\n      \"rationale\": \"The change request involves handling module versions with colons, which might affect how resolution events are managed. The EndResolveEvent class is responsible for managing end-of-resolution events, so it could be impacted.\"\n    }\n  ]\n}",
+    "path_diagnostics": null
+  },
+  "model_metrics": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "recall_at_5": 0.0,
+    "recall_at_10": 0.0,
+    "true_positives": 0,
+    "predicted_count": 9,
+    "reference_count": 2
+  },
+  "artifact_created_at": "2026-11-08T21:13:46.211Z",
+  "limitations": [
+    "A single model call is one sample; repeated calls can differ in lower ranks.",
+    "Changed-path labels are not a complete oracle for every file potentially affected.",
+    "Issue cleaning decisions are recorded in the task manifest.",
+    "C0_CONSTRAINED is a candidate-list prompt condition, not a hard decoding constraint; invalid paths are still rejected."
+  ]
+}

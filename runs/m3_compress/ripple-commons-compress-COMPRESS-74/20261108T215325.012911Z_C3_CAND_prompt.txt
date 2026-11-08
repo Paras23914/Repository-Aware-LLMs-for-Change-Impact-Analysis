@@ -1,0 +1,1595 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+ZipArchiveInputStream fails to update count of bytes read
+
+ZipArchiveInputStream fails to call count() in some cases where it reads (or puts back) data from the input stream.
+
+Not quite sure how to handle put-back yet, as a count of -1 is currently ignored, so how does one count a single byte that is put back?
+Easy enough to hack this in - count(1);count(-2); - but that's rather messy.
+
+## Allowed candidate paths (pre-change repository)
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveEntry.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipFile.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarBuffer.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ExtraFieldUtils.java
+src/main/java/org/apache/commons/compress/archivers/zip/AsiExtraField.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarUtils.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveStreamFactory.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnrecognizedExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/Simple8BitZipEncoding.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipEncodingHelper.java
+src/main/java/org/apache/commons/compress/compressors/CompressorStreamFactory.java
+src/main/java/org/apache/commons/compress/archivers/zip/AbstractUnicodeExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipShort.java
+src/main/java/org/apache/commons/compress/compressors/gzip/GzipUtils.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipLong.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnparseableExtraFieldData.java
+src/main/java/org/apache/commons/compress/compressors/gzip/GzipCompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/tar/TarConstants.java
+src/main/java/org/apache/commons/compress/compressors/CompressorInputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipExtraField.java
+src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveEntry.java
+src/main/java/org/apache/commons/compress/changes/ChangeSetPerformer.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipUtil.java
+src/main/java/org/apache/commons/compress/archivers/zip/JarMarker.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2Utils.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnicodeCommentExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnicodePathExtraField.java
+src/main/java/org/apache/commons/compress/archivers/zip/ZipEncoding.java
+src/main/java/org/apache/commons/compress/utils/ArchiveUtils.java
+src/main/java/org/apache/commons/compress/utils/IOUtils.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioConstants.java
+src/main/java/org/apache/commons/compress/changes/ChangeSet.java
+src/main/java/org/apache/commons/compress/changes/ChangeSetResults.java
+src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/FallbackZipEncoding.java
+src/main/java/org/apache/commons/compress/changes/Change.java
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioUtil.java
+src/main/java/org/apache/commons/compress/archivers/zip/NioZipEncoding.java
+src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveInputStream.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveEntry.java
+src/main/java/org/apache/commons/compress/archivers/ArchiveException.java
+src/main/java/org/apache/commons/compress/compressors/CompressorException.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/CRC.java
+src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveOutputStream.java
+src/main/java/org/apache/commons/compress/archivers/zip/UnixStat.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/Rand.java
+src/main/java/org/apache/commons/compress/compressors/gzip/GzipCompressorOutputStream.java
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2Constants.java
+src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveEntry.java
+src/main/java/org/apache/commons/compress/compressors/CompressorOutputStream.java
+src/test/java/org/apache/commons/compress/changes/ChangeSetTestCase.java
+src/test/java/org/apache/commons/compress/archivers/zip/TestZipEncodings.java
+src/test/java/org/apache/commons/compress/AbstractTestCase.java
+src/test/java/org/apache/commons/compress/archivers/zip/ExtraFieldUtilsTest.java
+src/test/java/org/apache/commons/compress/archivers/zip/AsiExtraFieldTest.java
+src/test/java/org/apache/commons/compress/archivers/zip/Maven221MultiVolumeTest.java
+src/test/java/org/apache/commons/compress/archivers/ZipTestCase.java
+src/test/java/org/apache/commons/compress/archivers/tar/TarUtilsTest.java
+src/test/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntryTest.java
+src/test/java/org/apache/commons/compress/IOMethodsTest.java
+LICENSE.txt
+PROPOSAL.txt
+pom.xml
+NOTICE.txt
+src/site/xdoc/zip.xml
+src/site/xdoc/examples.xml
+src/site/xdoc/index.xml
+src/site/xdoc/download_compress.xml
+src/changes/changes.xml
+src/site/xdoc/conventions.xml
+src/site/xdoc/issue-tracking.xml
+src/main/java/org/apache/commons/compress/archivers/tar/package.html
+src/main/java/org/apache/commons/compress/archivers/jar/package.html
+src/main/java/org/apache/commons/compress/compressors/gzip/package.html
+src/main/java/org/apache/commons/compress/changes/package.html
+
+## Seed and retrieved source files
+
+### SEED: src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorOutputStream.java
+```java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.commons.compress.compressors.bzip2;
+
+import java.io.IOException;
+import java.io.OutputStream;
+
+import org.apache.commons.compress.compressors.CompressorOutputStream;
+
+/**
+ * An output stream that compresses into the BZip2 format into another stream.
+ *
+ * <p>
+ * The compression requires large amounts of memory. Thus you should call the
+ * {@link #close() close()} method as soon as possible, to force
+ * <tt>BZip2CompressorOutputStream</tt> to release the allocated memory.
+ * </p>
+ *
+ * <p> You can shrink the amount of allocated memory and maybe raise
+ * the compression speed by choosing a lower blocksize, which in turn
+ * may cause a lower compression ratio. You can avoid unnecessary
+ * memory allocation by avoiding using a blocksize which is bigger
+ * than the size of the input.  </p>
+ *
+ * <p> You can compute the memory usage for compressing by the
+ * following formula: </p>
+ *
+ * <pre>
+ * &lt;code&gt;400k + (9 * blocksize)&lt;/code&gt;.
+ * </pre>
+ *
+ * <p> To get the memory required for decompression by {@link
+ * BZip2CompressorInputStream} use </p>
+ *
+ * <pre>
+ * &lt;code&gt;65k + (5 * blocksize)&lt;/code&gt;.
+ * </pre>
+ *
+ * <table width="100%" border="1">
+ * <colgroup> <col width="33%" /> <col width="33%" /> <col width="33%" />
+ * </colgroup>
+ * <tr>
+ * <th colspan="3">Memory usage by blocksize</th>
+ * </tr>
+ * <tr>
+ * <th align="right">Blocksize</th> <th align="right">Compression<br>
+ * memory usage</th> <th align="right">Decompression<br>
+ * memory usage</th>
+ * </tr>
+ * <tr>
+ * <td align="right">100k</td>
+ * <td align="right">1300k</td>
+ * <td align="right">565k</td>
+ * </tr>
+ * <tr>
+ * <td align="right">200k</td>
+ * <td align="right">2200k</td>
+ * <td align="right">1065k</td>
+ * </tr>
+ * <tr>
+ * <td align="right">300k</td>
+ * <td align="right">3100k</td>
+ * <td align="right">1565k</td>
+ * </tr>
+ * <tr>
+ * <td align="right">400k</td>
+ * <td align="right">4000k</td>
+ * <td align="right">2065k</td>
+ * </tr>
+ * <tr>
+ * <td align="right">500k</td>
+ * <td align="right">4900k</td>
+ * <td align="right">2565k</td>
+ * </tr>
+ * <tr>
+ * <td align="right">600k</td>
+ * <td align="right">5800k</td>
+ * <td align="right">3065k</td>
+ * </tr>
+ * <tr>
+ * <td align="right">700k</td>
+ * <td align="right">6700k</td>
+ * <td align="right">3565k</td>
+ * </tr>
+ * <tr>
+ * <td align="right">800k</td>
+ * <td align="right">7600k</td>
+ * <td align="right">4065k</td>
+ * </tr>
+ * <tr>
+ * <td align="right">900k</td>
+ * <td align="right">8500k</td>
+ * <td align="right">4565k</td>
+ * </tr>
+ * </table>
+ *
+ * <p>
+ * For decompression <tt>BZip2CompressorInputStream</tt> allocates less memory if the
+ * bzipped input is smaller than one block.
+ * </p>
+ *
+ * <p>
+ * Instances of this class are not threadsafe.
+ * </p>
+ *
+ * <p>
+ * TODO: Update to BZip2 1.0.1
+ * </p>
+ * @NotThreadSafe
+ */
+public class BZip2CompressorOutputStream extends CompressorOutputStream
+    implements BZip2Constants {
+
+    /**
+     * The minimum supported blocksize <tt> == 1</tt>.
+     */
+    public static final int MIN_BLOCKSIZE = 1;
+
+    /**
+     * The maximum supported blocksize <tt> == 9</tt>.
+     */
+    public static final int MAX_BLOCKSIZE = 9;
+
+    private static final int SETMASK = (1 << 21);
+    private static final int CLEARMASK = (~SETMASK);
+    private static final int GREATER_ICOST = 15;
+    private static final int LESSER_ICOST = 0;
+    private static final int SMALL_THRESH = 20;
+    private static final int DEPTH_THRESH = 10;
+    private static final int WORK_FACTOR = 30;
+
+    /*
+     * <p> If you are ever unlucky/improbable enough to get a stack
+     * overflow whilst sorting, increase the following constant and
+     * try again. In practice I have never seen the stack go above 27
+     * elems, so the following limit seems very generous.  </p>
+     */
+    private static final int QSORT_STACK_SIZE = 1000;
+
+    /**
+     * Knuth's increments seem to work better than Incerpi-Sedgewick here.
+     * Possibly because the number of elems to sort is usually small, typically
+     * &lt;= 20.
+     */
+    private static final int[] INCS = { 1, 4, 13, 40, 121, 364, 1093, 3280,
+                                        9841, 29524, 88573, 265720, 797161,
+                                        2391484 };
+
+    private static void hbMakeCodeLengths(final byte[] len, final int[] freq,
+                                          final Data dat, final int alphaSize,
+                                          final int maxLen) {
+        /*
+         * Nodes and heap entries run from 1. Entry 0 for both the heap and
+         * nodes is a sentinel.
+         */
+        final int[] heap = dat.heap;
+        final int[] weight = dat.weight;
+        final int[] parent = dat.parent;
+
+        for (int i = alphaSize; --i >= 0;) {
+            weight[i + 1] = (freq[i] == 0 ? 1 : freq[i]) << 8;
+        }
+
+        for (boolean tooLong = true; tooLong;) {
+            tooLong = false;
+
+            int nNodes = alphaSize;
+            int nHeap = 0;
+            heap[0] = 0;
+            weight[0] = 0;
+            parent[0] = -2;
+
+            for (int i = 1; i <= alphaSize; i++) {
+                parent[i] = -1;
+                nHeap++;
+                heap[nHeap] = i;
+
+                int zz = nHeap;
+                int tmp = heap[zz];
+                while (weight[tmp] < weight[heap[zz >> 1]]) {
+                    heap[zz] = heap[zz >> 1];
+                    zz >>= 1;
+                }
+                heap[zz] = tmp;
+            }
+
+            while (nHeap > 1) {
+                int n1 = heap[1];
+                heap[1] = heap[nHeap];
+                nHeap--;
+
+                int yy = 0;
+                int zz = 1;
+                int tmp = heap[1];
+
+                while (true) {
+                    yy = zz << 1;
+
+                    if (yy > nHeap) {
+                        break;
+                    }
+
+                    if ((yy < nHeap)
+                        && (weight[heap[yy + 1]] < weight[heap[yy]])) {
+                        yy++;
+                    }
+
+                    if (weight[tmp] < weight[heap[yy]]) {
+                        break;
+                    }
+
+                    heap[zz] = heap[yy];
+                    zz = yy;
+                }
+
+                heap[zz] = tmp;
+
+                int n2 = heap[1];
+                heap[1] = heap[nHeap];
+                nHeap--;
+
+                yy = 0;
+                zz = 1;
+                tmp = heap[1];
+
+                while (true) {
+                    yy = zz << 1;
+
+                    if (yy > nHeap) {
+                        break;
+                    }
+
+                    if ((yy < nHeap)
+                        && (weight[heap[yy + 1]] < weight[heap[yy]])) {
+                        yy++;
+                    }
+
+                    if (weight[tmp] < weight[heap[yy]]) {
+                        break;
+                    }
+
+                    heap[zz] = heap[yy];
+                    zz = yy;
+                }
+
+                heap[zz] = tmp;
+                nNodes++;
+                parent[n1] = parent[n2] = nNodes;
+
+                final int weight_n1 = weight[n1];
+                final int weight_n2 = weight[n2];
+                weight[nNodes] = ((weight_n
+... [truncated]
+```
+
+### RETRIEVED: src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveEntry.java
+```java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.commons.compress.archivers.cpio;
+
+import java.io.File;
+import java.util.Date;
+
+import org.apache.commons.compress.archivers.ArchiveEntry;
+
+/**
+ * A cpio archive consists of a sequence of files. There are several types of
+ * headers defided in two categories of new and old format. The headers are
+ * recognized by magic numbers:
+ * 
+ * <ul>
+ * <li>"070701" ASCII for new portable format</li>
+ * <li>"070702" ASCII for new portable format with CRC format</li>
+ * <li>"070707" ASCII for old ascii (also known as Portable ASCII, odc or old
+ * character format</li>
+ * <li>070707 binary for old binary</li>
+ * </ul>
+ *
+ * <p>The old binary format is limited to 16 bits for user id, group
+ * id, device, and inode numbers. It is limited to 4 gigabyte file
+ * sizes.
+ * 
+ * The old ASCII format is limited to 18 bits for the user id, group
+ * id, device, and inode numbers. It is limited to 8 gigabyte file
+ * sizes.
+ * 
+ * The new ASCII format is limited to 4 gigabyte file sizes.
+ * 
+ * CPIO 2.5 knows also about tar, but it is not recognized here.</p>
+ * 
+ * 
+ * <h3>OLD FORMAT</h3>
+ * 
+ * <p>Each file has a 76 (ascii) / 26 (binary) byte header, a variable
+ * length, NUL terminated filename, and variable length file data. A
+ * header for a filename "TRAILER!!!" indicates the end of the
+ * archive.</p>
+ * 
+ * <p>All the fields in the header are ISO 646 (approximately ASCII)
+ * strings of octal numbers, left padded, not NUL terminated.</p>
+ * 
+ * <pre>
+ * FIELDNAME        NOTES 
+ * c_magic          The integer value octal 070707.  This value can be used to deter-
+ *                  mine whether this archive is written with little-endian or big-
+ *                  endian integers.
+ * c_dev            Device that contains a directory entry for this file 
+ * c_ino            I-node number that identifies the input file to the file system 
+ * c_mode           The mode specifies both the regular permissions and the file type.
+ * c_uid            Numeric User ID of the owner of the input file 
+ * c_gid            Numeric Group ID of the owner of the input file 
+ * c_nlink          Number of links that are connected to the input file 
+ * c_rdev           For block special and character special entries, this field 
+ *                  contains the associated device number.  For all other entry types,
+ *                  it should be set to zero by writers and ignored by readers.
+ * c_mtime[2]       Modification time of the file, indicated as the number of seconds
+ *                  since the start of the epoch, 00:00:00 UTC January 1, 1970.  The
+ *                  four-byte integer is stored with the most-significant 16 bits
+ *                  first followed by the least-significant 16 bits.  Each of the two
+ *                  16 bit values are stored in machine-native byte order.
+ * c_namesize       Length of the path name, including the terminating null byte 
+ * c_filesize[2]    Length of the file in bytes. This is the length of the data 
+ *                  section that follows the header structure. Must be 0 for 
+ *                  FIFOs and directories
+ *
+ * All fields are unsigned short fields with 16-bit integer values
+ * apart from c_mtime and c_filesize which are 32-bit integer values
+ * </pre>
+ * 
+ * <p>If necessary, the filename and file data are padded with a NUL byte to an even length</p>
+ * 
+ * <p>Special files, directories, and the trailer are recorded with
+ * the h_filesize field equal to 0.</p>
+ * 
+ * <p>In the ASCII version of this format, the 16-bit entries are represented as 6-byte octal numbers,
+ * and the 32-bit entries are represented as 11-byte octal numbers. No padding is added.</p>
+ * 
+ * <h3>NEW FORMAT</h3>
+ * 
+ * <p>Each file has a 110 byte header, a variable length, NUL
+ * terminated filename, and variable length file data. A header for a
+ * filename "TRAILER!!!" indicates the end of the archive. All the
+ * fields in the header are ISO 646 (approximately ASCII) strings of
+ * hexadecimal numbers, left padded, not NUL terminated.</p>
+ * 
+ * <pre>
+ * FIELDNAME        NOTES 
+ * c_magic[6]       The string 070701 for new ASCII, the string 070702 for new ASCII with CRC
+ * c_ino[8]
+ * c_mode[8]
+ * c_uid[8]
+ * c_gid[8]
+ * c_nlink[8]
+ * c_mtim[8]
+ * c_filesize[8]    must be 0 for FIFOs and directories 
+ * c_maj[8]
+ * c_min[8] 
+ * c_rmaj[8]        only valid for chr and blk special files 
+ * c_rmin[8]        only valid for chr and blk special files 
+ * c_namesize[8]    count includes terminating NUL in pathname 
+ * c_check[8]       0 for "new" portable format; for CRC format
+ *                  the sum of all the bytes in the file
+ * </pre>
+ * 
+ * <p>New ASCII Format The "new" ASCII format uses 8-byte hexadecimal
+ * fields for all numbers and separates device numbers into separate
+ * fields for major and minor numbers.</p>
+ * 
+ * <p>The pathname is followed by NUL bytes so that the total size of
+ * the fixed header plus pathname is a multiple of four. Likewise, the
+ * file data is padded to a multiple of four bytes.</p>
+ * 
+ * <p>This class uses mutable fields and is not considered to be
+ * threadsafe.</p>
+ * 
+ * <p>Based on code from the jRPM project (http://jrpm.sourceforge.net).</p>
+ *
+ * <p>The MAGIC numbers and other constants are defined in {@link CpioConstants}</p>
+ * 
+ * <p>
+ * N.B. does not handle the cpio "tar" format
+ * </p>
+ * @NotThreadSafe
+ * @see "http://people.freebsd.org/~kientzle/libarchive/man/cpio.5.txt"
+ */
+public class CpioArchiveEntry implements CpioConstants, ArchiveEntry {
+
+    // Header description fields - should be same throughout an archive
+
+    /**
+     * See constructor documenation for possible values.
+     */
+    private final short fileFormat; 
+
+    /** The number of bytes in each header record; depends on the file format */
+    private final int headerSize;
+
+    /** The boundary to which the header and data elements are aligned: 0, 2 or 4 bytes */
+    private final int alignmentBoundary;
+
+    // Header fields
+
+    private long chksum = 0;
+
+    /** Number of bytes in the file */
+    private long filesize = 0;
+
+    private long gid = 0;
+
+    private long inode = 0;
+
+    private long maj = 0;
+
+    private long min = 0;
+
+    private long mode = 0;
+
+    private long mtime = 0;
+
+    private String name;
+
+    private long nlink = 0;
+
+    private long rmaj = 0;
+
+    private long rmin = 0;
+
+    private long uid = 0;
+
+    /**
+     * Creates a CPIOArchiveEntry with a specified format.
+     * 
+     * @param format
+     *            The cpio format for this entry.
+     * <br/>
+     * Possible format values are:
+     * <p>
+     * CpioConstants.FORMAT_NEW<br/>
+     * CpioConstants.FORMAT_NEW_CRC<br/>
+     * CpioConstants.FORMAT_OLD_BINARY<br/>
+     * CpioConstants.FORMAT_OLD_ASCII<br/>
+     * 
+     */
+    public CpioArchiveEntry(final short format) {
+        switch (format) {
+        case FORMAT_NEW:
+            this.headerSize = 110;
+            this.alignmentBoundary = 4;
+            break;
+        case FORMAT_NEW_CRC:
+            this.headerSize = 110;
+            this.alignmentBoundary = 4;
+            break;
+        case FORMAT_OLD_ASCII:
+            this.headerSize = 76;
+            this.alignmentBoundary = 0;
+       
+... [truncated]
+```
+
+### RETRIEVED: src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java
+```java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+/*
+ * This package is based on the work done by Keiron Liddle, Aftex Software
+ * <keiron@aftexsw.com> to whom the Ant project is very grateful for his
+ * great code.
+ */
+package org.apache.commons.compress.compressors.bzip2;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.commons.compress.compressors.CompressorInputStream;
+
+/**
+ * An input stream that decompresses from the BZip2 format to be read as any other stream.
+ * 
+ * @NotThreadSafe
+ */
+public class BZip2CompressorInputStream extends CompressorInputStream implements
+                                                                          BZip2Constants {
+
+    /**
+     * Index of the last char in the block, so the block size == last + 1.
+     */
+    private int last;
+
+    /**
+     * Index in zptr[] of original string after sorting.
+     */
+    private int origPtr;
+
+    /**
+     * always: in the range 0 .. 9. The current block size is 100000 * this
+     * number.
+     */
+    private int blockSize100k;
+
+    private boolean blockRandomised;
+
+    private int bsBuff;
+    private int bsLive;
+    private final CRC crc = new CRC();
+
+    private int nInUse;
+
+    private InputStream in;
+
+    private int currentChar = -1;
+
+    private static final int EOF = 0;
+    private static final int START_BLOCK_STATE = 1;
+    private static final int RAND_PART_A_STATE = 2;
+    private static final int RAND_PART_B_STATE = 3;
+    private static final int RAND_PART_C_STATE = 4;
+    private static final int NO_RAND_PART_A_STATE = 5;
+    private static final int NO_RAND_PART_B_STATE = 6;
+    private static final int NO_RAND_PART_C_STATE = 7;
+
+    private int currentState = START_BLOCK_STATE;
+
+    private int storedBlockCRC, storedCombinedCRC;
+    private int computedBlockCRC, computedCombinedCRC;
+
+    // Variables used by setup* methods exclusively
+
+    private int su_count;
+    private int su_ch2;
+    private int su_chPrev;
+    private int su_i2;
+    private int su_j2;
+    private int su_rNToGo;
+    private int su_rTPos;
+    private int su_tPos;
+    private char su_z;
+
+    /**
+     * All memory intensive stuff. This field is initialized by initBlock().
+     */
+    private BZip2CompressorInputStream.Data data;
+
+    /**
+     * Constructs a new BZip2CompressorInputStream which decompresses bytes read from the
+     * specified stream.
+     * 
+     * @throws IOException
+     *             if the stream content is malformed or an I/O error occurs.
+     * @throws NullPointerException
+     *             if <tt>in == null</tt>
+     */
+    public BZip2CompressorInputStream(final InputStream in) throws IOException {
+        super();
+
+        this.in = in;
+        init();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.io.InputStream#read()
+     */
+    public int read() throws IOException {
+        if (this.in != null) {
+            return read0();
+        } else {
+            throw new IOException("stream closed");
+        }
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.io.InputStream#read(byte[], int, int)
+     */
+    public int read(final byte[] dest, final int offs, final int len)
+        throws IOException {
+        if (offs < 0) {
+            throw new IndexOutOfBoundsException("offs(" + offs + ") < 0.");
+        }
+        if (len < 0) {
+            throw new IndexOutOfBoundsException("len(" + len + ") < 0.");
+        }
+        if (offs + len > dest.length) {
+            throw new IndexOutOfBoundsException("offs(" + offs + ") + len("
+                                                + len + ") > dest.length(" + dest.length + ").");
+        }
+        if (this.in == null) {
+            throw new IOException("stream closed");
+        }
+
+        final int hi = offs + len;
+        int destOffs = offs;
+        for (int b; (destOffs < hi) && ((b = read0()) >= 0);) {
+            dest[destOffs++] = (byte) b;
+        }
+
+        return (destOffs == offs) ? -1 : (destOffs - offs);
+    }
+
+    private void makeMaps() {
+        final boolean[] inUse = this.data.inUse;
+        final byte[] seqToUnseq = this.data.seqToUnseq;
+
+        int nInUseShadow = 0;
+
+        for (int i = 0; i < 256; i++) {
+            if (inUse[i])
+                seqToUnseq[nInUseShadow++] = (byte) i;
+        }
+
+        this.nInUse = nInUseShadow;
+    }
+
+    private int read0() throws IOException {
+        final int retChar = this.currentChar;
+
+        switch (this.currentState) {
+        case EOF:
+            return -1;
+
+        case START_BLOCK_STATE:
+            throw new IllegalStateException();
+
+        case RAND_PART_A_STATE:
+            throw new IllegalStateException();
+
+        case RAND_PART_B_STATE:
+            setupRandPartB();
+            break;
+
+        case RAND_PART_C_STATE:
+            setupRandPartC();
+            break;
+
+        case NO_RAND_PART_A_STATE:
+            throw new IllegalStateException();
+
+        case NO_RAND_PART_B_STATE:
+            setupNoRandPartB();
+            break;
+
+        case NO_RAND_PART_C_STATE:
+            setupNoRandPartC();
+            break;
+
+        default:
+            throw new IllegalStateException();
+        }
+
+        return retChar;
+    }
+
+    private void init() throws IOException {
+        if (null == in) {
+            throw new IOException("No InputStream");
+        }
+        if (in.available() == 0) {
+            throw new IOException("Empty InputStream");
+        }
+        checkMagicChar('B', "first");
+        checkMagicChar('Z', "second");
+        checkMagicChar('h', "third");
+
+        int blockSize = this.in.read();
+        if ((blockSize < '1') || (blockSize > '9')) {
+            throw new IOException("Stream is not BZip2 formatted: illegal "
+                                  + "blocksize " + (char) blockSize);
+        }
+
+        this.blockSize100k = blockSize - '0';
+
+        initBlock();
+        setupBlock();
+    }
+
+    private void checkMagicChar(char expected, String position)
+        throws IOException {
+        int magic = this.in.read();
+        if (magic != expected) {
+            throw new IOException("Stream is not BZip2 formatted: expected '"
+                                  + expected + "' as " + position + " byte but got '"
+                                  + (char) magic + "'");
+        }
+    }
+
+    private void initBlock() throws IOException {
+        char magic0 = bsGetUByte();
+        char magic1 = bsGetUByte();
+        char magic2 = bsGetUByte();
+        char magic3 = bsGetUByte();
+        char magic4 = bsGetUByte();
+        char magic5 = bsGetUByte();
+
+        if (magic0 == 0x17 && magic1 == 0x72 && magic2 == 0x45
+            && magic3 == 0x38 && magic4 == 0x50 && magic5 == 0x90) {
+            complete(); // end of file
+        } else if (magic0 != 0x31 || // '1'
+                   magic1 != 0x41 || // ')'
+                   magic2 != 0x59 || // 'Y'
+                   magic3 != 0x26 || // '&'
+                   magic4 != 0x53 || // 'S'
+                   magic5 != 0x59 // 'Y'
+                   ) {
+            this.currentState = EOF;
+            throw new IOException("bad block header");
+        } else {
+            this.storedBlockCRC = bsGetInt();
+            this.blockRandomised = bsR(1) == 1;
+
+            /**
+             * Allocate data
+... [truncated]
+```
+
+### RETRIEVED: src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveEntry.java
+```java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.commons.compress.archivers.tar;
+
+import java.io.File;
+import java.util.Date;
+import java.util.Locale;
+
+import org.apache.commons.compress.archivers.ArchiveEntry;
+
+/**
+ * This class represents an entry in a Tar archive. It consists
+ * of the entry's header, as well as the entry's File. Entries
+ * can be instantiated in one of three ways, depending on how
+ * they are to be used.
+ * <p>
+ * TarEntries that are created from the header bytes read from
+ * an archive are instantiated with the TarEntry( byte[] )
+ * constructor. These entries will be used when extracting from
+ * or listing the contents of an archive. These entries have their
+ * header filled in using the header bytes. They also set the File
+ * to null, since they reference an archive entry not a file.
+ * <p>
+ * TarEntries that are created from Files that are to be written
+ * into an archive are instantiated with the TarEntry( File )
+ * constructor. These entries have their header filled in using
+ * the File's information. They also keep a reference to the File
+ * for convenience when writing entries.
+ * <p>
+ * Finally, TarEntries can be constructed from nothing but a name.
+ * This allows the programmer to construct the entry by hand, for
+ * instance when only an InputStream is available for writing to
+ * the archive, and the header information is constructed from
+ * other information. In this case the header fields are set to
+ * defaults and the File is set to null.
+ *
+ * <p>
+ * The C structure for a Tar Entry's header is:
+ * <pre>
+ * struct header {
+ * char name[100];     // TarConstants.NAMELEN    - offset   0
+ * char mode[8];       // TarConstants.MODELEN    - offset 100
+ * char uid[8];        // TarConstants.UIDLEN     - offset 108
+ * char gid[8];        // TarConstants.GIDLEN     - offset 116
+ * char size[12];      // TarConstants.SIZELEN    - offset 124
+ * char mtime[12];     // TarConstants.MODTIMELEN - offset 136
+ * char chksum[8];     // TarConstants.CHKSUMLEN  - offset 148
+ * char linkflag[1];   //                         - offset 156
+ * char linkname[100]; // TarConstants.NAMELEN    - offset 157
+ * The following fields are only present in new-style POSIX tar archives:
+ * char magic[6];      // TarConstants.MAGICLEN   - offset 257
+ * char version[2];    // TarConstants.VERSIONLEN - offset 263
+ * char uname[32];     // TarConstants.UNAMELEN   - offset 265
+ * char gname[32];     // TarConstants.GNAMELEN   - offset 297
+ * char devmajor[8];   // TarConstants.DEVLEN     - offset 329
+ * char devminor[8];   // TarConstants.DEVLEN     - offset 337
+ * char prefix[155];   // TarConstants.PREFIXLEN  - offset 345
+ * // Used if "name" field is not long enough to hold the path
+ * char pad[12];       // NULs                    - offset 500
+ * } header;
+ * All unused bytes are set to null.
+ * New-style GNU tar files are slightly different from the above.
+ * </pre>
+ * 
+ * @NotThreadSafe
+ */
+
+public class TarArchiveEntry implements TarConstants, ArchiveEntry {
+    /** The entry's name. */
+    private String name;
+
+    /** The entry's permission mode. */
+    private int mode;
+
+    /** The entry's user id. */
+    private int userId;
+
+    /** The entry's group id. */
+    private int groupId;
+
+    /** The entry's size. */
+    private long size;
+
+    /** The entry's modification time. */
+    private long modTime;
+
+    /** The entry's link flag. */
+    private byte linkFlag;
+
+    /** The entry's link name. */
+    private String linkName;
+
+    /** The entry's magic tag. */
+    private String magic;
+    /** The version of the format */
+    private String version;
+
+    /** The entry's user name. */
+    private String userName;
+
+    /** The entry's group name. */
+    private String groupName;
+
+    /** The entry's major device number. */
+    private int devMajor;
+
+    /** The entry's minor device number. */
+    private int devMinor;
+
+    /** The entry's file reference */
+    private File file;
+
+    /** Maximum length of a user's name in the tar file */
+    public static final int MAX_NAMELEN = 31;
+
+    /** Default permissions bits for directories */
+    public static final int DEFAULT_DIR_MODE = 040755;
+
+    /** Default permissions bits for files */
+    public static final int DEFAULT_FILE_MODE = 0100644;
+
+    /** Convert millis to seconds */
+    public static final int MILLIS_PER_SECOND = 1000;
+
+    /**
+     * Construct an empty entry and prepares the header values.
+     */
+    private TarArchiveEntry () {
+        this.magic = MAGIC_POSIX;
+        this.version = VERSION_POSIX;
+        this.name = "";
+        this.linkName = "";
+
+        String user = System.getProperty("user.name", "");
+
+        if (user.length() > MAX_NAMELEN) {
+            user = user.substring(0, MAX_NAMELEN);
+        }
+
+        this.userId = 0;
+        this.groupId = 0;
+        this.userName = user;
+        this.groupName = "";
+        this.file = null;
+    }
+
+    /**
+     * Construct an entry with only a name. This allows the programmer
+     * to construct the entry's header "by hand". File is set to null.
+     *
+     * @param name the entry name
+     */
+    public TarArchiveEntry(String name) {
+        this(name, false);
+    }
+
+    /**
+     * Construct an entry with only a name. This allows the programmer
+     * to construct the entry's header "by hand". File is set to null.
+     *
+     * @param name the entry name
+     * @param preserveLeadingSlashes whether to allow leading slashes
+     * in the name.
+     */
+    public TarArchiveEntry(String name, boolean preserveLeadingSlashes) {
+        this();
+
+        name = normalizeFileName(name, preserveLeadingSlashes);
+        boolean isDir = name.endsWith("/");
+
+        this.devMajor = 0;
+        this.devMinor = 0;
+        this.name = name;
+        this.mode = isDir ? DEFAULT_DIR_MODE : DEFAULT_FILE_MODE;
+        this.linkFlag = isDir ? LF_DIR : LF_NORMAL;
+        this.userId = 0;
+        this.groupId = 0;
+        this.size = 0;
+        this.modTime = (new Date()).getTime() / MILLIS_PER_SECOND;
+        this.linkName = "";
+        this.userName = "";
+        this.groupName = "";
+        this.devMajor = 0;
+        this.devMinor = 0;
+
+    }
+
+    /**
+     * Construct an entry with a name and a link flag.
+     *
+     * @param name the entry name
+     * @param linkFlag the entry link flag.
+     */
+    public TarArchiveEntry(String name, byte linkFlag) {
+        this(name);
+        this.linkFlag = linkFlag;
+        if (linkFlag == LF_GNUTYPE_LONGNAME) {
+            magic = MAGIC_GNU;
+            version = VERSION_GNU_SPACE;
+        }
+    }
+
+    /**
+     * Construct an entry for a file. File is set to file, and the
+     * header is constructed from information from the file.
+     * The name is set from the normalized file path.
+     *
+     * @param file The file that the entry represents.
+     */
+    public TarArchiveEntry(File file) {
+        this(file, normalizeFileName(file.getPath(), false));
+    }
+    
+    /**
+     * Construct an entry for a file. File is set to file, and the
+     * header is constructed from information from the file.
+     *
+     * @param file The file that the entry represents.
+     * @param fileName the name to be used
+... [truncated]
+```
+
+## Dependency information (parent revision)
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/compressors/CompressorOutputStream.java
+```java
+package org.apache.commons.compress.compressors;
+import java.io.OutputStream;
+public abstract class CompressorOutputStream extends OutputStream {
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/compressors/CompressorStreamFactory.java
+```java
+package org.apache.commons.compress.compressors;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorInputStream;
+import org.apache.commons.compress.compressors.bzip2.BZip2CompressorOutputStream;
+import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
+import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
+public class CompressorStreamFactory {
+    private static final String BZ = "bzip2";
+    private static final String GZ = "gz";
+    public CompressorInputStream createCompressorInputStream(final InputStream in)
+        final byte[] signature = new byte[12];
+    public CompressorInputStream createCompressorInputStream(final String name,
+            final InputStream in) throws CompressorException {
+    public CompressorOutputStream createCompressorOutputStream(
+            final String name, final OutputStream out)
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2Constants.java
+```java
+package org.apache.commons.compress.compressors.bzip2;
+interface BZip2Constants {
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/compressors/bzip2/CRC.java
+```java
+package org.apache.commons.compress.compressors.bzip2;
+class CRC {
+    private static final int crc32Table[] = {
+	    private int globalCrc;
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/compressors/bzip2/Rand.java
+```java
+package org.apache.commons.compress.compressors.bzip2;
+final class Rand {
+    private static final int[] RNUMS = {
+    static int rNums(int i){
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/ArchiveEntry.java
+```java
+package org.apache.commons.compress.archivers;
+import java.util.Date;
+public interface ArchiveEntry {
+    public String getName();
+    public long getSize();
+    public static final long SIZE_UNKNOWN = -1;
+    public boolean isDirectory();
+    public Date getLastModifiedDate();
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveInputStream.java
+```java
+package org.apache.commons.compress.archivers.cpio;
+import java.io.EOFException;
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
+import org.apache.commons.compress.utils.ArchiveUtils;
+public class CpioArchiveInputStream extends ArchiveInputStream implements
+    private boolean closed = false;
+    private CpioArchiveEntry entry;
+    private long entryBytesRead = 0;
+    private boolean entryEOF = false;
+    private final byte tmpbuf[] = new byte[4096];
+    private long crc = 0;
+    private final InputStream in;
+    public CpioArchiveInputStream(final InputStream in) {
+    public int available() throws IOException {
+    public void close() throws IOException {
+    private void closeEntry() throws IOException {
+    private void ensureOpen() throws IOException {
+    public CpioArchiveEntry getNextCPIOEntry() throws IOException {
+    private void skip(int bytes) throws IOException{
+        final byte[] buff = new byte[4]; // Cannot be more than 3 bytes
+    public int read(final byte[] b, final int off, final int len)
+    private final int readFully(final byte[] b, final int off, final int len)
+    private long readBinaryLong(final int length, final boolean swapHalfWord)
+    private long readAsciiLong(final int length, final int radix)
+    private CpioArchiveEntry readNewEntry(final boolean hasCrc)
+    private CpioArchiveEntry readOldAsciiEntry() throws IOException {
+        final long mode = readAsciiLong(6, 8);
+        final String name = readCString((int) namesize);
+    private CpioArchiveEntry readOldBinaryEntry(final boolean swapHalfWord)
+        final long mode = readBinaryLong(2, swapHalfWord);
+        final String name = readCString((int) namesize);
+    private String readCString(final int length) throws IOException {
+    public long skip(final long n) throws IOException {
+    public ArchiveEntry getNextEntry() throws IOException {
+    public static boolean matches(byte[] signature, int length) {
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java
+```java
+package org.apache.commons.compress.archivers.cpio;
+import java.io.File;
+import java.io.FilterOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.HashMap;
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveOutputStream;
+import org.apache.commons.compress.utils.ArchiveUtils;
+public class CpioArchiveOutputStream extends ArchiveOutputStream implements
+    private CpioArchiveEntry entry;
+    private boolean closed = false;
+    private boolean finished;
+    private final short entryFormat;
+    private final HashMap names = new HashMap();
+    private long crc = 0;
+    private long written;
+    private final OutputStream out;
+    private final int blockSize;
+    private long nextArtificalDeviceAndInode = 1;
+    public CpioArchiveOutputStream(final OutputStream out, final short format) {
+    public CpioArchiveOutputStream(final OutputStream out, final short format,
+                                   final int blockSize) {
+        default:
+    public CpioArchiveOutputStream(final OutputStream out) {
+    private void ensureOpen() throws IOException {
+    public void putArchiveEntry(ArchiveEntry entry) throws IOException {
+        final short format = e.getFormat();
+    private void writeHeader(final CpioArchiveEntry e) throws IOException {
+    private void writeNewEntry(final CpioArchiveEntry entry) throws IOException {
+    private void writeOldAsciiEntry(final CpioArchiveEntry entry)
+    private void writeOldBinaryEntry(final CpioArchiveEntry entry,
+            final boolean swapHalfWord) throws IOException {
+    public void closeArchiveEntry() throws IOException {
+    public void write(final byte[] b, final int off, final int len)
+    public void finish() throws IOException {
+    public void close() throws IOException {
+    private void pad(int count) throws IOException{
+    private void writeBinaryLong(final long number, final int length,
+            final boolean swapHalfWord) throws IOException {
+    private void writeAsciiLong(final long number, final int length,
+            final int radix) throws IOException {
+    private void writeCString(final String str) throws IOException {
+    public ArchiveEntry createArchiveEntry(File inputFile, String entryName)
+    private static class CountingStream extends FilterOutputStream {
+        private long totalWritten = 0;
+        private CountingStream(final OutputStream out) {
+        public void write(byte[] b) throws IOExce
+... [truncated]
+```
+
+### Dependency signatures: src/main/java/org/apache/commons/compress/archivers/cpio/CpioConstants.java
+```java
+package org.apache.commons.compress.archivers.cpio;
+public interface CpioConstants {
+    final String MAGIC_NEW = "070701";
+    final String MAGIC_NEW_CRC = "070702";
+    final String MAGIC_OLD_ASCII = "070707";
+    final int MAGIC_OLD_BINARY = 070707;
+    final short FORMAT_NEW = 1;
+    final short FORMAT_NEW_CRC = 2;
+    final short FORMAT_OLD_ASCII = 4;
+    final short FORMAT_OLD_BINARY = 8;
+    final short FORMAT_NEW_MASK = 3;
+    final short FORMAT_OLD_MASK = 12;
+    final int S_IFMT   = 0170000;
+    final int C_ISSOCK = 0140000;
+    final int C_ISLNK  = 0120000;
+    final int C_ISNWK  = 0110000;
+    final int C_ISREG  = 0100000;
+    final int C_ISBLK  = 0060000;
+    final int C_ISDIR  = 0040000;
+    final int C_ISCHR  = 0020000;
+    final int C_ISFIFO = 0010000;
+    final int C_ISUID  = 0004000;
+    final int C_ISGID  = 0002000;
+    final int C_ISVTX  = 0001000;
+    final int C_IRUSR  = 0000400;
+    final int C_IWUSR  = 0000200;
+    final int C_IXUSR  = 0000100;
+    final int C_IRGRP  = 0000040;
+    final int C_IWGRP  = 0000020;
+    final int C_IXGRP  = 0000010;
+    final int C_IROTH  = 0000004;
+    final int C_IWOTH  = 0000002;
+    final int C_IXOTH  = 0000001;
+    final String CPIO_TRAILER = "TRAILER!!!";
+    final int BLOCK_SIZE = 512;
+```
+
+### Dependency signatures: src/test/java/org/apache/commons/compress/IOMethodsTest.java
+```java
+package org.apache.commons.compress;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveInputStream;
+import org.apache.commons.compress.archivers.ArchiveOutputStream;
+import org.apache.commons.compress.archivers.ar.ArArchiveEntry;
+import org.apache.commons.compress.archivers.cpio.CpioArchiveEntry;
+import org.apache.commons.compress.archivers.jar.JarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+public class IOMethodsTest extends AbstractTestCase {
+    private static final int bytesToTest = 50;
+    private static final byte[] byteTest = new byte[bytesToTest];
+    static {
+    public void testWriteAr() throws Exception {
+    public void testWriteCpio() throws Exception {
+    public void testWriteJar() throws Exception {
+    public void testWriteTar() throws Exception {
+    public void testWriteZip() throws Exception {
+    public void testReadAr() throws Exception {
+    public void testReadCpio() throws Exception {
+    public void testReadJar() throws Exception {
+    public void testReadTar() throws Exception {
+    public void testReadZip() throws Exception {
+    private void compareWrites(String archiverName, ArchiveEntry entry) throws Exception {
+    private void compareReads(String archiverName) throws Exception {
+        final ArchiveEntry nextEntry = ais1.getNextEntry();
+        final ArchiveEntry nextEntry2 = ais2.getNextEntry();
+        final ArchiveEntry nextEntry3 = ais3.getNextEntry();
+```
+
+### Dependency signatures: src/test/java/org/apache/commons/compress/archivers/ArchiveOutputStreamTest.java
+```java
+package org.apache.commons.compress.archivers;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import org.apache.commons.compress.AbstractTestCase;
+import org.apache.commons.compress.archivers.ar.ArArchiveEntry;
+import org.apache.commons.compress.archivers.cpio.CpioArchiveEntry;
+import org.apache.commons.compress.archivers.jar.JarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.utils.IOUtils;
+public class Archi
+... [truncated]
+```
+
+## Tests, documentation, and prior co-change (parent history only)
+
+### Relevant test: src/test/java/org/apache/commons/compress/ArchiveReadTests.java
+```
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ */
+
+package org.apache.commons.compress;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import junit.framework.Test;
+import junit.framework.TestSuite;
+
+import org.apache.commons.compress.archivers.ArchiveEntry;
+import org.apache.commons.compress.archivers.ArchiveException;
+
+/**
+ * Test that can read various archive file examples.
+ * 
+ * This is a very simple implementation.
+ * 
+ * Files must be in resources/archives, and there must be a file.txt containing
+ * the list of files in the archives.
+ * 
+ * The class uses nested suites in order to be able to name the test after the file name,
+ * as JUnit does not allow one to change the display name of a test.
+ */
+public class ArchiveReadTests extends AbstractTestCase {
+    
+    final static ClassLoader classLoader = ArchiveReadTests.class.getClassLoader();
+
+    private File file;
+    private static ArrayList fileList = new ArrayList();
+    
+    public ArchiveReadTests(String name) {
+        super(name);
+    }
+    
+    private ArchiveReadTests(String name, File file){
+        super(name);
+        this.file = file;
+    }
+    
+    public static TestSuite suite() throws IOException{
+        TestSuite suite = new TestSuite("ArchiveReadTests");
+        File arcdir =new File(classLoader.getResource("archives").getFile());
+        assertTrue(arcdir.exists());
+        File listing= new File(arcdir,"files.txt");
+        assertTrue("files.txt is readable",listing.canRead());
+        BufferedReader br = new BufferedReader(new FileReader(listing));
+        String line;
+        while ((line=br.readLine())!=null){
+            if (line.startsWith("#")){
+                continue;
+            }
+            fileList.add(line);
+        }
+        br.close();
+        File[]files=arcdir.listFiles();
+        for (int i=0; i<files.length; i++){
+            final File file = files[i];
+            if (file.getName().endsWith(".txt")){
+                continue;
+            }
+            // Cannot handle these tar files yet 
+            if (file.getName().equals("SunOS_cAEf.tar")
+             || file.getName().equals("FreeBSD_pax.tar")
+             || file.getName().equals("SunOS_cEf.tar")){
+                continue;
+            }
+            // Appears to be the only way to give the test a variable name
+            TestSuite namedSuite = new TestSuite(file.getName());
+            Test test = new ArchiveReadTests("testArchive", file);
+            namedSuite.addTest(test);
+            suite.addTest(namedSuite);
+        }        
+        return suite;
+    }
+    
+    // files.txt contains size and filename
+    protected String getExpectedString(Archi
+... [truncated]
+```
+
+### Relevant test: src/test/java/org/apache/commons/compress/archivers/tar/TarArchiveEntryTest.java
+```
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+
+package org.apache.commons.compress.archivers.tar;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Locale;
+import junit.framework.TestCase;
+
+public class TarArchiveEntryTest extends TestCase {
+
+    private static final String OS =
+        System.getProperty("os.name").toLowerCase(Locale.US);
+    private static final String ROOT =
+        OS.startsWith("windows") || OS.startsWith("netware") ? "C:\\" : "/";
+
+    /**
+     * JIRA issue SANDBOX-284
+     *
+     * @see "https://issues.apache.org/jira/browse/SANDBOX-284"
+     */
+    public void testFileSystemRoot() {
+        TarArchiveEntry t = new TarArchiveEntry(new File(ROOT));
+        assertEquals("/", t.getName());
+    }
+
+    public void testTarFileWithFSRoot() throws IOException {
+        File f = File.createTempFile("taetest", ".tar");
+        f.deleteOnExit();
+        TarArchiveOutputStream tout = null;
+        TarArchiveInputStream tin = null;
+        try {
+            tout = new TarArchiveOutputStream(new FileOutputStream(f));
+            TarArchiveEntry t = new TarArchiveEntry(new File(ROOT));
+            tout.putArchiveEntry(t);
+            tout.closeArchiveEntry();
+            t = new TarArchiveEntry(new File(new File(ROOT), "foo.txt"));
+            t.setSize(6);
+            tout.putArchiveEntry(t);
+            tout.write(new byte[] {'h', 'e', 'l', 'l', 'o', ' '});
+            tout.closeArchiveEntry();
+            t = new TarArchiveEntry(new File(new File(ROOT), "bar.txt")
+                                    .getAbsolutePath());
+            t.setSize(5);
+            tout.putArchiveEntry(t);
+            tout.write(new byte[] {'w', 'o', 'r', 'l', 'd'});
+            tout.closeArchiveEntry();
+            t = new TarArchiveEntry("dummy");
+            t.setName(new File(new File(ROOT), "baz.txt").getAbsolutePath());
+            t.setSize(1);
+            tout.putArchiveEntry(t);
+            tout.write(new byte[] {'!'});
+            tout.closeArchiveEntry();
+            tout.close();
+            tout = null;
+
+            tin = new TarArchiveInputStream(new FileInputStream(f));
+            //tin.setDebug(true);
+            t = tin.getNextTarEntry();
+            assertNotNull(t);
+            assertEquals("/", t.getName());
+            t = tin.getNextTarEntry();
+            assertNotNull(t);
+            assertEquals("foo.txt", t.getName());
+            t = tin.getNextTarEntry();
+            assertNotNull(t);
+            assertEquals("bar.txt", t.getName());
+            t = tin.getNextTarEntry();
+            assertNotNull(t);
+            assertEquals("baz.txt", t.getName());
+        } finally {
+            if
+... [truncated]
+```
+
+### Prior co-change counts
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2CompressorInputStream.java: co-changed with seed in 9 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveOutputStream.java: co-changed with seed in 6 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/compressors/CompressorOutputStream.java: co-changed with seed in 5 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/compressors/bzip2/BZip2Constants.java: co-changed with seed in 5 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/compressors/bzip2/CRC.java: co-changed with seed in 5 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveOutputStream.java: co-changed with seed in 4 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveInputStream.java: co-changed with seed in 4 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveOutputStream.java: co-changed with seed in 4 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/zip/AsiExtraField.java: co-changed with seed in 4 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/zip/UnrecognizedExtraField.java: co-changed with seed in 4 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveInputStream.java: co-changed with seed in 4 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/compressors/gzip/GzipCompressorOutputStream.java: co-changed with seed in 4 prior non-merge commit(s)
+NOTICE.txt: co-changed with seed in 3 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/ArchiveInputStream.java: co-changed with seed in 3 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/ar/ArArchiveOutputStream.java: co-changed with seed in 3 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/cpio/CpioArchiveInputStream.java: co-changed with seed in 3 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveInputStream.java: co-changed with seed in 3 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/jar/JarArchiveOutputStream.java: co-changed with seed in 3 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/tar/TarArchiveEntry.java: co-changed with seed in 3 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/zip/ExtraFieldUtils.java: co-changed with seed in 3 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/zip/ZipArchiveEntry.java: co-changed with seed in 3 prior non-merge commit(s)
+src/main/java/org/apache/commons/compress/archivers/zip/ZipLong.java: co-changed with seed in 3 prior non-merge commit(s)
+pom.xml: co-changed with seed in 2 prior non-merge commit(s)
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.

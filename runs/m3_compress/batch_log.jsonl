@@ -1,0 +1,16 @@
+{"logged_at": "2026-11-08T21:51:50+00:00", "task_id": "ripple-commons-compress-COMPRESS-74", "condition": "C0_CAND", "repeat": 1, "exit_code": 2, "error": null, "seconds": 25.0}
+{"logged_at": "2026-11-08T21:52:24+00:00", "task_id": "ripple-commons-compress-COMPRESS-74", "condition": "C1_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 33.7}
+{"logged_at": "2026-11-08T21:52:53+00:00", "task_id": "ripple-commons-compress-COMPRESS-74", "condition": "C2_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 28.9}
+{"logged_at": "2026-11-08T21:53:25+00:00", "task_id": "ripple-commons-compress-COMPRESS-74", "condition": "C3_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 31.9}
+{"logged_at": "2026-11-08T21:53:52+00:00", "task_id": "ripple-commons-compress-COMPRESS-119", "condition": "C0_CAND", "repeat": 1, "exit_code": 2, "error": null, "seconds": 27.9}
+{"logged_at": "2026-11-08T21:54:26+00:00", "task_id": "ripple-commons-compress-COMPRESS-119", "condition": "C1_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 33.5}
+{"logged_at": "2026-11-08T21:54:58+00:00", "task_id": "ripple-commons-compress-COMPRESS-119", "condition": "C2_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 31.7}
+{"logged_at": "2026-11-08T21:55:28+00:00", "task_id": "ripple-commons-compress-COMPRESS-119", "condition": "C3_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 29.9}
+{"logged_at": "2026-11-08T21:56:12+00:00", "task_id": "ripple-commons-compress-COMPRESS-469", "condition": "C0_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 44.8}
+{"logged_at": "2026-11-08T21:57:02+00:00", "task_id": "ripple-commons-compress-COMPRESS-469", "condition": "C1_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 49.5}
+{"logged_at": "2026-11-08T21:57:49+00:00", "task_id": "ripple-commons-compress-COMPRESS-469", "condition": "C2_CAND", "repeat": 1, "exit_code": 2, "error": null, "seconds": 47.3}
+{"logged_at": "2026-11-08T21:58:38+00:00", "task_id": "ripple-commons-compress-COMPRESS-469", "condition": "C3_CAND", "repeat": 1, "exit_code": 2, "error": null, "seconds": 48.3}
+{"logged_at": "2026-11-08T21:59:11+00:00", "task_id": "ripple-commons-compress-COMPRESS-276", "condition": "C0_CAND", "repeat": 1, "exit_code": 2, "error": null, "seconds": 33.2}
+{"logged_at": "2026-11-08T21:59:48+00:00", "task_id": "ripple-commons-compress-COMPRESS-276", "condition": "C1_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 37.5}
+{"logged_at": "2026-11-08T22:00:24+00:00", "task_id": "ripple-commons-compress-COMPRESS-276", "condition": "C2_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 36.0}
+{"logged_at": "2026-11-08T22:01:01+00:00", "task_id": "ripple-commons-compress-COMPRESS-276", "condition": "C3_CAND", "repeat": 1, "exit_code": 0, "error": null, "seconds": 37.0}
