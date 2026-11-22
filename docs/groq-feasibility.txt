@@ -1,0 +1,27 @@
+prompt characters: 38410; model: openai/gpt-oss-120b; max_tokens: 100; json: True
+HTTP status: 413; latency: 0.1 s
+  x-ratelimit-limit-tokens: 8000
+  x-ratelimit-remaining-tokens: 8000
+  x-ratelimit-reset-tokens: 1ms
+  x-ratelimit-limit-requests: 1000
+  x-ratelimit-remaining-requests: 1000
+  retry-after: 3
+  error: {"error_body": "{\"error\":{\"message\":\"Request too large for model `openai/gpt-oss-120b` in organization `org_REDACTED` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 8370, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}\n"}
+prompt characters: 38410; model: openai/gpt-oss-20b; max_tokens: 100; json: True
+HTTP status: 413; latency: 0.1 s
+  x-ratelimit-limit-tokens: 8000
+  x-ratelimit-remaining-tokens: 8000
+  x-ratelimit-reset-tokens: 1ms
+  x-ratelimit-limit-requests: 1000
+  x-ratelimit-remaining-requests: 1000
+  retry-after: 3
+  error: {"error_body": "{\"error\":{\"message\":\"Request too large for model `openai/gpt-oss-20b` in organization `org_REDACTED` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 8370, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}\n"}
+prompt characters: 38410; model: qwen/qwen3.8-27b; max_tokens: 100; json: True
+HTTP status: 413; latency: 0.1 s
+  x-ratelimit-limit-tokens: 8000
+  x-ratelimit-remaining-tokens: 8000
+  x-ratelimit-reset-tokens: 1ms
+  x-ratelimit-limit-requests: 1000
+  x-ratelimit-remaining-requests: 1000
+  retry-after: 15
+  error: {"error_body": "{\"error\":{\"message\":\"Request too large for model `qwen/qwen3.8-27b` in organization `org_REDACTED` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 8745, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}}\n"}
