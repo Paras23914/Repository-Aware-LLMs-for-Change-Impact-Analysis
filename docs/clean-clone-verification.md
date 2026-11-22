@@ -1,6 +1,6 @@
 # Clean-clone verification (Milestone 4)
 
-Performed on 2026-11-22 by Sheikh Fraz Alam, in a fresh clone on the shared laptop.
+Performed on 2026-11-22 by Atharva Rajadhyaksha, in a fresh clone on the shared laptop.
 
 - Clone: commit 88d9206 (main, equal to origin/main)
 - Python 3.11.9, new virtual environment, `pip install -e .` succeeded
