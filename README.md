@@ -1,3 +1,58 @@
+# Milestone 4: final direction, validation and reproducibility
+
+**Project track: Applied.** Question: how does the amount and type of repository context given to one fixed local model (Qwen2.5-Coder 7B) change file-level change impact prediction? Milestone 3 results are frozen and unchanged (commit `9384ae1`).
+
+## What Milestone 4 added
+
+| Item | Where | Result |
+|---|---|---|
+| Candidate coverage (are the gold files even offered?) | `results/m4/` | 34/47 = 0.723 pooled; Java-only 25/30 = 0.833. Candidate lists hold 88 to 100 files. |
+| Paired strict comparison (tasks valid in all four conditions) | `results/m4/summary.md` | n = 4. F1 0.111 (C0), 0.073 (C1), 0.042 (C2), 0.000 (C3). Descriptive only. |
+| Hit rate among offered gold paths | `results/m4/summary.md` | C0 8/18, C1 10/33, C2 7/31, C3 4/24 |
+| Repeatability run (all 52 cells rerun) | `runs/m4_repeat2`, `results/m4_repeat/` | Prompt hashes identical 52/52; ranked lists identical 29/52; status same 51/52; mean top-10 overlap 0.849 |
+| Second-run analysis | `results/m4_repeat_analysis/` | n = 3 paired; F1 0.093, 0.042, 0.000, 0.000 |
+| Groq free-tier feasibility attempt | `docs/groq-feasibility.txt`, `scripts/groq_probe.py` | HTTP 413 on all three free models: the smallest C1 prompt needs about 8,270 tokens, the free limit is 8,000 per minute. Cloud comparison not run; future work. |
+| Clean-clone verification | `docs/clean-clone-verification.md` | 21 tests OK, 13 manifest records valid, analysis summary identical |
+
+Output repeatability did not meet the 90% criterion we set before reading the repeat comparison, so single-run differences are treated as noisy and the ordering of C2 against C3 is not claimed.
+
+## Reproduce
+
+Requirements: Python 3.11 or newer; Git; Ollama with the model `qwen2.5-coder:7b` (digest `dae161e27b0e`, Q4_K_M). No paid service is needed. The cloud probe is optional and reads a key only from the environment variable `GROQ_API_KEY`; no key is stored in this repository.
+
+```bash
+git clone https://github.com/Paras23914/Repository-Aware-LLMs-for-Change-Impact-Analysis.git
+cd Repository-Aware-LLMs-for-Change-Impact-Analysis
+py -3.11 -m venv .venv            # on Linux/macOS: python3.11 -m venv .venv
+source .venv/Scripts/activate     # on Linux/macOS: source .venv/bin/activate
+pip install -e .
+python -m unittest discover -s tests          # expect 21 tests, OK
+python -m cia validate-manifest data/tasks.jsonl   # expect 13 records
+```
+
+Re-derive the Milestone 4 tables from the saved run artifacts (no model needed):
+
+```bash
+python scripts/m4_analysis.py runs/m3_ivy1028 runs/m3_r1 runs/m3_compress --out-dir results/m4
+python scripts/repeat_check.py --first runs/m3_ivy1028 runs/m3_r1 runs/m3_compress --second runs/m4_repeat2 --out-dir results/m4_repeat
+```
+
+Re-run the model (needs Ollama running and local clones of Apache Ivy and Commons Compress at the commits in `data/tasks.jsonl`). Fixed settings: temperature 0.0, seed 42, top_p 1.0, top_k 40, repeat penalty 1.0, context 32,768, at most 2,048 output tokens, JSON output.
+
+```bash
+python -m cia run-batch --repository <path to ant-ivy clone> --output-dir runs/<new folder> --repeats 1 --task-id ripple-ant-ivy-IVY-1028 ...
+python -m cia run-batch --repository <path to commons-compress clone> --output-dir runs/<new folder> --repeats 1 --task-id ripple-commons-compress-COMPRESS-74 ...
+```
+
+A rerun may differ slightly from the saved artifacts (see the repeatability row above), so the saved artifacts, not a rerun, are the evidence for the reported numbers.
+
+## Where things are
+
+- `runs/m3_ivy1028`, `runs/m3_r1`, `runs/m3_compress`: Milestone 3 model outputs (52 runs). `runs/m4_repeat2`: the repeat of all 52.
+- `results/m3_all`, `results/m3_lenient`: Milestone 3 tables (strict and lenient scoring, kept separate). `results/m4*`: Milestone 4 tables.
+- `scripts/`: `m4_analysis.py`, `repeat_check.py`, `groq_probe.py`, plus the Milestone 3 summary and screening scripts. `tests/`: unit tests.
+
+---
 # Repository-Aware Change Impact Analysis
 
 How do the amount and type of repository context given to an LLM affect its prediction of the files impacted by a software change? This repository holds a reproducible pipeline and the evidence for that question: a fixed local model, Qwen2.5-Coder 7B (`qwen2.5-coder:7b` through Ollama), is given a cleaned issue text and progressively more context, and its ranked list of impacted files is compared with the files changed by the real fix.
@@ -7,7 +62,7 @@ Course project for ENGR 5570G (Software Maintenance and Evolution), Fall 2026, D
 - **Project track: Applied.** This is an applied empirical study of LLM-based change impact analysis on real projects. It is not a replication of a published study. The RIPPLE dataset is used only to discover candidate tasks, and the labels and the experiment are our own.
 - **Group 6:** Paras Sharma, Atharva Rajadhyaksha, Amala Gopinath, Janvi Naresh Gurfude, Sheikh Fraz Alam.
 
-## Project status (Milestone 3)
+## Milestone 3 : Project Status
 
 - **13 tasks in two Apache repositories:** 9 from Apache Ivy (the audited pilot task IVY-1028 plus 8 drawn tasks) and 4 from Apache Commons Compress. Tasks were screened with fixed rules and drawn with a seeded, stratified sampler (seed 42, strata by number of changed paths).
 - **Four context conditions, one run per task and condition (52 model runs):** C0_CAND, C1_CAND, C2_CAND, C3_CAND (see below).
