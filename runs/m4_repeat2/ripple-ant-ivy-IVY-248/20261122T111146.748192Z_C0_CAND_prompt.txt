@@ -1,0 +1,115 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+report Ant-task doesn't call init() on the internal XSLTProcess
+
+The report task doesn't call the init() method on the internal XSLTProcess instance.
+This results in an unitialized XMLCatalog and could cause failures in custom stylesheets.
+
+## Allowed candidate paths (pre-change repository)
+src/java/fr/jayasoft/ivy/Ivy.java
+src/java/fr/jayasoft/ivy/IvyNode.java
+src/java/fr/jayasoft/ivy/url/ApacheURLLister.java
+src/java/fr/jayasoft/ivy/repository/Repository.java
+src/java/fr/jayasoft/ivy/Main.java
+src/java/fr/jayasoft/ivy/repository/Resource.java
+src/java/fr/jayasoft/ivy/repository/TransferEvent.java
+src/java/fr/jayasoft/ivy/extendable/ExtendableItem.java
+src/java/fr/jayasoft/ivy/ant/IvyReport.java
+src/java/fr/jayasoft/ivy/version/VersionMatcher.java
+src/java/fr/jayasoft/ivy/ModuleDescriptor.java
+src/java/fr/jayasoft/ivy/ant/IvyBuildList.java
+src/java/fr/jayasoft/ivy/url/URLHandler.java
+src/java/fr/jayasoft/ivy/ant/IvyDeliver.java
+src/java/fr/jayasoft/ivy/repository/vfs/VfsRepository.java
+src/java/fr/jayasoft/ivy/xml/XmlReportParser.java
+src/java/fr/jayasoft/ivy/report/XmlReportOutputter.java
+src/java/fr/jayasoft/ivy/DependencyArtifactDescriptor.java
+src/java/fr/jayasoft/ivy/repository/vfs/VfsResource.java
+src/java/fr/jayasoft/ivy/resolver/BasicResolver.java
+src/java/fr/jayasoft/ivy/external/m2/PomModuleDescriptorParser.java
+src/java/fr/jayasoft/ivy/DefaultDependencyDescriptor.java
+src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorUpdater.java
+src/java/fr/jayasoft/ivy/ant/IvyCacheTask.java
+src/java/fr/jayasoft/ivy/util/Configurator.java
+src/java/fr/jayasoft/ivy/LatestStrategy.java
+src/java/fr/jayasoft/ivy/resolver/DualResolver.java
+src/java/fr/jayasoft/ivy/xml/XmlModuleDescriptorParser.java
+src/java/fr/jayasoft/ivy/DefaultModuleDescriptor.java
+src/java/fr/jayasoft/ivy/DependencyResolver.java
+src/java/fr/jayasoft/ivy/ant/IvyArtifactReport.java
+src/example/dependence/standalone/src/standalone/Main.java
+src/java/fr/jayasoft/ivy/ModuleDescriptorSorter.java
+src/java/fr/jayasoft/ivy/ant/IvyPublish.java
+src/java/fr/jayasoft/ivy/resolver/IvyRepResolver.java
+src/java/fr/jayasoft/ivy/conflict/RegexpConflictManager.java
+src/java/fr/jayasoft/ivy/resolver/AbstractResolver.java
+src/java/fr/jayasoft/ivy/report/LogReportOutputter.java
+src/java/fr/jayasoft/ivy/Configuration.java
+src/java/fr/jayasoft/ivy/ant/IvyRetrieve.java
+src/java/fr/jayasoft/ivy/report/ResolveReport.java
+src/java/fr/jayasoft/ivy/report/ConfigurationResolveReport.java
+src/java/fr/jayasoft/ivy/resolver/ChainResolver.java
+src/java/fr/jayasoft/ivy/url/IvyAuthenticator.java
+src/java/fr/jayasoft/ivy/parser/ModuleDescriptorParserRegistry.java
+src/java/fr/jayasoft/ivy/ant/IvyInstall.java
+src/java/fr/jayasoft/ivy/resolver/IBiblioResolver.java
+src/java/fr/jayasoft/ivy/ConflictManager.java
+src/java/fr/jayasoft/ivy/ant/IvyResolve.java
+src/java/fr/jayasoft/ivy/resolver/ResolverHelper.java
+src/java/fr/jayasoft/ivy/PublishingDependencyRevisionResolver.java
+src/java/fr/jayasoft/ivy/ant/IvyTask.java
+src/java/fr/jayasoft/ivy/ant/IvyArtifactProperty.java
+src/java/fr/jayasoft/ivy/Artifact.java
+src/java/fr/jayasoft/ivy/ResolvedModuleRevision.java
+src/java/fr/jayasoft/ivy/ArtifactId.java
+src/java/fr/jayasoft/ivy/ResolveData.java
+src/java/fr/jayasoft/ivy/version/VersionRangeMatcher.java
+src/java/fr/jayasoft/ivy/util/XMLHelper.java
+src/java/fr/jayasoft/ivy/resolver/CacheResolver.java
+src/java/fr/jayasoft/ivy/url/HttpClientHandler.java
+src/java/fr/jayasoft/ivy/DependencyDescriptor.java
+src/java/fr/jayasoft/ivy/ant/IvyExtractFromSources.java
+src/java/fr/jayasoft/ivy/DefaultDependencyArtifactDescriptor.java
+src/java/fr/jayasoft/ivy/ArtifactRevisionId.java
+src/java/fr/jayasoft/ivy/ant/IvyConfigure.java
+src/java/fr/jayasoft/ivy/resolver/AbstractResourceResolver.java
+src/java/fr/jayasoft/ivy/util/FileUtil.java
+src/java/fr/jayasoft/ivy/util/IvyPatternHelper.java
+src/java/fr/jayasoft/ivy/util/Message.java
+src/java/fr/jayasoft/ivy/ant/IvyConvertPom.java
+src/java/fr/jayasoft/ivy/latest/LatestLexicographicStrategy.java
+src/java/fr/jayasoft/ivy/latest/LatestRevisionStrategy.java
+src/java/fr/jayasoft/ivy/repository/url/URLResource.java
+src/java/fr/jayasoft/ivy/ant/IvyCachePath.java
+test/java/fr/jayasoft/ivy/ResolveTest.java
+test/java/fr/jayasoft/ivy/repository/vfs/VfsRepositoryTest.java
+test/java/fr/jayasoft/ivy/resolver/URLResolverTest.java
+test/java/fr/jayasoft/ivy/resolver/FileSystemResolverTest.java
+test/java/fr/jayasoft/ivy/ant/IvyVarTest.java
+test/java/fr/jayasoft/ivy/resolver/ChainResolverTest.java
+test/java/fr/jayasoft/ivy/resolver/IBiblioResolverTest.java
+test/java/fr/jayasoft/ivy/xml/XmlIvyConfigurationParserTest.java
+test/java/fr/jayasoft/ivy/repository/vfs/VfsURI.java
+test/java/fr/jayasoft/ivy/ant/IvyDeliverTest.java
+CHANGES.txt
+LICENSE.txt
+build.xml
+build.properties
+ivy.xml
+doc/ideas.txt
+src/example/multi-project/common/common.xml
+doc/conflict-solving-algo.html
+src/java/fr/jayasoft/ivy/report/ivy-report.xsl
+doc/announce/announce-1.3-RC1.txt
+doc/announce/announce-1.3.txt
+doc/announce/announce-1.3-RC2.txt
+doc/announce/announce-1.3-RC3.txt
+src/example/build-a-ivy-repository/build.xml
+src/example/configurations/multi-projects/filter-framework/build.xml
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.

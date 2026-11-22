@@ -1,0 +1,199 @@
+{
+  "artifact_type": "context_ablation_run",
+  "is_synthetic": false,
+  "task": {
+    "task_id": "ripple-ant-ivy-IVY-1141",
+    "source_name": "Ripple issue-linked change dataset (record instance-00018; used for candidate discovery and cross-check only)",
+    "source_url": "https://github.com/se-doubleblind/ripple",
+    "repository_url": "https://github.com/apache/ant-ivy",
+    "issue_url": "https://issues.apache.org/jira/browse/IVY-1141",
+    "issue_text_source": "ASF Jira REST API v2 issue IVY-1141 fields created,summary,description; retrieved 2026-11-06T02:42:51+00:00; https://issues.apache.org/jira/rest/api/2/issue/IVY-1141?fields=created,summary,description",
+    "issue_created_at": "2009-11-19T08:56:46.684+00:00",
+    "target_sha": "8e0e1c32ff1ed1da4f09fc9917812e6457e6fef7",
+    "parent_sha": "5240c8825896997f0845e354a51b1ac725dfe06b",
+    "target_first_parent": "5240c8825896997f0845e354a51b1ac725dfe06b",
+    "target_committer_at": "2015-09-06T17:10:56+02:00",
+    "changed_paths_reference": [
+      "doc/release-notes.html",
+      "src/java/org/apache/ivy/plugins/version/LatestVersionMatcher.java",
+      "test/java/org/apache/ivy/plugins/version/LatestVersionMatcherTest.java"
+    ],
+    "selection_decision": "From scripts/screen_tasks.py: Jira creation time precedes the target commit, the recorded parent is the target's first parent, and labels are the complete parent-to-target Git diff path set. Confirmed by the reviewers named in cleaning_decisions. Ripple impact-set-files is not used as ground truth.",
+    "cleaning_decisions": [
+      "Ground truth is the exact Git diff path set from parent to target; do not substitute Ripple impact-set-files.",
+      "Issue text is the Jira summary and opening problem statement, manually cleaned: follow-up discussion, contact details and any fix description removed; no patch, commit message or changed-file list is included.",
+      "Reviewed by Atharva + Janvi on 2026-11-08."
+    ]
+  },
+  "predictor_input_policy": {
+    "condition": "C2_CAND",
+    "allowed": [
+      "cleaned issue text",
+      "candidate paths selected from the parent tree (production Java, tests, non-Java text files; label-free rule)",
+      "seed and lexically retrieved source files",
+      "dependency signatures"
+    ],
+    "context_manifest": "20261122T111753.860279Z_C2_CAND_context.json",
+    "prompt_file": "20261122T111753.860279Z_C2_CAND_prompt.txt",
+    "target_sha_or_patch_content_in_prompt": false,
+    "ground_truth_label_list_in_prompt": false,
+    "changed_paths_appear_only_as_parent_tree_entries": true,
+    "constraint_type": "candidate-list prompt constraint; strict validation still enforced after generation"
+  },
+  "run_meta": {
+    "repeat_index": 1,
+    "prompt_chars": 50545,
+    "prompt_truncation_suspected": null,
+    "environment": {
+      "python_version": "3.11.9",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "ollama_version": "0.40.17",
+      "cia_git_commit": "b1af1742b0326dbd7fbfa511afbe52602c446afb"
+    }
+  },
+  "baselines": {
+    "seed_path": "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+    "seed_selection": "first deterministic lexical source rank from request text against parent snapshot",
+    "dependency": {
+      "ranked_paths": [
+        "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "src/java/org/apache/ivy/Ivy.java",
+        "src/java/org/apache/ivy/core/check/CheckEngine.java",
+        "src/java/org/apache/ivy/core/install/InstallEngine.java",
+        "src/java/org/apache/ivy/core/report/ConfigurationResolveReport.java",
+        "src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java",
+        "src/java/org/apache/ivy/core/resolve/ResolveData.java",
+        "src/java/org/apache/ivy/core/resolve/ResolveOptions.java",
+        "src/java/org/apache/ivy/core/resolve/VisitNode.java",
+        "src/java/org/apache/ivy/osgi/repo/ResolverManifestIterable.java"
+      ],
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 3
+      }
+    },
+    "historical_cochange": {
+      "ranked_paths": [
+        "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "test/java/org/apache/ivy/core/resolve/ResolveTest.java",
+        "src/java/org/apache/ivy/core/resolve/IvyNode.java",
+        "src/java/org/apache/ivy/core/settings/IvySettings.java",
+        "src/java/org/apache/ivy/Ivy.java",
+        "src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java",
+        "src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java",
+        "src/java/org/apache/ivy/plugins/resolver/BasicResolver.java",
+        "src/java/org/apache/ivy/ant/IvyResolve.java",
+        "src/java/org/apache/ivy/core/resolve/DownloadOptions.java"
+      ],
+      "history_anchor_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "true_positives": 0,
+        "predicted_count": 10,
+        "reference_count": 3
+      }
+    }
+  },
+  "model_run": {
+    "task_id": "ripple-ant-ivy-IVY-1141",
+    "run_kind": "context_ablation_run",
+    "run_started_at": "2026-11-22T11:17:38.392Z",
+    "condition": "C2_CAND",
+    "source_commit": "5240c8825896997f0845e354a51b1ac725dfe06b",
+    "provider_name": "ollama",
+    "model_id": "qwen2.5-coder:7b",
+    "model_digest": "dae161e27b0e90dd1856c8bb3209201fd6736d8eb66298e75ed87571486f4364",
+    "status": "ok",
+    "prompt_sha256": "fd67a003d7662cd72262c05ac0eff070f66c5ed528976fdb3db277ad6d4523db",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "latency_ms": 15457.425,
+    "input_tokens": 10725,
+    "output_tokens": 509,
+    "generation_settings": {
+      "temperature": 0.0,
+      "seed": 42,
+      "top_p": 1.0,
+      "top_k": 40,
+      "repeat_penalty": 1.0,
+      "num_ctx": 32768,
+      "num_predict": 2048,
+      "format": "json",
+      "stream": false
+    },
+    "provider_metrics": {
+      "total_duration_ns": 15403833000,
+      "load_duration_ns": 22772700,
+      "prompt_eval_duration_ns": 1429758000,
+      "eval_duration_ns": 13874218000
+    },
+    "predictions": [
+      {
+        "path": "src/java/org/apache/ivy/core/resolve/ResolveEngine.java",
+        "rationale": "The change request involves using the branch attribute in the Ivy module descriptor, which is likely to affect the ResolveEngine class responsible for resolving dependencies."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java",
+        "rationale": "The change request involves using the branch attribute, which may affect how artifacts are cached and retrieved, so the DefaultRepositoryCacheManager class is relevant."
+      },
+      {
+        "path": "src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java",
+        "rationale": "The change request involves using the branch attribute, and the XmlModuleDescriptorUpdater class is responsible for updating Ivy module descriptors, so it is relevant."
+      },
+      {
+        "path": "src/java/org/apache/ivy/Ivy.java",
+        "rationale": "The change request involves using the branch attribute, and Ivy is the main class for managing Ivy operations, so it is relevant."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java",
+        "rationale": "The change request involves using the branch attribute, and ModuleDescriptor is the interface representing a module descriptor, so it is relevant."
+      },
+      {
+        "path": "src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java",
+        "rationale": "The change request involves using the branch attribute, and DependencyDescriptor is the interface representing a dependency descriptor, so it is relevant."
+      },
+      {
+        "path": "src/java/org/apache/ivy/plugins/resolver/BasicResolver.java",
+        "rationale": "The change request involves using the branch attribute, and BasicResolver is a basic resolver implementation, so it is relevant."
+      },
+      {
+        "path": "src/java/org/apache/ivy/plugins/resolver/DependencyResolver.java",
+        "rationale": "The change request involves using the branch attribute, and DependencyResolver is the interface for resolving dependencies, so it is relevant."
+      },
+      {
+        "path": "src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java",
+        "rationale": "The change request involves using the branch attribute, and RepositoryResolver is a resolver that retrieves artifacts from a repository, so it is relevant."
+      }
+    ],
+    "error": null,
+    "raw_response": "{\n  \"predictions\": [\n    {\n      \"path\": \"src/java/org/apache/ivy/core/resolve/ResolveEngine.java\",\n      \"rationale\": \"The change request involves using the branch attribute in the Ivy module descriptor, which is likely to affect the ResolveEngine class responsible for resolving dependencies.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java\",\n      \"rationale\": \"The change request involves using the branch attribute, which may affect how artifacts are cached and retrieved, so the DefaultRepositoryCacheManager class is relevant.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java\",\n      \"rationale\": \"The change request involves using the branch attribute, and the XmlModuleDescriptorUpdater class is responsible for updating Ivy module descriptors, so it is relevant.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/Ivy.java\",\n      \"rationale\": \"The change request involves using the branch attribute, and Ivy is the main class for managing Ivy operations, so it is relevant.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java\",\n      \"rationale\": \"The change request involves using the branch attribute, and ModuleDescriptor is the interface representing a module descriptor, so it is relevant.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java\",\n      \"rationale\": \"The change request involves using the branch attribute, and DependencyDescriptor is the interface representing a dependency descriptor, so it is relevant.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/BasicResolver.java\",\n      \"rationale\": \"The change request involves using the branch attribute, and BasicResolver is a basic resolver implementation, so it is relevant.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/DependencyResolver.java\",\n      \"rationale\": \"The change request involves using the branch attribute, and DependencyResolver is the interface for resolving dependencies, so it is relevant.\"\n    },\n    {\n      \"path\": \"src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java\",\n      \"rationale\": \"The change request involves using the branch attribute, and RepositoryResolver is a resolver that retrieves artifacts from a repository, so it is relevant.\"\n    }\n  ]\n}",
+    "path_diagnostics": null
+  },
+  "model_metrics": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "recall_at_5": 0.0,
+    "recall_at_10": 0.0,
+    "true_positives": 0,
+    "predicted_count": 9,
+    "reference_count": 3
+  },
+  "artifact_created_at": "2026-11-22T11:17:53.905Z",
+  "limitations": [
+    "A single model call is one sample; repeated calls can differ in lower ranks.",
+    "Changed-path labels are not a complete oracle for every file potentially affected.",
+    "Issue cleaning decisions are recorded in the task manifest.",
+    "C0_CONSTRAINED is a candidate-list prompt condition, not a hard decoding constraint; invalid paths are still rejected."
+  ]
+}

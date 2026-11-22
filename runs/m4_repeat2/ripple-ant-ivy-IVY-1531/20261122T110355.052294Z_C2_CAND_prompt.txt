@@ -1,0 +1,1208 @@
+You are analyzing likely file impact for a software maintenance request.
+Return only a JSON object with a 'predictions' array containing up to 10 objects of the form {"path": string, "rationale": string}, most likely first.
+Every path must be copied exactly from the candidate path list below.
+Do not output any path that is not in that list. Do not repeat paths.
+
+## Change request
+Translation of POM to Ivy XML with * exclusion is removing main artifact
+
+Using the change from issue 1470 (makepom with transitive=false dependency) we get a POM file with * for group and artifact exclusion.  This may also occur naturally in POMs, but the main case for us is a library with transitive=false on a dependency.
+
+Ex:
+    <dependency>
+      <groupId>org.owasp.esapi</groupId>
+      <artifactId>esapi</artifactId>
+      <version>2.1.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+When we are consuming this library as a dependency out of Nexus, Ivy translates the above into:
+
+  <dependency org="org.owasp.esapi" name="esapi" rev="2.1.0" force="true" conf="compile->compile(*),master(*);runtime->runtime(*)">
+    <exclude org="*" module="*" name="*" type="*" ext="*" conf="" matcher="exact"/>
+   </dependency>
+
+This is having the effect of excluding all artifacts, including the master jar.  We are expecting to get the master jar, its sources and javadocs if they exist but no transitive dependencies.
+
+## Allowed candidate paths (pre-change repository)
+src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java
+src/java/org/apache/ivy/core/resolve/ResolveEngine.java
+src/java/org/apache/ivy/core/resolve/IvyNode.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java
+src/java/org/apache/ivy/core/settings/IvySettings.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorUpdater.java
+src/java/org/apache/ivy/Ivy.java
+src/java/org/apache/ivy/plugins/resolver/BasicResolver.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorBuilder.java
+src/java/org/apache/ivy/core/resolve/VisitNode.java
+src/java/org/apache/ivy/core/module/descriptor/ModuleDescriptor.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultModuleDescriptor.java
+src/java/org/apache/ivy/core/cache/RepositoryCacheManager.java
+src/java/org/apache/ivy/core/IvyContext.java
+src/java/org/apache/ivy/Main.java
+src/java/org/apache/ivy/util/FileUtil.java
+src/java/org/apache/ivy/core/settings/XmlSettingsParser.java
+src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorWriter.java
+src/java/org/apache/ivy/plugins/resolver/DependencyResolver.java
+src/java/org/apache/ivy/core/deliver/DeliverOptions.java
+src/java/org/apache/ivy/core/report/ResolveReport.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorWriter.java
+src/java/org/apache/ivy/core/module/descriptor/DefaultDependencyDescriptor.java
+src/java/org/apache/ivy/Ivy14.java
+src/java/org/apache/ivy/core/retrieve/RetrieveEngine.java
+src/java/org/apache/ivy/plugins/resolver/AbstractResolver.java
+src/java/org/apache/ivy/plugins/resolver/IBiblioResolver.java
+src/java/org/apache/ivy/core/module/id/ModuleRules.java
+src/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParser.java
+src/java/org/apache/ivy/ant/IvyBuildList.java
+src/java/org/apache/ivy/core/IvyPatternHelper.java
+src/java/org/apache/ivy/ant/IvyResolve.java
+src/java/org/apache/ivy/ant/IvyDeliver.java
+src/java/org/apache/ivy/ant/IvyPostResolveTask.java
+src/java/org/apache/ivy/core/report/ConfigurationResolveReport.java
+src/java/org/apache/ivy/core/search/SearchEngine.java
+src/java/org/apache/ivy/core/publish/PublishEngine.java
+src/java/org/apache/ivy/plugins/conflict/LatestCompatibleConflictManager.java
+src/java/org/apache/ivy/core/resolve/ResolveOptions.java
+src/java/org/apache/ivy/core/module/descriptor/DependencyDescriptor.java
+src/java/org/apache/ivy/core/resolve/IvyNodeEviction.java
+src/java/org/apache/ivy/plugins/resolver/RepositoryResolver.java
+src/java/org/apache/ivy/osgi/repo/AbstractOSGiResolver.java
+src/java/org/apache/ivy/core/resolve/ResolveData.java
+src/java/org/apache/ivy/plugins/parser/m2/PomReader.java
+src/java/org/apache/ivy/osgi/p2/P2MetadataParser.java
+src/java/org/apache/ivy/util/Configurator.java
+src/java/org/apache/ivy/core/sort/ModuleInSort.java
+src/java/org/apache/ivy/osgi/core/BundleInfoAdapter.java
+src/java/org/apache/ivy/plugins/repository/TransferEvent.java
+src/java/org/apache/ivy/core/repository/RepositoryManagementEngine.java
+src/java/org/apache/ivy/ant/IvyAntSettings.java
+src/java/org/apache/ivy/ant/IvyReport.java
+src/java/org/apache/ivy/plugins/repository/vsftp/VsftpRepository.java
+src/java/org/apache/ivy/plugins/resolver/AbstractSshBasedResolver.java
+src/java/org/apache/ivy/plugins/repository/ssh/SshCache.java
+src/java/org/apache/ivy/ant/IvyMakePom.java
+src/java/org/apache/ivy/osgi/util/DelegatingHandler.java
+src/java/org/apache/ivy/ant/IvyTask.java
+src/java/org/apache/ivy/core/resolve/IvyNodeUsage.java
+src/java/org/apache/ivy/core/module/id/ModuleId.java
+src/java/org/apache/ivy/plugins/resolver/DualResolver.java
+src/java/org/apache/ivy/plugins/repository/ssh/Scp.java
+src/java/org/apache/ivy/plugins/repository/ssh/SshRepository.java
+src/java/org/apache/ivy/plugins/lock/FileBasedLockStrategy.java
+src/java/org/apache/ivy/plugins/resolver/AbstractWorkspaceResolver.java
+src/java/org/apache/ivy/ant/IvyPublish.java
+src/java/org/apache/ivy/plugins/version/VersionMatcher.java
+src/java/org/apache/ivy/plugins/parser/AbstractModuleDescriptorParser.java
+src/java/org/apache/ivy/core/module/descriptor/Artifact.java
+src/java/org/apache/ivy/core/module/id/ModuleRevisionId.java
+src/java/org/apache/ivy/util/url/URLHandler.java
+src/java/org/apache/ivy/plugins/resolver/packager/PackagerCacheEntry.java
+src/java/org/apache/ivy/plugins/repository/ssh/AbstractSshBasedRepository.java
+src/java/org/apache/ivy/plugins/resolver/IvyRepResolver.java
+test/java/org/apache/ivy/core/resolve/ResolveTest.java
+test/java/org/apache/ivy/ant/IvyPublishTest.java
+test/java/org/apache/ivy/ant/IvyResolveTest.java
+test/java/org/apache/ivy/plugins/resolver/FileSystemResolverTest.java
+test/java/org/apache/ivy/plugins/parser/m2/PomModuleDescriptorParserTest.java
+test/java/org/apache/ivy/core/publish/PublishEventsTest.java
+test/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParserTest.java
+test/java/org/apache/ivy/ant/IvyDeliverTest.java
+test/java/org/apache/ivy/plugins/resolver/ChainResolverTest.java
+test/java/org/apache/ivy/ant/IvyRetrieveTest.java
+build.xml
+LICENSE
+build-release.xml
+ivy.xml
+README
+build-for-bin-distrib.xml
+ivysettings-release.xml
+version.properties
+build.properties
+NOTICE
+doc/concept.html
+doc/settings/triggers.html
+doc/ivyfile/dependency.html
+doc/tutorial/multiproject.html
+doc/use/resolve.html
+
+## Seed and retrieved source files
+
+### SEED: src/java/org/apache/ivy/core/cache/DefaultRepositoryCacheManager.java
+```java
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.ivy.core.cache;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.regex.Pattern;
+
+import org.apache.ivy.Ivy;
+import org.apache.ivy.core.IvyPatternHelper;
+import org.apache.ivy.core.module.descriptor.Artifact;
+import org.apache.ivy.core.module.descriptor.DefaultArtifact;
+import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
+import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
+import org.apache.ivy.core.module.id.ArtifactRevisionId;
+import org.apache.ivy.core.module.id.ModuleRevisionId;
+import org.apache.ivy.core.module.id.ModuleRules;
+import org.apache.ivy.core.pack.PackagingManager;
+import org.apache.ivy.core.report.ArtifactDownloadReport;
+import org.apache.ivy.core.report.DownloadStatus;
+import org.apache.ivy.core.report.MetadataArtifactDownloadReport;
+import org.apache.ivy.core.resolve.ResolvedModuleRevision;
+import org.apache.ivy.core.settings.IvySettings;
+import org.apache.ivy.plugins.IvySettingsAware;
+import org.apache.ivy.plugins.lock.LockStrategy;
+import org.apache.ivy.plugins.matcher.ExactPatternMatcher;
+import org.apache.ivy.plugins.matcher.MapMatcher;
+import org.apache.ivy.plugins.matcher.Matcher;
+import org.apache.ivy.plugins.matcher.NoMatcher;
+import org.apache.ivy.plugins.matcher.PatternMatcher;
+import org.apache.ivy.plugins.namespace.NameSpaceHelper;
+import org.apache.ivy.plugins.parser.ModuleDescriptorParser;
+import org.apache.ivy.plugins.parser.ModuleDescriptorParserRegistry;
+import org.apache.ivy.plugins.parser.ParserSettings;
+import org.apache.ivy.plugins.parser.xml.XmlModuleDescriptorParser;
+import org.apache.ivy.plugins.repository.ArtifactResourceResolver;
+import org.apache.ivy.plugins.repository.LocalizableResource;
+import org.apache.ivy.plugins.repository.Repository;
+import org.apache.ivy.plugins.repository.Resource;
+import org.apache.ivy.plugins.repository.ResourceDownloader;
+import org.apache.ivy.plugins.repository.ResourceHelper;
+import org.apache.ivy.plugins.resolver.AbstractResolver;
+import org.apache.ivy.plugins.resolver.DependencyResolver;
+import org.apache.ivy.plugins.resolver.util.ResolvedResource;
+import org.apache.ivy.util.Checks;
+import org.apache.ivy.util.FileUtil;
+import org.apache.ivy.util.HexEncoder;
+import org.apache.ivy.util.Message;
+import org.apache.ivy.util.PropertiesFile;
+
+public class DefaultRepositoryCacheManager implements RepositoryCacheManager, IvySettingsAware {
+    private static final String DEFAULT_ARTIFACT_PATTERN = "[organisation]/[module](/[branch])/[type]s/[artifact]-[revision](-[classifier])(.[ext])";
+
+    private static final String DEFAULT_DATA_FILE_PATTERN = "[organisation]/[module](/[branch])/ivydata-[revision].properties";
+
+    private static final String DEFAULT_IVY_PATTERN = "[organisation]/[module](/[branch])/ivy-[revision].xml";
+
+    private static final int DEFAULT_MEMORY_CACHE_SIZE = 150;
+
+    private static MessageDigest SHA_DIGEST;
+    static {
+        try {
+            SHA_DIGEST = MessageDigest.getInstance("SHA1");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("The SHA1 algorithm is not available in your classpath", e);
+        }
+    }
+
+    private IvySettings settings;
+
+    private File basedir;
+
+    private LockStrategy lockStrategy;
+
+    private String name;
+
+    private String ivyPattern;
+
+    private String dataFilePattern = DEFAULT_DATA_FILE_PATTERN;
+
+    private String artifactPattern;
+
+    private String lockStrategyName;
+
+    private String changingPattern;
+
+    private String changingMatcherName = PatternMatcher.EXACT_OR_REGEXP;
+
+    private Boolean checkmodified;
+
+    private Boolean useOrigin;
+
+    private ModuleRules<Long> ttlRules = new ModuleRules<Long>();
+
+    private Long defaultTTL = null;
+
+    private ModuleDescriptorMemoryCache memoryModuleDescrCache;
+
+    private PackagingManager packagingManager = new PackagingManager();
+
+    public DefaultRepositoryCacheManager() {
+    }
+
+    public DefaultRepositoryCacheManager(String name, IvySettings settings, File basedir) {
+        setName(name);
+        setSettings(settings);
+        setBasedir(basedir);
+    }
+
+    public IvySettings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(IvySettings settings) {
+        this.settings = settings;
+        packagingManager.setSettings(settings);
+    }
+
+    public File getIvyFileInCache(ModuleRevisionId mrid) {
+        String file = IvyPatternHelper.substitute(getIvyPattern(),
+            DefaultArtifact.newIvyArtifact(mrid, null));
+        return new File(getRepositoryCacheRoot(), file);
+    }
+
+    public String getIvyPattern() {
+        if (ivyPattern == null) {
+            if (settings != null) {
+                ivyPattern = settings.getDefaultCacheIvyPattern();
+            }
+            if (ivyPattern == null) {
+                ivyPattern = DEFAULT_IVY_PATTERN;
+            }
+        }
+        return ivyPattern;
+    }
+
+    public String getArtifactPattern() {
+        if (artifactPattern == null) {
+            if (settings != null) {
+                artifactPattern = settings.getDefaultCacheArtifactPattern();
+            }
+            if (artifactPattern == null) {
+                artifactPattern = DEFAULT_ARTIFACT_PATTERN;
+            }
+        }
+        return artifactPattern;
+    }
+
+    public void setArtifactPattern(String artifactPattern) {
+        CacheUtil.checkCachePattern(artifactPattern);
+        this.artifactPattern = artifactPattern;
+    }
+
+    public File getBasedir() {
+        if (basedir == null) {
+            basedir = settings.getDefaultRepositoryCacheBasedir();
+        }
+        return basedir;
+    }
+
+    public void setBasedir(File cache) {
+        this.basedir = cache;
+    }
+
+    public long getDefaultTTL() {
+        if (defaultTTL == null) {
+            defaultTTL = new Long(parseDuration(settings.getVariable("ivy.cache.ttl.default")));
+        }
+        return defaultTTL.longValue();
+    }
+
+    public void setDefaultTTL(long defaultTTL) {
+        this.defaultTTL = new Long(defaultTTL);
+    }
+
+    public void setDefaultTTL(String defaultTTL) {
+        this.defaultTTL = new Long(parseDuration(defaultTTL));
+    }
+
+    public String getDataFilePattern() {
+        return dataFilePattern;
+    }
+
+    public void setDataFilePattern(String dataFilePattern) {
+        CacheUtil.checkCachePattern(dataFilePattern);
+        this.dataFilePattern = dataFilePattern;
+    }
+
+    public void setIvyPattern(String ivyPattern) {
+        CacheUtil.checkCachePattern(ivyPattern);
+        this.ivyPattern = ivyPattern;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getChangingMatcherName() {
+        return changingMatcherName;
+    }
+
+    public void setChangingMatcher(String changingMatcherName) {
+        this.changingMatcherName = changingMatcherName;
+    }
+
+ 
+... [truncated]
+```
+
+### RETRIEVED: src/java/org/apache/ivy/core/resolve/ResolveEngine.java
+```java
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.ivy.core.resolve;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
+
+import org.apache.ivy.Ivy;
+import org.apache.ivy.core.IvyContext;
+import org.apache.ivy.core.LogOptions;
+import org.apache.ivy.core.cache.ArtifactOrigin;
+import org.apache.ivy.core.cache.ResolutionCacheManager;
+import org.apache.ivy.core.event.EventManager;
+import org.apache.ivy.core.event.download.PrepareDownloadEvent;
+import org.apache.ivy.core.event.resolve.EndResolveEvent;
+import org.apache.ivy.core.event.resolve.StartResolveEvent;
+import org.apache.ivy.core.module.descriptor.Artifact;
+import org.apache.ivy.core.module.descriptor.Configuration;
+import org.apache.ivy.core.module.descriptor.DefaultDependencyDescriptor;
+import org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor;
+import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
+import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
+import org.apache.ivy.core.module.id.ModuleId;
+import org.apache.ivy.core.module.id.ModuleRevisionId;
+import org.apache.ivy.core.report.ArtifactDownloadReport;
+import org.apache.ivy.core.report.ConfigurationResolveReport;
+import org.apache.ivy.core.report.DownloadReport;
+import org.apache.ivy.core.report.DownloadStatus;
+import org.apache.ivy.core.report.ResolveReport;
+import org.apache.ivy.core.resolve.IvyNodeEviction.EvictionData;
+import org.apache.ivy.core.settings.IvySettings;
+import org.apache.ivy.core.sort.SortEngine;
+import org.apache.ivy.core.sort.SortOptions;
+import org.apache.ivy.plugins.conflict.ConflictManager;
+import org.apache.ivy.plugins.parser.ModuleDescriptorParser;
+import org.apache.ivy.plugins.parser.ModuleDescriptorParserRegistry;
+import org.apache.ivy.plugins.repository.url.URLResource;
+import org.apache.ivy.plugins.resolver.DependencyResolver;
+import org.apache.ivy.plugins.version.VersionMatcher;
+import org.apache.ivy.util.Message;
+import org.apache.ivy.util.filter.Filter;
+
+/**
+ * The resolve engine which is the core of the dependency resolution mechanism used in Ivy. It
+ * features several resolve methods, some very simple, like {@link #resolve(File)} and
+ * {@link #resolve(URL)} which allow to simply resolve dependencies of a single module descriptor,
+ * or more complete one, like the {@link #resolve(ModuleDescriptor, ResolveOptions)} which allows to
+ * provide options to the resolution engine.
+ * 
+ * @see ResolveOptions
+ */
+public class ResolveEngine {
+    private ResolveEngineSettings settings;
+
+    private EventManager eventManager;
+
+    private SortEngine sortEngine;
+
+    private Set<String> fetchedSet = new HashSet<String>();
+
+    private DependencyResolver dictatorResolver;
+
+    /**
+     * Constructs a ResolveEngine.
+     * 
+     * @param settings
+     *            the settings to use to configure the engine. Must not be null.
+     * @param eventManager
+     *            the event manager to use to send events about the resolution process. Must not be
+     *            null.
+     * @param sortEngine
+     *            the sort engine to use to sort modules before producing the dependency resolution
+     *            report. Must not be null.
+     */
+    public ResolveEngine(ResolveEngineSettings settings, EventManager eventManager,
+            SortEngine sortEngine) {
+        this.settings = settings;
+        this.eventManager = eventManager;
+        this.sortEngine = sortEngine;
+    }
+
+    /**
+     * Returns the currently configured dictator resolver, which when non null is used in place of
+     * any specified resolver in the {@link IvySettings}
+     * 
+     * @return the currently configured dictator resolver, may be null.
+     */
+    public DependencyResolver getDictatorResolver() {
+        return dictatorResolver;
+    }
+
+    /**
+     * Sets a dictator resolver, which is used in place of regular dependency resolver for
+     * subsequent dependency resolution by this engine.
+     * 
+     * @param dictatorResolver
+     *            the dictator resolver to use in this engine, null if regular settings should used
+     */
+    public void setDictatorResolver(DependencyResolver dictatorResolver) {
+        this.dictatorResolver = dictatorResolver;
+        settings.setDictatorResolver(dictatorResolver);
+    }
+
+    public ResolveReport resolve(File ivySource) throws ParseException, IOException {
+        return resolve(ivySource.toURI().toURL());
+    }
+
+    public ResolveReport resolve(URL ivySource) throws ParseException, IOException {
+        return resolve(ivySource, new ResolveOptions());
+    }
+
+    /**
+     * Resolves the module identified by the given mrid with its dependencies if transitive is set
+     * to true.
+     */
+    public ResolveReport resolve(final ModuleRevisionId mrid, ResolveOptions options,
+            boolean changing) throws ParseException, IOException {
+        DefaultModuleDescriptor md;
+        ResolveOptions optionsToUse = new ResolveOptions(options);
+
+        if (options.useSpecialConfs()) {
+            // create new resolve options because this is a different resolve than the real resolve
+            // (which will be a resolve of a newCallerInstance module)
+            ResolvedModuleRevision rmr = findModule(mrid, new ResolveOptions(options));
+            if (rmr == null) {
+                Message.verbose("module not found " + mrid);
+
+                // we will continue the resolve anyway to get a nice error message back
+                // to the user, however reduce the amount of logging in this case
+                optionsToUse.setLog(LogOptions.LOG_DOWNLOAD_ONLY);
+                md = DefaultModuleDescriptor.newCallerInstance(mrid, new String[] {"default"},
+                    options.isTransitive(), changing);
+            } else {
+                String[] confs = options.getConfs(rmr.getDescriptor());
+                md = DefaultModuleDescriptor.newCallerInstance(
+                    ModuleRevisionId.newInstance(mrid, rmr.getId().getRevision()), confs,
+                    options.isTransitive(), changing);
+            }
+        } else {
+            md = DefaultModuleDescriptor.newCallerInstance(mrid, options.getConfs(),
+                options.isTransitive(), changing);
+        }
+
+        return resolve(md, optionsToUse);
+    }
+
+    /**
+     * Resolve dependencies of a module described by an ivy file.
+     */
+    public ResolveReport resolve(URL ivySource, ResolveOptions options) throws ParseException,
+            IOException {
+        URLResource res = new URLResource(ivySource);
+        ModuleDescriptorParser parser = ModuleDescriptorParserRegistry.getInstance().getParser(res);
+        Message.verbose("using " + parser + " to parse " + ivySource);
+        ModuleDescriptor md = parser.parseDescriptor(settings, ivySource, options.isValidate());
+        String revision = options.getRevision();
+     
+... [truncated]
+```
+
+### RETRIEVED: src/java/org/apache/ivy/core/resolve/IvyNode.java
+```java
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.ivy.core.resolve;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.ivy.core.IvyContext;
+import org.apache.ivy.core.LogOptions;
+import org.apache.ivy.core.event.resolve.EndResolveDependencyEvent;
+import org.apache.ivy.core.event.resolve.StartResolveDependencyEvent;
+import org.apache.ivy.core.module.descriptor.Artifact;
+import org.apache.ivy.core.module.descriptor.Configuration;
+import org.apache.ivy.core.module.descriptor.DefaultArtifact;
+import org.apache.ivy.core.module.descriptor.DependencyArtifactDescriptor;
+import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
+import org.apache.ivy.core.module.descriptor.IncludeRule;
+import org.apache.ivy.core.module.descriptor.MDArtifact;
+import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
+import org.apache.ivy.core.module.id.ArtifactId;
+import org.apache.ivy.core.module.id.ModuleId;
+import org.apache.ivy.core.module.id.ModuleRevisionId;
+import org.apache.ivy.core.resolve.IvyNodeCallers.Caller;
+import org.apache.ivy.core.resolve.IvyNodeEviction.EvictionData;
+import org.apache.ivy.plugins.conflict.ConflictManager;
+import org.apache.ivy.plugins.conflict.LatestCompatibleConflictManager;
+import org.apache.ivy.plugins.matcher.MatcherHelper;
+import org.apache.ivy.plugins.resolver.DependencyResolver;
+import org.apache.ivy.util.Message;
+import org.apache.ivy.util.StringUtils;
+import org.apache.ivy.util.filter.Filter;
+import org.apache.ivy.util.filter.FilterHelper;
+
+public class IvyNode implements Comparable<IvyNode> {
+    private static final Pattern FALLBACK_CONF_PATTERN = Pattern.compile("(.+)\\((.*)\\)");
+
+    // //////// CONTEXT
+    private ResolveData data;
+
+    private ResolveEngineSettings settings;
+
+    // //////// DELEGATES
+    private IvyNodeCallers callers;
+
+    private IvyNodeEviction eviction;
+
+    // //////// MAIN DATA
+
+    private IvyNode root;
+
+    // id as requested, i.e. may be with latest rev
+    private ModuleRevisionId id;
+
+    // set only when node has been built or updated from a DependencyDescriptor
+    private Map<IvyNode, DependencyDescriptor> dds = new HashMap<IvyNode, DependencyDescriptor>();
+
+    // Set when data has been loaded only, or when constructed from a module descriptor
+    private ModuleDescriptor md;
+
+    private ResolvedModuleRevision module;
+
+    // //////// LOADING METADATA
+    private Exception problem = null;
+
+    private boolean downloaded = false;
+
+    private boolean searched = false;
+
+    private Collection<String> confsToFetch = new HashSet<String>();
+
+    private Collection<String> fetchedConfigurations = new HashSet<String>();
+
+    private Collection<String> loadedRootModuleConfs = new HashSet<String>();
+
+    // //////// USAGE DATA
+
+    private IvyNodeUsage usage = new IvyNodeUsage(this);
+
+    // usage information merged from evicted nodes this node is "replacing"
+    private Map<ModuleRevisionId, IvyNodeUsage> mergedUsages = new LinkedHashMap<ModuleRevisionId, IvyNodeUsage>();
+
+    public IvyNode(ResolveData data, IvyNode parent, DependencyDescriptor dd) {
+        id = dd.getDependencyRevisionId();
+        dds.put(parent, dd);
+        root = parent.getRoot();
+        init(data);
+    }
+
+    public IvyNode(ResolveData data, ModuleDescriptor md) {
+        id = md.getModuleRevisionId();
+        this.md = md;
+        root = this;
+        init(data);
+    }
+
+    private void init(ResolveData data) {
+        this.data = data;
+        settings = data.getSettings();
+        eviction = new IvyNodeEviction(this);
+        callers = new IvyNodeCallers(this);
+    }
+
+    /**
+     * After the call node may be discarded. To avoid using discarded node, make sure to get the
+     * real node after the call IvyNode node = ... node.loadData(); node = node.getRealNode(); ...
+     */
+    public boolean loadData(String rootModuleConf, IvyNode parent, String parentConf, String conf,
+            boolean shouldBePublic, IvyNodeUsage usage) {
+        Message.debug("loadData of " + this.toString() + " of rootConf=" + rootModuleConf);
+        if (!isRoot() && (data.getReport() != null)) {
+            data.getReport().addDependency(this);
+        }
+
+        boolean loaded = false;
+        if (hasProblem()) {
+            Message.debug("Node has problem.  Skip loading");
+        } else if (isEvicted(rootModuleConf)) {
+            Message.debug(rootModuleConf + " is evicted.  Skip loading");
+        } else if (!hasConfigurationsToLoad() && isRootModuleConfLoaded(rootModuleConf)) {
+            Message.debug(rootModuleConf + " is loaded and no conf to load.  Skip loading");
+        } else {
+            markRootModuleConfLoaded(rootModuleConf);
+            if (md == null) {
+                DependencyResolver resolver = data.getSettings().getResolver(getId());
+                if (resolver == null) {
+                    Message.error("no resolver found for " + getModuleId()
+                            + ": check your configuration");
+                    problem = new RuntimeException("no resolver found for " + getModuleId()
+                            + ": check your configuration");
+                    return false;
+                }
+                try {
+                    Message.debug("\tusing " + resolver + " to resolve " + getId());
+                    DependencyDescriptor dependencyDescriptor = getDependencyDescriptor(parent);
+                    long start = System.currentTimeMillis();
+                    ModuleRevisionId requestedRevisionId = dependencyDescriptor
+                            .getDependencyRevisionId();
+                    data.getEventManager().fireIvyEvent(
+                        new StartResolveDependencyEvent(resolver, dependencyDescriptor,
+                                requestedRevisionId));
+                    module = resolver.getDependency(dependencyDescriptor, data);
+                    data.getEventManager().fireIvyEvent(
+                        new EndResolveDependencyEvent(resolver, dependencyDescriptor,
+                                requestedRevisionId, module, System.currentTimeMillis() - start));
+
+                    if (module != null) {
+                        module.getResolver()
+                                .getRepositoryCacheManager()
+                                .saveResolvers(module.getDescriptor(),
+                                    module.getResolver().getName(),
+                                    module.getArtifactResolver().getName());
+                        if (settings.logModuleWhenFound()
+                                && LogOptions.LOG_DEFAULT.equals(getData().getOptions().getLog())) {
+                            Message.info("\tfound " + module.getId() + " in "
+                                    + module.getResolver().getName());
+                        } else {
+                            Me
+... [truncated]
+```
+
+### RETRIEVED: src/java/org/apache/ivy/plugins/parser/xml/XmlModuleDescriptorParser.java
+```java
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.ivy.plugins.parser.xml;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Stack;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.ivy.Ivy;
+import org.apache.ivy.core.IvyContext;
+import org.apache.ivy.core.module.descriptor.Configuration;
+import org.apache.ivy.core.module.descriptor.ConfigurationAware;
+import org.apache.ivy.core.module.descriptor.DefaultArtifact;
+import org.apache.ivy.core.module.descriptor.DefaultDependencyArtifactDescriptor;
+import org.apache.ivy.core.module.descriptor.DefaultDependencyDescriptor;
+import org.apache.ivy.core.module.descriptor.DefaultExcludeRule;
+import org.apache.ivy.core.module.descriptor.DefaultExtendsDescriptor;
+import org.apache.ivy.core.module.descriptor.DefaultIncludeRule;
+import org.apache.ivy.core.module.descriptor.DefaultModuleDescriptor;
+import org.apache.ivy.core.module.descriptor.DependencyArtifactDescriptor;
+import org.apache.ivy.core.module.descriptor.DependencyDescriptor;
+import org.apache.ivy.core.module.descriptor.ExcludeRule;
+import org.apache.ivy.core.module.descriptor.ExtraInfoHolder;
+import org.apache.ivy.core.module.descriptor.IncludeRule;
+import org.apache.ivy.core.module.descriptor.License;
+import org.apache.ivy.core.module.descriptor.MDArtifact;
+import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
+import org.apache.ivy.core.module.descriptor.OverrideDependencyDescriptorMediator;
+import org.apache.ivy.core.module.id.ArtifactId;
+import org.apache.ivy.core.module.id.ModuleId;
+import org.apache.ivy.core.module.id.ModuleRevisionId;
+import org.apache.ivy.core.resolve.ResolveData;
+import org.apache.ivy.core.resolve.ResolveEngine;
+import org.apache.ivy.core.resolve.ResolveOptions;
+import org.apache.ivy.core.resolve.ResolvedModuleRevision;
+import org.apache.ivy.plugins.conflict.ConflictManager;
+import org.apache.ivy.plugins.conflict.FixedConflictManager;
+import org.apache.ivy.plugins.matcher.PatternMatcher;
+import org.apache.ivy.plugins.namespace.NameSpaceHelper;
+import org.apache.ivy.plugins.namespace.Namespace;
+import org.apache.ivy.plugins.parser.AbstractModuleDescriptorParser;
+import org.apache.ivy.plugins.parser.ModuleDescriptorParser;
+import org.apache.ivy.plugins.parser.ModuleDescriptorParserRegistry;
+import org.apache.ivy.plugins.parser.ParserSettings;
+import org.apache.ivy.plugins.repository.Resource;
+import org.apache.ivy.plugins.repository.file.FileResource;
+import org.apache.ivy.plugins.repository.url.URLResource;
+import org.apache.ivy.plugins.resolver.DependencyResolver;
+import org.apache.ivy.util.DateUtil;
+import org.apache.ivy.util.FileUtil;
+import org.apache.ivy.util.Message;
+import org.apache.ivy.util.XMLHelper;
+import org.apache.ivy.util.extendable.ExtendableItemHelper;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+
+/**
+ * Parses an xml ivy file and output a ModuleDescriptor. For dependency and performance reasons, it
+ * uses only the SAX API, which makes the parsing code harder to understand.
+ */
+public class XmlModuleDescriptorParser extends AbstractModuleDescriptorParser {
+    static final String[] DEPENDENCY_REGULAR_ATTRIBUTES = new String[] {"org", "name", "branch",
+            "branchConstraint", "rev", "revConstraint", "force", "transitive", "changing", "conf"};
+
+    private static final XmlModuleDescriptorParser INSTANCE = new XmlModuleDescriptorParser();
+
+    public static XmlModuleDescriptorParser getInstance() {
+        return INSTANCE;
+    }
+
+    protected XmlModuleDescriptorParser() {
+    }
+
+    /**
+     * @param settings
+     * @param xmlURL
+     *            the url pointing to the file to parse
+     * @param res
+     *            the real resource to parse, used for log only
+     * @param validate
+     * @return
+     * @throws ParseException
+     * @throws IOException
+     */
+    public ModuleDescriptor parseDescriptor(ParserSettings ivySettings, URL xmlURL, Resource res,
+            boolean validate) throws ParseException, IOException {
+        Parser parser = newParser(ivySettings);
+        parser.setValidate(validate);
+        parser.setResource(res);
+        parser.setInput(xmlURL);
+        parser.parse();
+        return parser.getModuleDescriptor();
+    }
+
+    /** Used for test purpose */
+    ModuleDescriptor parseDescriptor(ParserSettings ivySettings, InputStream descriptor,
+            Resource res, boolean validate) throws ParseException {
+        Parser parser = newParser(ivySettings);
+        parser.setValidate(validate);
+        parser.setResource(res);
+        parser.setInput(descriptor);
+        parser.parse();
+        return parser.getModuleDescriptor();
+    }
+
+    /**
+     * Instantiates a Parser instance responsible for actual parsing of Ivy files.
+     * <p>
+     * Override this method if you want to use a custom Parser.
+     * </p>
+     * 
+     * @param ivySettings
+     *            the settings to use during parsing
+     * @return the Parser instance used for parsing Ivy files
+     */
+    protected Parser newParser(ParserSettings ivySettings) {
+        return new Parser(this, ivySettings);
+    }
+
+    public boolean accept(Resource res) {
+        return true; // this the default parser, it thus accepts all resources
+    }
+
+    public void toIvyFile(InputStream is, Resource res, File destFile, ModuleDescriptor md)
+            throws IOException, ParseException {
+        try {
+            Namespace ns = null;
+            if (md instanceof DefaultModuleDescriptor) {
+                DefaultModuleDescriptor dmd = (DefaultModuleDescriptor) md;
+                ns = dmd.getNamespace();
+            }
+            XmlModuleDescriptorUpdater.update(
+                is,
+                res,
+                destFile,
+                new UpdateOptions().setSettings(IvyContext.getContext().getSettings())
+                        .setStatus(md.getStatus())
+                        .setRevision(md.getResolvedModuleRevisionId().getRevision())
+                        .setPubdate(md.getResolvedPublicationDate()).setUpdateBranch(false)
+                        .setNamespace(ns));
+        } catch (SAXException e) {
+            ParseException ex = new ParseException("exception occurred while parsing " + res, 0);
+            ex.initCause(e);
+            throw ex;
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+    }
+
+    public static class Parser extends AbstractParser {
+        public static final class State {
+            public static final int NONE = 0;
+
+            public static final int INFO = 1;
+
+            public static final int CONF = 2;
+
+            public static final int PUB = 3;
+
+            public static final int DEP = 4;
+
+            public static final int DEP_ARTIFACT = 5;
+
+            public static final int ARTIFACT_INCLUDE = 6;
+
+            public static final in
+... [truncated]
+```
+
+## Dependency information (parent revision)
+
+### Dependency signatures: src/java/org/apache/ivy/Ivy.java
+```java
+package org.apache.ivy;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import org.apache.ivy.core.IvyContext;
+import org.apache.ivy.core.LogOptions;
+import org.apache.ivy.core.cache.ResolutionCacheManager;
+import org.apache.ivy.core.check.CheckEngine;
+import org.apache.ivy.core.deliver.DeliverEngine;
+import org.apache.ivy.core.deliver.DeliverOptions;
+import org.apache.ivy.core.event.EventManager;
+import org.apache.ivy.core.install.InstallEngine;
+import org.apache.ivy.core.install.InstallOptions;
+import org.apache.ivy.core.module.descriptor.Artifact;
+import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
+import org.apache.ivy.core.module.id.ModuleId;
+import org.apache.ivy.core.module.id.ModuleRevisionId;
+import org.apache.ivy.core.publish.PublishEngine;
+import org.apache.ivy.core.publish.PublishOptions;
+import org.apache.ivy.core.report.ResolveReport;
+import org.apache.ivy.core.repository.RepositoryManagementEngine;
+import org.apache.ivy.core.resolve.IvyNode;
+import org.apache.ivy.core.resolve.ResolveData;
+import org.apache.ivy.core.resolve.ResolveEngine;
+import org.apache.ivy.core.resolve.ResolveOptions;
+import org.apache.ivy.core.resolve.ResolvedModuleRevision;
+import org.apache.ivy.core.retrieve.RetrieveEngine;
+import org.apache.ivy.core.retrieve.RetrieveOptions;
+import org.apache.ivy.core.retrieve.RetrieveReport;
+import org.apache.ivy.core.search.ModuleEntry;
+import org.apache.ivy.core.search.OrganisationEntry;
+import org.apache.ivy.core.search.RevisionEntry;
+import org.apache.ivy.core.search.SearchEngine;
+import org.apache.ivy.core.settings.IvySettings;
+import org.apache.ivy.core.sort.SortEngine;
+import org.apache.ivy.core.sort.SortOptions;
+import org.apache.ivy.plugins.circular.CircularDependencyException;
+import org.apache.ivy.plugins.matcher.PatternMatcher;
+import org.apache.ivy.plugins.repository.TransferEvent;
+import org.apache.ivy.plugins.repository.TransferListener;
+import org.apache.ivy.plugins.resolver.BasicResolver;
+import org.apache.ivy.plugins.resolver.DependencyResolver;
+import org.apache.ivy.plugins.trigger.Trigger;
+import org.apache.ivy.util.DateUtil;
+import org.apache.ivy.util.HostUtil;
+import org.apache.ivy.util.Message;
+import org.apache.ivy.util.MessageLoggerEngine;
+public class Ivy {
+    public static inter
+... [truncated]
+```
+
+### Dependency signatures: src/java/org/apache/ivy/ant/BuildOBRTask.java
+```java
+package org.apache.ivy.ant;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
+import javax.xml.transform.TransformerConfigurationException;
+import org.apache.ivy.Ivy;
+import org.apache.ivy.core.IvyContext;
+import org.apache.ivy.core.cache.DefaultRepositoryCacheManager;
+import org.apache.ivy.core.cache.RepositoryCacheManager;
+import org.apache.ivy.core.settings.IvySettings;
+import org.apache.ivy.osgi.obr.xml.OBRXMLWriter;
+import org.apache.ivy.osgi.repo.ArtifactReportManifestIterable;
+import org.apache.ivy.osgi.repo.FSManifestIterable;
+import org.apache.ivy.osgi.repo.ManifestAndLocation;
+import org.apache.ivy.osgi.repo.ResolverManifestIterable;
+import org.apache.ivy.plugins.resolver.BasicResolver;
+import org.apache.ivy.plugins.resolver.DependencyResolver;
+import org.apache.ivy.util.Message;
+import org.apache.tools.ant.BuildException;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXException;
+public class BuildOBRTask extends IvyCacheTask {
+    private String resolverName = null;
+    private File file = null;
+    private String cacheName = null;
+    private String encoding = "UTF-8";
+    private boolean indent = true;
+    private File baseDir;
+    private boolean quiet;
+    private List<String> sourceTypes = Arrays.asList("source", "sources", "src");
+    public void setResolver(String resolverName) {
+    public void setCache(String cacheName) {
+    public void setOut(File file) {
+    public void setEncoding(String encoding) {
+    public void setIndent(boolean indent) {
+    public void setBaseDir(File dir) {
+    public void setQuiet(boolean quiet) {
+    public void setSourceType(String sourceType) {
+    protected void prepareTask() {
+    public void doExecute() throws BuildException {
+        class AntMessageLogger2 extends AntMessageLogger {
+```
+
+### Dependency signatures: src/java/org/apache/ivy/core/IvyPatternHelper.java
+```java
+package org.apache.ivy.core;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.ivy.core.cache.ArtifactOrigin;
+import org.apache.ivy.core.cache.RepositoryCacheManager;
+import org.apache.ivy.core.module.descriptor.Artifact;
+import org.apache.ivy.core.module.descriptor.DefaultArtifact;
+import org.apache.ivy.core.module.id.ModuleRevisionId;
+import org.apache.ivy.core.settings.IvyVariableContainer;
+import org.apache.ivy.core.settings.IvyVariableContainerImpl;
+import org.apache.ivy.util.Message;
+public final class IvyPatternHelper {
+    private IvyPatternHelper() {
+    public static final String CONF_KEY = "conf";
+    public static final String TYPE_KEY = "type";
+    public static final String EXT_KEY = "ext";
+    public static final String ARTIFACT_KEY = "artifact";
+    public static final String BRANCH_KEY = "branch";
+    public static final String REVISION_KEY = "revision";
+    public static final String MODULE_KEY = "module";
+    public static final String ORGANISATION_KEY = "organisation";
+    public static final String ORGANISATION_KEY2 = "organization";
+    public static final String ORGANISATION_PATH_KEY = "orgPath";
+    public static final String ORIGINAL_ARTIFACTNAME_KEY = "originalname";
+    private static final Pattern PARAM_PATTERN = Pattern.compile("\\@\\{(.*?)\\}");
+    private static final Pattern VAR_PATTERN = Pattern.compile("\\$\\{(.*?)\\}");
+    public static String substitute(String pattern, ModuleRevisionId moduleRevision) {
+    public static String substitute(String pattern, ModuleRevisionId moduleRevision,
+    public static String substitute(String pattern, Artifact artifact) {
+    public static String substitute(String pattern, Artifact artifact, ArtifactOrigin origin) {
+    public static String substitute(String pattern, Artifact artifact, String conf) {
+    public static String substitute(String pattern, ModuleRevisionId mrid, Artifact artifact) {
+    public static String substitute(String pattern, ModuleRevisionId mrid, Artifact artifact,
+    public static String substitute(String pattern, String org, String module, String revision,
+    public static String substitute(String pattern, String org, String module, String revision,
+    public static String substitute(String pattern, String org, String module, String revision,
+    public static String substitute
+... [truncated]
+```
+
+### Dependency signatures: src/java/org/apache/ivy/core/cache/ArtifactOrigin.java
+```java
+package org.apache.ivy.core.cache;
+import org.apache.ivy.core.module.descriptor.Artifact;
+import org.apache.ivy.util.Checks;
+public class ArtifactOrigin {
+    private static final String UNKNOWN = "UNKNOWN";
+    public static final ArtifactOrigin unkwnown(Artifact artifact) {
+    public static final boolean isUnknown(ArtifactOrigin artifact) {
+    public static final boolean isUnknown(String location) {
+    private static final int MAGIC_HASH_VALUE = 31;
+    private boolean isLocal;
+    private String location;
+    private Artifact artifact;
+    private Long lastChecked;
+    private boolean exists = true;
+    public ArtifactOrigin(Artifact artifact, boolean isLocal, String location) {
+    public boolean isLocal() {
+    public String getLocation() {
+    public void setLocation(String location) {
+    public Artifact getArtifact() {
+    public Long getLastChecked() {
+    public void setLastChecked(Long lastChecked) {
+    public boolean isExists() {
+    public void setExist(boolean exists) {
+    public String toString() {
+    public boolean equals(Object o) {
+    public int hashCode() {
+```
+
+### Dependency signatures: src/java/org/apache/ivy/core/cache/CacheDownloadOptions.java
+```java
+package org.apache.ivy.core.cache;
+public class CacheDownloadOptions {
+    private DownloadListener listener = null;
+    private boolean force = false;
+    public DownloadListener getListener() {
+    public CacheDownloadOptions setListener(DownloadListener listener) {
+    public boolean isForce() {
+    public CacheDownloadOptions setForce(boolean force) {
+```
+
+### Dependency signatures: src/java/org/apache/ivy/core/cache/CacheMetadataOptions.java
+```java
+package org.apache.ivy.core.cache;
+import org.apache.ivy.plugins.namespace.Namespace;
+public class CacheMetadataOptions extends CacheDownloadOptions {
+    private boolean validate = false;
+    private Namespace namespace = Namespace.SYSTEM_NAMESPACE;
+    private Boolean isCheckmodified = null;
+    private String changingMatcherName = null;
+    private String changingPattern = null;
+    private boolean checkTTL = true;
+    private boolean useCacheOnly = false;
+    public Namespace getNamespace() {
+    public CacheMetadataOptions setNamespace(Namespace namespace) {
+    public boolean isValidate() {
+    public CacheMetadataOptions setValidate(boolean validate) {
+    public Boolean isCheckmodified() {
+    public CacheMetadataOptions setCheckmodified(Boolean isCheckmodified) {
+    public String getChangingMatcherName() {
+    public CacheMetadataOptions setChangingMatcherName(String changingMatcherName) {
+    public String getChangingPattern() {
+    public CacheMetadataOptions setChangingPattern(String changingPattern) {
+    public CacheMetadataOptions setCheckTTL(boolean checkTTL) {
+    public boolean isCheckTTL() {
+    public CacheMetadataOptions setUseCacheOnly(boolean useCacheOnly) {
+    public boolean isUseCacheOnly() {
+```
+
+### Dependency signatures: src/java/org/apache/ivy/core/cache/CacheResourceOptions.java
+```java
+package org.apache.ivy.core.cache;
+public class CacheResourceOptions extends CacheDownloadOptions {
+    private long ttl = 1000 * 60 * 60;
+    public void setTtl(long ttl) {
+    public long getTtl() {
+```
+
+### Dependency signatures: src/java/org/apache/ivy/core/cache/CacheUtil.java
+```java
+package org.apache.ivy.core.cache;
+public final class CacheUtil {
+    public static void checkCachePattern(String ca
+... [truncated]
+```
+
+## Task
+Using the information above, return the JSON object now: up to 10 predictions, most likely first, every path copied exactly from the allowed candidate paths list.
