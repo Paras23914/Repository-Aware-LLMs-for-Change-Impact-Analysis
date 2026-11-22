@@ -1,0 +1,14 @@
+task_id,gold,in_candidates,gold_java,java_in_candidates,candidate_count
+ripple-ant-ivy-IVY-1028,2,2,1,1,100
+ripple-ant-ivy-IVY-112,7,5,4,4,100
+ripple-ant-ivy-IVY-1141,3,0,2,0,100
+ripple-ant-ivy-IVY-1423,6,3,2,2,100
+ripple-ant-ivy-IVY-1475,3,1,2,1,100
+ripple-ant-ivy-IVY-1522,2,1,2,1,100
+ripple-ant-ivy-IVY-1531,3,2,2,2,100
+ripple-ant-ivy-IVY-237,2,2,1,1,100
+ripple-ant-ivy-IVY-248,2,2,1,1,100
+ripple-commons-compress-COMPRESS-119,3,3,2,2,91
+ripple-commons-compress-COMPRESS-276,8,8,7,7,100
+ripple-commons-compress-COMPRESS-469,4,3,3,2,100
+ripple-commons-compress-COMPRESS-74,2,2,1,1,88
